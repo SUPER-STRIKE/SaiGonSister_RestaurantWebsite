@@ -1,0 +1,173 @@
+Restaurant Website Project Tasks
+1. Branding
+Design logo
+Background: very dark forest green
+Text: yellow gold
+Emphasize:
+Authentic Vietnamese cuisine
+Organic ingredients
+Full vegan menu available
+No reservation/booking system (full-service restaurant only)
+2. Home Page
+Hero Section
+Large banner image
+Restaurant logo
+Short introduction
+Marketing message
+Authentic Vietnamese Cuisine
+Organic Vietnamese food
+Full vegan menu available
+Specialty Daily
+Featured on the front page
+Changes every day
+Backend option to update daily specialty
+Highlight it as a special item
+Restaurant Introduction
+
+Include:
+
+Restaurant story
+Images
+Short description
+Chef Section
+
+Introduce the chef/owner.
+
+Information to include:
+
+Founder of a successful Vietnamese restaurant group in Toronto
+15+ years of experience
+Restaurants include:
+Saigon Sister (774 Yonge Street)
+Hue Kitchen
+Ginger (Vietnamese fast-food chain)
+Strong reputation for authentic Vietnamese cuisine backed by successful restaurants
+3. Menu
+Categories
+Breakfast
+Lunch
+Dinner
+Drinks
+Specialty Daily
+Menu Focus
+
+Main specialty:
+
+Vietnamese Rolls
+
+Highlight:
+
+Spring Rolls
+Salad Rolls (Rice Paper Rolls)
+Restaurant Signature Rice Rolls
+Inspired by sushi
+Easier for Vietnamese customers
+House creation
+
+Also include:
+
+Traditional Vietnamese dishes
+Restaurant signature creations
+Vietnamese Bánh Mì
+French baguette options
+Vegan menu
+Regular menu
+4. Admin Dashboard
+
+Need backend management for menu.
+
+Functions:
+
+Admin login
+Add menu item
+Edit menu item
+Delete menu item
+Change menu image
+Rename menu item
+Change menu categories
+Update Specialty Daily
+5. Menu Display
+
+Instead of only text:
+
+Display food images
+Decorative menu layout
+Image carousel/slider
+Auto-rotating food photos
+6. Contact Page
+
+Include:
+
+Restaurant location
+Opening hours
+Contact information
+
+Layout:
+
+Large image on top
+Information underneath
+7. Design Direction
+
+Reference:
+
+Lunch Lady website
+
+Style:
+
+Warm
+Modern
+Authentic Vietnamese
+Premium but welcoming
+Food photography focused
+8. Technical Features
+Required
+Responsive website
+Admin authentication
+Dynamic menu management
+Daily specialty management
+Image carousel
+Not Required
+Online reservation
+Booking system
+9. Post-Delivery
+1-month warranty/support
+Bug fixes
+Minor changes
+Small revisions included
+Overall Site Structure
+Home
+│
+├── Hero Banner
+├── Specialty Daily
+├── About Restaurant
+├── Chef Story
+├── Featured Rolls
+├── Menu Preview
+└── Contact Preview
+
+Menu
+├── Breakfast
+├── Lunch
+├── Dinner
+├── Drinks
+└── Specialty Daily
+
+Contact
+
+Admin (Hidden)
+├── Login
+├── Manage Menu
+├── Manage Categories
+├── Update Specialty Daily
+├── Upload Images
+└── Edit/Delete Items
+
+This gives you a clear development roadmap:
+
+Branding & logo
+Home page
+Menu system
+Admin dashboard
+Contact page
+Responsive polish
+1-month maintenance after launch
