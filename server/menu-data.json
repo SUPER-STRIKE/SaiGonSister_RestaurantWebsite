@@ -1,0 +1,938 @@
+{
+  "restaurant": "Saigon Sister",
+  "address": "774 Yonge Street, Toronto",
+  "menuVersion": "2026",
+  "categories": ["breakfast", "lunch", "dinner", "drink"],
+  "tagsLegend": {
+    "vegan": "Plant-based or vegan option",
+    "must-try": "House signature or popular pick",
+    "creation": "Saigon Sister original / house creation",
+    "spicy": "Contains or served with spice",
+    "seafood": "Fish, shrimp, tuna, or calamari"
+  },
+  "items": [
+    {
+      "menuNumber": "1",
+      "name": "Simple Breakfast",
+      "description": "3 eggs your style, home fries, butter garlic toasted baguette. Egg styles: over easy, sunny side up, poached. Add-ons: Bacon (2), Peameal Bacon (4), Bratwurst sausage (4), Ham (2), Philly Cheese Steak (5), Chicken Parmesan (5).",
+      "price": 8.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": []
+    },
+    {
+      "menuNumber": "2",
+      "name": "Banh Mi Chao SG - Big Breakfast",
+      "description": "Philly cheese steak, pork meatball, pork sausage, ham, sunny eggs, fries. Served in a hot cast iron skillet with toasted baguette.",
+      "price": 19.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": ["must-try", "creation"]
+    },
+    {
+      "menuNumber": "3",
+      "name": "Bo Kho - Beef Bourguignon",
+      "description": "Beef in red wine butter sauce, home fries, sunny eggs. Served in cast iron skillet with toasted baguette.",
+      "price": 14.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": ["creation"]
+    },
+    {
+      "menuNumber": "4",
+      "name": "Pho Soup Breakfast",
+      "description": "Rare beef tenderloin cooked in hot broth, garnished with basil, onion, coriander, hoisin, hot sauce, fresh lime. Served with toasted baguette.",
+      "price": 13.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": ["must-try"]
+    },
+    {
+      "menuNumber": "6",
+      "name": "Avocado Toast",
+      "description": "Avocado, grilled portobello mushroom, tomato, onion, jalapeno, red onion, coriander, lime juice, vegan creamy sauce. Add-ons: poached eggs (2), peameal bacon (4), smoked salmon (6).",
+      "price": 11.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "7",
+      "name": "Vegan Western Omelette",
+      "description": "Vegan egg, vegan ham, chickpea puree, onion, bell pepper, tomato, home fries, green salad, toasted vegan butter baguette.",
+      "price": 13.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "8",
+      "name": "Hot Plate Poutine",
+      "description": "Vegan sausage, crumble turmeric tofu, jalapeno, tomato, bell pepper, onion, home fries, vegan creamy sauce. Non-vegan add-ons: bacon (2), sausage (3), ham (2), egg (1).",
+      "price": 12.95,
+      "category": "breakfast",
+      "section": "Breakfast",
+      "tags": ["vegan", "spicy"]
+    },
+
+    {
+      "menuNumber": "11",
+      "name": "Seared Tuna-Avocado Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Seared tuna and avocado.",
+      "price": 5.95,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "12",
+      "name": "Grilled Beef Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Grilled beef.",
+      "price": 3.95,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": []
+    },
+    {
+      "menuNumber": "13",
+      "name": "Shrimp & Pork Belly Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Shrimp and pork belly.",
+      "price": 4.5,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "14",
+      "name": "Shrimp Tempura-Avocado Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Shrimp tempura and avocado.",
+      "price": 4.5,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "15",
+      "name": "Lemongrass Tofu-Avocado Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Lemongrass tofu and avocado.",
+      "price": 3.5,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "16",
+      "name": "Vegan Fried Chicken-Avocado Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Vegan fried chicken and avocado.",
+      "price": 3.95,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "17",
+      "name": "Yam-Avocado Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Yam and avocado.",
+      "price": 3.75,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "18",
+      "name": "Jicama-Peanut Salad Roll",
+      "description": "Lettuce, mint, basil, sprout, carrot, mango. Jicama and peanut.",
+      "price": 3.75,
+      "category": "lunch",
+      "section": "Salad Rolls",
+      "tags": ["vegan"]
+    },
+
+    {
+      "menuNumber": "21",
+      "name": "Pork Momo",
+      "description": "Pan-fried or steamed dumplings (6 pcs). Pork filling.",
+      "price": 6.95,
+      "category": "lunch",
+      "section": "Momo",
+      "tags": []
+    },
+    {
+      "menuNumber": "22",
+      "name": "Beef, Tomato, Cheese Momo",
+      "description": "Pan-fried or steamed dumplings (6 pcs). Beef, tomato, and cheese filling.",
+      "price": 7.95,
+      "category": "lunch",
+      "section": "Momo",
+      "tags": []
+    },
+    {
+      "menuNumber": "23",
+      "name": "Vegan Momo",
+      "description": "Pan-fried or steamed dumplings (6 pcs). Chickpea and lentil filling.",
+      "price": 6.95,
+      "category": "lunch",
+      "section": "Momo",
+      "tags": ["vegan"]
+    },
+
+    {
+      "menuNumber": "31",
+      "name": "Five Spices Pork Belly Salad Wrap",
+      "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Five spices pork belly.",
+      "price": 10.95,
+      "category": "lunch",
+      "section": "Salad Wraps",
+      "tags": []
+    },
+    {
+      "menuNumber": "32",
+      "name": "Beef on Garlic Bread Salad Wrap",
+      "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Beef on garlic bread.",
+      "price": 10.95,
+      "category": "lunch",
+      "section": "Salad Wraps",
+      "tags": []
+    },
+    {
+      "menuNumber": "33",
+      "name": "Shrimp Sausage Salad Wrap",
+      "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Shrimp sausage.",
+      "price": 12.5,
+      "category": "lunch",
+      "section": "Salad Wraps",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "34",
+      "name": "Shrimp-Coco Yam Tempura Salad Wrap",
+      "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Shrimp-coco yam tempura.",
+      "price": 10.95,
+      "category": "lunch",
+      "section": "Salad Wraps",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "35",
+      "name": "Seared Tuna-Avocado Salad Wrap",
+      "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Seared tuna and avocado.",
+      "price": 13.95,
+      "category": "lunch",
+      "section": "Salad Wraps",
+      "tags": ["seafood", "must-try"]
+    },
+
+    {
+      "menuNumber": "41",
+      "name": "Wings with Onion Ring",
+      "description": "6 pcs wings and onion ring with spicy egg yolk-calamansi sauce.",
+      "price": 15.95,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": ["spicy"]
+    },
+    {
+      "menuNumber": "42",
+      "name": "Pork Spring Roll",
+      "description": "Crispy fried pork spring roll.",
+      "price": 3.5,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": []
+    },
+    {
+      "menuNumber": "43",
+      "name": "Vegetable Spring Roll",
+      "description": "Crispy fried vegetable spring roll.",
+      "price": 3.5,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "44",
+      "name": "Shrimp, Fish, Calamari Tempura",
+      "description": "Assorted shrimp, fish, and calamari tempura.",
+      "price": 14.95,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "45",
+      "name": "Vegetable Tempura",
+      "description": "Crispy vegetable tempura.",
+      "price": 8.5,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "46",
+      "name": "Yam Fries",
+      "description": "Crispy yam fries.",
+      "price": 4.5,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "47",
+      "name": "French Fries",
+      "description": "Classic french fries.",
+      "price": 3.5,
+      "category": "lunch",
+      "section": "Crispy Fry",
+      "tags": ["vegan"]
+    },
+
+    {
+      "menuNumber": "51",
+      "name": "Goi Xoai - Mango Salad",
+      "description": "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, cracker. Add grilled chicken and shrimp (6).",
+      "price": 15.95,
+      "category": "lunch",
+      "section": "Salads",
+      "tags": ["spicy"]
+    },
+
+    {
+      "menuNumber": "61",
+      "name": "Caramel Chicken Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Caramel chicken.",
+      "price": 9.95,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": []
+    },
+    {
+      "menuNumber": "62",
+      "name": "Spicy Lemongrass Beef Burger Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Spicy lemongrass beef burger.",
+      "price": 9.95,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": ["spicy"]
+    },
+    {
+      "menuNumber": "63",
+      "name": "Five Spices Pork Belly Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Five spices pork belly.",
+      "price": 9.5,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": []
+    },
+    {
+      "menuNumber": "64",
+      "name": "Grilled Lemongrass Pork Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Grilled lemongrass pork.",
+      "price": 9.5,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": []
+    },
+    {
+      "menuNumber": "65",
+      "name": "Saigon Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Pate, pork belly, ham, sausage, shredded chicken.",
+      "price": 9.95,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": ["must-try", "creation"]
+    },
+    {
+      "menuNumber": "66",
+      "name": "Chicken Parmesan Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Chicken parmesan.",
+      "price": 11.95,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": []
+    },
+    {
+      "menuNumber": "67",
+      "name": "Cheese Steak Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Cheese steak.",
+      "price": 12.95,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": []
+    },
+    {
+      "menuNumber": "68",
+      "name": "Fillet O Fish Tomato Sauce Banh Mi",
+      "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Fillet o fish with tomato sauce.",
+      "price": 10.95,
+      "category": "lunch",
+      "section": "Banh Mi - Baguettes",
+      "tags": ["seafood"]
+    },
+
+    {
+      "menuNumber": "71",
+      "name": "Special Pho",
+      "description": "Rib, rare beef, brisket, beef balls, tendon.",
+      "price": 23.95,
+      "category": "lunch",
+      "section": "Pho",
+      "tags": ["must-try"]
+    },
+    {
+      "menuNumber": "72",
+      "name": "Rare Beef Tenderloin Pho",
+      "description": "Rare beef tenderloin pho.",
+      "price": 22.95,
+      "category": "lunch",
+      "section": "Pho",
+      "tags": []
+    },
+    {
+      "menuNumber": "73",
+      "name": "Brisket and Beef Pho",
+      "description": "Brisket and beef pho.",
+      "price": 19.95,
+      "category": "lunch",
+      "section": "Pho",
+      "tags": []
+    },
+    {
+      "menuNumber": "74",
+      "name": "Free Range Chicken Pho",
+      "description": "Free range chicken pho.",
+      "price": 19.95,
+      "category": "lunch",
+      "section": "Pho",
+      "tags": []
+    },
+    {
+      "menuNumber": "75",
+      "name": "Grilled Chicken Pho",
+      "description": "Grilled chicken pho.",
+      "price": 18.95,
+      "category": "lunch",
+      "section": "Pho",
+      "tags": []
+    },
+
+    {
+      "menuNumber": "81",
+      "name": "Bun - Vermicelli Bowl",
+      "description": "Grilled chicken, beef, pork, shrimp, spring roll. Lettuce, basil, mint, cucumber, pickle carrot, onion, peanut. Choice of steamed or stir-fry vermicelli.",
+      "price": 19.95,
+      "category": "lunch",
+      "section": "Noodle Bowls",
+      "tags": ["seafood"]
+    },
+    {
+      "menuNumber": "85",
+      "name": "House Special Noodle Bowl",
+      "description": "Shrimp, calamari, fish cake, BBQ pork, shrimp cracker. Broth served on side. Choice of fresh egg noodle or clear noodle.",
+      "price": 20.95,
+      "category": "lunch",
+      "section": "Noodle Bowls",
+      "tags": ["seafood", "must-try", "creation"]
+    },
+
+    {
+      "menuNumber": "91",
+      "name": "Char-Grill Lemongrass Pork Chop Com",
+      "description": "Char-grill spicy lemongrass pork chop, grilled chicken, beef, sunny egg, steamed jasmine rice.",
+      "price": 19.95,
+      "category": "lunch",
+      "section": "Com - Rice Platter",
+      "tags": ["spicy"]
+    },
+    {
+      "menuNumber": "92",
+      "name": "Crispy Skin Chicken Thigh Com",
+      "description": "Crispy skin chicken thigh, grilled chicken, salad, tomato fried rice.",
+      "price": 19.95,
+      "category": "lunch",
+      "section": "Com - Rice Platter",
+      "tags": []
+    },
+    {
+      "menuNumber": "93",
+      "name": "Hot Stone Bowl Free Range Chicken",
+      "description": "Served with mushroom, bamboo ginger rice, and fresh slaw on side.",
+      "price": 21.95,
+      "category": "lunch",
+      "section": "Com - Rice Platter",
+      "tags": ["creation"]
+    },
+
+    {
+      "menuNumber": "52",
+      "name": "Goi Bo Tai Chanh - Beef Carpaccio",
+      "description": "AAA rib eye rare steak slices, green papaya, onion, carrot, pepper, basil, peanut, cracker.",
+      "price": 21.95,
+      "category": "dinner",
+      "section": "Dinner Special",
+      "tags": ["must-try", "creation"]
+    },
+    {
+      "menuNumber": "53",
+      "name": "Goi Tuna - Tuna Salad",
+      "description": "Seared tuna slices, variety of herbs, fried onion, peanut, pepper, cracker.",
+      "price": 23.95,
+      "category": "dinner",
+      "section": "Dinner Special",
+      "tags": ["seafood", "must-try"]
+    },
+    {
+      "menuNumber": "94",
+      "name": "Bo Luc Lac - Beef Steak",
+      "description": "AAA medium rare rib eye steak cubed, onion, bell pepper, mushroom in red wine butter sauce. Fries, sunny egg, salad, toasted baguette.",
+      "price": 26.95,
+      "category": "dinner",
+      "section": "Dinner Special",
+      "tags": ["must-try", "creation"]
+    },
+
+    {
+      "menuNumber": "D1",
+      "name": "Aperitif",
+      "description": "1oz bourbon, 1oz aperol, amaro nonino, lemon juice.",
+      "price": 12,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D2",
+      "name": "Aperol Spirit",
+      "description": "Prosecco, aperol, soda.",
+      "price": 11,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D3",
+      "name": "Lychee Concubine",
+      "description": "1.5oz soho lychee, 1oz sake, lychee juice, lychee pearls, over ice, garnished with whole lychee fruit.",
+      "price": 12,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": ["creation"]
+    },
+    {
+      "menuNumber": "D4",
+      "name": "Mango Bellini",
+      "description": "5oz prosecco, mango smoothie, grenadine, raspberry.",
+      "price": 11,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D5",
+      "name": "Spicy Mango Mezcalita",
+      "description": "1.5oz mezcal, 0.5oz cointreau, mango smoothie, fresh lime, chilli salt rim glass.",
+      "price": 12,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": ["spicy", "creation"]
+    },
+    {
+      "menuNumber": "D6",
+      "name": "Passion Memmo",
+      "description": "2oz vodka, sparkling wine, passion juice, lime.",
+      "price": 12,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D7",
+      "name": "SG Cool Day",
+      "description": "1.5oz vodka, 1.5oz blue curacao, prosecco, calamansi juice, lychee pearls.",
+      "price": 13,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": ["creation", "must-try"]
+    },
+    {
+      "menuNumber": "D8",
+      "name": "HN B-52",
+      "description": "Grand marnier, kahlua, irish cream, coffee infused clove-cardamon, condensed milk.",
+      "price": 14,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": ["creation"]
+    },
+    {
+      "menuNumber": "D9",
+      "name": "White Night",
+      "description": "1oz irish whiskey, 1oz coffee liquor, black spices infused brewed coffee, sugar syrup.",
+      "price": 11,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D10",
+      "name": "Pina Colada",
+      "description": "2oz white rum, cream of coco, pineapple juice, sugar syrup blended with ice.",
+      "price": 13,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D11",
+      "name": "Margarita",
+      "description": "1oz blanco tequila, 1oz cointreau, lime juice, spicy salted lime rim glass.",
+      "price": 14,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": ["spicy"]
+    },
+    {
+      "menuNumber": "D12",
+      "name": "Mojito",
+      "description": "2oz white rum, sugar syrup, soda lime, mint.",
+      "price": 12,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+    {
+      "menuNumber": "D13",
+      "name": "Cuba Libre",
+      "description": "2oz dark rum, cola, lime juice.",
+      "price": 11,
+      "category": "drink",
+      "section": "Cocktails",
+      "tags": []
+    },
+
+    {
+      "menuNumber": "D14",
+      "name": "Cabernet Sauvignon",
+      "description": "Red wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "Red Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D15",
+      "name": "Merlot",
+      "description": "Red wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "Red Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D16",
+      "name": "Pinot Noir",
+      "description": "Red wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "Red Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D17",
+      "name": "Shiraz",
+      "description": "Red wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "Red Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D18",
+      "name": "Malbec",
+      "description": "Red wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "Red Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D19",
+      "name": "Sauvignon Blanc",
+      "description": "White wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "White Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D20",
+      "name": "Pinot Grigio",
+      "description": "White wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "White Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D21",
+      "name": "Chardonnay",
+      "description": "White wine by the glass. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "White Wine",
+      "tags": []
+    },
+    {
+      "menuNumber": "D22",
+      "name": "Riesling",
+      "description": "White wine by the glass. Pairs well with spicy food. Ask server for current pour price.",
+      "price": null,
+      "category": "drink",
+      "section": "White Wine",
+      "tags": ["spicy"]
+    },
+
+    {
+      "menuNumber": "D23",
+      "name": "Saigon 33 Beer",
+      "description": "Vietnamese lager.",
+      "price": null,
+      "category": "drink",
+      "section": "Beers",
+      "tags": []
+    },
+    {
+      "menuNumber": "D24",
+      "name": "Sapporo Beer",
+      "description": "Japanese lager.",
+      "price": null,
+      "category": "drink",
+      "section": "Beers",
+      "tags": []
+    },
+    {
+      "menuNumber": "D25",
+      "name": "Tiger Beer",
+      "description": "Singapore lager.",
+      "price": null,
+      "category": "drink",
+      "section": "Beers",
+      "tags": []
+    },
+    {
+      "menuNumber": "D26",
+      "name": "Singha Beer",
+      "description": "Thai lager.",
+      "price": null,
+      "category": "drink",
+      "section": "Beers",
+      "tags": []
+    },
+    {
+      "menuNumber": "D27",
+      "name": "Cass Beer",
+      "description": "Korean lager.",
+      "price": null,
+      "category": "drink",
+      "section": "Beers",
+      "tags": []
+    },
+
+    {
+      "menuNumber": "D28",
+      "name": "Seasonal Fruit Smoothie",
+      "description": "Fresh fruit in season. Flavors: mango, strawberry, avocado, pineapple, jackfruit.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "D29",
+      "name": "Thai Tea",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D30",
+      "name": "Matcha Green Latte",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D31",
+      "name": "Lychee Juice",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D32",
+      "name": "Passion Soda",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D33",
+      "name": "Salted Lime Soda",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D34",
+      "name": "Strawberry Soda",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D35",
+      "name": "Calamansi Soda",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": ["creation"]
+    },
+    {
+      "menuNumber": "D36",
+      "name": "Strawberry Cream Soda",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D37",
+      "name": "Tropical Colada",
+      "description": "Iced cold drink.",
+      "price": null,
+      "category": "drink",
+      "section": "Non Alcohol",
+      "tags": []
+    },
+    {
+      "menuNumber": "D38",
+      "name": "Ginger Honey Jasmine Green Tea",
+      "description": "Hot tea.",
+      "price": 3,
+      "category": "drink",
+      "section": "Hot Tea",
+      "tags": []
+    },
+    {
+      "menuNumber": "D39",
+      "name": "Black Oolong Tea",
+      "description": "Hot tea.",
+      "price": null,
+      "category": "drink",
+      "section": "Hot Tea",
+      "tags": []
+    },
+    {
+      "menuNumber": "D40",
+      "name": "Apple Juice",
+      "description": "Fresh juice.",
+      "price": 3,
+      "category": "drink",
+      "section": "Juices",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "D41",
+      "name": "Orange Juice",
+      "description": "Fresh juice.",
+      "price": 3,
+      "category": "drink",
+      "section": "Juices",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "D42",
+      "name": "Grapefruit Juice",
+      "description": "Fresh juice.",
+      "price": 3,
+      "category": "drink",
+      "section": "Juices",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "D43",
+      "name": "Ice Tea",
+      "description": "Fresh juice.",
+      "price": 3,
+      "category": "drink",
+      "section": "Juices",
+      "tags": []
+    },
+    {
+      "menuNumber": "D44",
+      "name": "Homemade Soya",
+      "description": "Hot or iced.",
+      "price": 2,
+      "category": "drink",
+      "section": "Juices",
+      "tags": ["vegan"]
+    },
+    {
+      "menuNumber": "D45",
+      "name": "Coke",
+      "description": "Soft drink.",
+      "price": 2,
+      "category": "drink",
+      "section": "Pop",
+      "tags": []
+    },
+    {
+      "menuNumber": "D46",
+      "name": "Coke Zero",
+      "description": "Soft drink.",
+      "price": 2,
+      "category": "drink",
+      "section": "Pop",
+      "tags": []
+    },
+    {
+      "menuNumber": "D47",
+      "name": "Diet Coke",
+      "description": "Soft drink.",
+      "price": 2,
+      "category": "drink",
+      "section": "Pop",
+      "tags": []
+    },
+    {
+      "menuNumber": "D48",
+      "name": "Ginger Ale",
+      "description": "Soft drink.",
+      "price": 2,
+      "category": "drink",
+      "section": "Pop",
+      "tags": []
+    },
+    {
+      "menuNumber": "D49",
+      "name": "Root Beer",
+      "description": "Soft drink.",
+      "price": 2,
+      "category": "drink",
+      "section": "Pop",
+      "tags": []
+    }
+  ]
+}
