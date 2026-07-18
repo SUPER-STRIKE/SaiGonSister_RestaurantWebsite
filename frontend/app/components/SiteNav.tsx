@@ -1,0 +1,27 @@
+import Image from "next/image";
+import Link from "next/link";
+import { restaurantContent } from "../lib/restaurant-data";
+
+type SiteNavProps = {
+  tone?: "dark" | "light";
+};
+
+export function SiteNav({ tone = "dark" }: SiteNavProps) {
+  return (
+    <nav className={`nav ${tone === "light" ? "nav-light" : ""}`} aria-label="Main navigation">
+      <Link className="brand" href="/" aria-label={`${restaurantContent.restaurantName} home`}>
+        <Image alt="" className="brand-logo" height={58} src="/logo.svg" width={58} />
+        <span>
+          <strong>{restaurantContent.restaurantName}</strong>
+          <small>Vietnamese Kitchen</small>
+        </span>
+      </Link>
+      <div className="nav-links">
+        <Link href="/">Home</Link>
+        <Link href="/menu">Menu</Link>
+        <Link href="/contact">Contact</Link>
+        <Link className="staff-link" href="/admin">Staff</Link>
+      </div>
+    </nav>
+  );
+}
