@@ -1,8 +1,12 @@
 localReq.txt
 requirement/backend-implementation-plan.md
+requirement/COMPLETE MENU.docx
+requirement/COMPLETE MENU.pdf
 
 server/node_modules/
 server/.env
 server/uploads/*
 !server/uploads/.gitkeep
 server/*.db
+server/*.db-shm
+server/*.db-wal
