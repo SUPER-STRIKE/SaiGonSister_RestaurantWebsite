@@ -1,0 +1,8 @@
+localReq.txt
+requirement/backend-implementation-plan.md
+
+server/node_modules/
+server/.env
+server/uploads/*
+!server/uploads/.gitkeep
+server/*.db
