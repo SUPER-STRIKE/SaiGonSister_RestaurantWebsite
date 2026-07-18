@@ -48,12 +48,13 @@ export default function MenuPage() {
           <p className="eyebrow">Choose a category</p>
           <h2 id="menu-title">Explore the menu</h2>
           <p>
-            Browse by service, diet, or specialty. Rolls stay at the center, with vegan
-            options and traditional Vietnamese dishes available across the day.
+            Browse by service, diet, signature dishes, or plates with choices and add-ons.
+            The menu can stay long without hiding the details guests need before ordering.
           </p>
         </div>
         <MenuExplorer tabs={menuTabs} items={menuItems} dailySpecials={dailySpecials} />
       </section>
+
     </main>
   );
 }

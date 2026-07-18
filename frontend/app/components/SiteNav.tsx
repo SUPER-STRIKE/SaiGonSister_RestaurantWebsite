@@ -9,7 +9,7 @@ type SiteNavProps = {
 export function SiteNav({ tone = "dark" }: SiteNavProps) {
   return (
     <nav className={`nav ${tone === "light" ? "nav-light" : ""}`} aria-label="Main navigation">
-      <Link className="brand" href="/" aria-label={`${restaurantContent.restaurantName} home`}>
+      <Link className="brand" href="/#home" aria-label={`${restaurantContent.restaurantName} home`}>
         <Image alt="" className="brand-logo" height={58} src="/logo.svg" width={58} />
         <span>
           <strong>{restaurantContent.restaurantName}</strong>
@@ -17,10 +17,10 @@ export function SiteNav({ tone = "dark" }: SiteNavProps) {
         </span>
       </Link>
       <div className="nav-links">
-        <Link href="/">Home</Link>
+        <Link href="/#home">Home</Link>
         <Link href="/menu">Menu</Link>
         <Link href="/contact">Contact</Link>
-        <Link className="staff-link" href="/admin">Staff</Link>
+        <Link className="staff-link" href="/login">Staff</Link>
       </div>
     </nav>
   );

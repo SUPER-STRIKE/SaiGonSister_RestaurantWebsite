@@ -1,0 +1,42 @@
+import Image from "next/image";
+import Link from "next/link";
+
+export default function LoginPage() {
+  return (
+    <main className="login-page">
+      <section className="login-shell" aria-labelledby="login-title">
+        <Link className="login-brand" href="/">
+          <Image alt="" height={58} src="/logo.svg" width={58} />
+          <span>
+            <strong>All@One</strong>
+            <small>Staff access</small>
+          </span>
+        </Link>
+        <div className="login-panel">
+          <div>
+            <p className="eyebrow">Staff login</p>
+            <h1 id="login-title">Sign in to manage the restaurant.</h1>
+            <p>
+              Menu changes, daily specials, add-ons, images, and restaurant details live behind
+              staff access.
+            </p>
+          </div>
+          <form className="admin-form">
+            <label>
+              Email
+              <input required type="email" />
+            </label>
+            <label>
+              Password
+              <input minLength={8} required type="password" />
+            </label>
+            <button type="submit">Sign in</button>
+          </form>
+          <Link className="login-back" href="/">
+            Back to website
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+}

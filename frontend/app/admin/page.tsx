@@ -21,6 +21,7 @@ export default function AdminPage() {
         <nav aria-label="Admin sections">
           <a href="#daily">Daily special</a>
           <a href="#menu-editor">Menu editor</a>
+          <a href="#extras">Choices and extras</a>
           <a href="#categories">Categories</a>
           <a href="#media">Images</a>
           <a href="#settings">Restaurant info</a>
@@ -55,24 +56,6 @@ export default function AdminPage() {
           </article>
         </section>
 
-        <section className="admin-card login-card" aria-labelledby="login-title">
-          <div>
-            <h2 id="login-title">Login</h2>
-            <p>Staff access for the restaurant team.</p>
-          </div>
-          <form className="admin-form two-col">
-            <label>
-              Email
-              <input type="email" />
-            </label>
-            <label>
-              Password
-              <input type="password" />
-            </label>
-            <button type="button">Sign in</button>
-          </form>
-        </section>
-
         <section className="admin-card" id="daily" aria-labelledby="daily-admin-title">
           <div className="admin-card-heading">
             <div>
@@ -85,26 +68,64 @@ export default function AdminPage() {
             <div className="two-col">
               <label>
                 Day label
-                <input defaultValue={editableDailySpecial.dayLabel} />
+                <input defaultValue={editableDailySpecial.dayLabel} required />
               </label>
               <label>
                 Price
-                <input defaultValue={editableDailySpecial.price} />
+                <input defaultValue={editableDailySpecial.price} required />
               </label>
             </div>
             <label>
               Dish name
-              <input defaultValue={editableDailySpecial.name} />
+              <input defaultValue={editableDailySpecial.name} required />
             </label>
             <label>
               Description
-              <textarea defaultValue={editableDailySpecial.description} rows={4} />
+              <textarea defaultValue={editableDailySpecial.description} required rows={4} />
             </label>
             <label className="check-row">
               <input defaultChecked={editableDailySpecial.isVeganAvailable} type="checkbox" />
               Vegan option available
             </label>
           </form>
+        </section>
+
+        <section className="admin-card" id="extras" aria-labelledby="extras-admin-title">
+          <div className="admin-card-heading">
+            <div>
+              <p className="eyebrow">Dish choices</p>
+              <h2 id="extras-admin-title">Options and add-ons</h2>
+            </div>
+            <button type="button">Save options</button>
+          </div>
+          <div className="option-editor-grid">
+            {restaurantContent.menuItems
+              .filter((item) => item.choices?.length || item.addOns?.length)
+              .slice(0, 4)
+              .map((item) => (
+                <article key={item.id}>
+                  <strong>{item.name}</strong>
+                  {item.choices?.map((choice) => (
+                    <label key={choice.label}>
+                      {choice.label}
+                      <textarea defaultValue={choice.options.join(", ")} required rows={3} />
+                    </label>
+                  ))}
+                  {item.addOns?.length ? (
+                    <label>
+                      Add-ons
+                      <textarea
+                        defaultValue={item.addOns
+                          .map((addOn) => `${addOn.name} ${addOn.price}`)
+                          .join(", ")}
+                        required
+                        rows={3}
+                      />
+                    </label>
+                  ) : null}
+                </article>
+              ))}
+          </div>
         </section>
 
         <section className="admin-card" id="menu-editor" aria-labelledby="menu-admin-title">
@@ -126,7 +147,7 @@ export default function AdminPage() {
               <article className="admin-table-row" key={item.id}>
                 <label>
                   Name
-                  <input defaultValue={item.name} />
+                  <input defaultValue={item.name} required />
                 </label>
                 <label>
                   Category
@@ -140,7 +161,7 @@ export default function AdminPage() {
                 </label>
                 <label>
                   Price
-                  <input defaultValue={item.price} />
+                  <input defaultValue={item.price} required />
                 </label>
                 <div className="admin-row-actions">
                   <label className="check-row">
@@ -167,7 +188,7 @@ export default function AdminPage() {
               {editableCategories.map((category) => (
                 <label key={category.id}>
                   {category.label}
-                  <input defaultValue={category.note} />
+                  <input defaultValue={category.note} required />
                 </label>
               ))}
             </div>
@@ -187,7 +208,7 @@ export default function AdminPage() {
             </div>
             <label>
               Image URL
-              <input defaultValue="/vietnamese-rolls-hero.png" />
+              <input defaultValue="/vietnamese-rolls-hero.png" required />
             </label>
           </article>
         </section>
@@ -203,19 +224,19 @@ export default function AdminPage() {
           <form className="admin-form two-col">
             <label>
               Location
-              <input defaultValue={restaurantContent.contact.location} />
+              <input defaultValue={restaurantContent.contact.location} required />
             </label>
             <label>
               Hours
-              <input defaultValue={restaurantContent.contact.hours} />
+              <input defaultValue={restaurantContent.contact.hours} required />
             </label>
             <label>
               Email
-              <input defaultValue={restaurantContent.contact.email} />
+              <input defaultValue={restaurantContent.contact.email} required type="email" />
             </label>
             <label>
               Phone
-              <input defaultValue={restaurantContent.contact.phone} />
+              <input defaultValue={restaurantContent.contact.phone} required />
             </label>
           </form>
         </section>
