@@ -7,6 +7,13 @@ const db = new Database(dbPath);
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');
 
+function addColumnIfMissing(table, column, definition) {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all().map((c) => c.name);
+  if (!cols.includes(column)) {
+    db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
+  }
+}
+
 db.exec(`
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -23,6 +30,8 @@ db.exec(`
     price REAL NOT NULL,
     category TEXT NOT NULL CHECK(category IN ('breakfast','lunch','dinner','drink')),
     tags TEXT DEFAULT '[]',
+    choices TEXT DEFAULT '[]',
+    addOns TEXT DEFAULT '[]',
     imageUrl TEXT
   );
 
@@ -39,5 +48,8 @@ db.exec(`
     special_date TEXT NOT NULL UNIQUE
   );
 `);
+
+addColumnIfMissing('menu_items', 'choices', "TEXT DEFAULT '[]'");
+addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
 
 module.exports = db;

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "seed:admin": "node scripts/seed-admin.js",
-    "seed:menu": "node scripts/seed-menu.js"
+    "seed:menu": "node scripts/seed-menu.js",
+    "seed:menu:force": "node scripts/seed-menu.js --force"
   },
   "keywords": [],
   "author": "",

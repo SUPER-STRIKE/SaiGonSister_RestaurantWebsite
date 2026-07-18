@@ -19,10 +19,25 @@
     {
       "menuNumber": "1",
       "name": "Simple Breakfast",
-      "description": "3 eggs your style, home fries, butter garlic toasted baguette. Egg styles: over easy, sunny side up, poached. Add-ons: Bacon (2), Peameal Bacon (4), Bratwurst sausage (4), Ham (2), Philly Cheese Steak (5), Chicken Parmesan (5).",
+      "description": "3 eggs your style, home fries, butter garlic toasted baguette.",
       "price": 8.95,
       "category": "breakfast",
-      "tags": []
+      "tags": [],
+      "choices": [
+        {
+          "name": "Egg style",
+          "required": true,
+          "options": ["over easy", "sunny side up", "poached"]
+        }
+      ],
+      "addOns": [
+        { "name": "Bacon", "price": 2 },
+        { "name": "Peameal Bacon", "price": 4 },
+        { "name": "Bratwurst sausage", "price": 4 },
+        { "name": "Ham", "price": 2 },
+        { "name": "Philly Cheese Steak", "price": 5 },
+        { "name": "Chicken Parmesan", "price": 5 }
+      ]
     },
     {
       "menuNumber": "2",
@@ -58,11 +73,16 @@
     {
       "menuNumber": "6",
       "name": "Avocado Toast",
-      "description": "Avocado, grilled portobello mushroom, tomato, onion, jalapeno, red onion, coriander, lime juice, vegan creamy sauce. Add-ons: poached eggs (2), peameal bacon (4), smoked salmon (6).",
+      "description": "Avocado, grilled portobello mushroom, tomato, onion, jalapeno, red onion, coriander, lime juice, vegan creamy sauce.",
       "price": 11.95,
       "category": "breakfast",
       "tags": [
         "vegan"
+      ],
+      "addOns": [
+        { "name": "Poached eggs", "price": 2 },
+        { "name": "Peameal Bacon", "price": 4 },
+        { "name": "Smoked salmon", "price": 6 }
       ]
     },
     {
@@ -78,12 +98,18 @@
     {
       "menuNumber": "8",
       "name": "Hot Plate Poutine",
-      "description": "Vegan sausage, crumble turmeric tofu, jalapeno, tomato, bell pepper, onion, home fries, vegan creamy sauce. Non-vegan add-ons: bacon (2), sausage (3), ham (2), egg (1).",
+      "description": "Vegan sausage, crumble turmeric tofu, jalapeno, tomato, bell pepper, onion, home fries, vegan creamy sauce.",
       "price": 12.95,
       "category": "breakfast",
       "tags": [
         "vegan",
         "spicy"
+      ],
+      "addOns": [
+        { "name": "Bacon", "price": 2 },
+        { "name": "Sausage", "price": 3 },
+        { "name": "Ham", "price": 2 },
+        { "name": "Egg", "price": 1 }
       ]
     },
     {
@@ -167,27 +193,48 @@
     {
       "menuNumber": "21",
       "name": "Pork Momo",
-      "description": "Pan-fried or steamed dumplings (6 pcs). Pork filling.",
+      "description": "Dumplings (6 pcs). Pork filling.",
       "price": 6.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "choices": [
+        {
+          "name": "Preparation",
+          "required": true,
+          "options": ["pan fry", "steamed"]
+        }
+      ]
     },
     {
       "menuNumber": "22",
       "name": "Beef, Tomato, Cheese Momo",
-      "description": "Pan-fried or steamed dumplings (6 pcs). Beef, tomato, and cheese filling.",
+      "description": "Dumplings (6 pcs). Beef, tomato, and cheese filling.",
       "price": 7.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "choices": [
+        {
+          "name": "Preparation",
+          "required": true,
+          "options": ["pan fry", "steamed"]
+        }
+      ]
     },
     {
       "menuNumber": "23",
       "name": "Vegan Momo",
-      "description": "Pan-fried or steamed dumplings (6 pcs). Chickpea and lentil filling.",
+      "description": "Dumplings (6 pcs). Chickpea and lentil filling.",
       "price": 6.95,
       "category": "lunch",
       "tags": [
         "vegan"
+      ],
+      "choices": [
+        {
+          "name": "Preparation",
+          "required": true,
+          "options": ["pan fry", "steamed"]
+        }
       ]
     },
     {
@@ -210,7 +257,7 @@
       "menuNumber": "33",
       "name": "Shrimp Sausage Salad Wrap",
       "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Shrimp sausage.",
-      "price": 12.5,
+      "price": 10.95,
       "category": "lunch",
       "tags": [
         "seafood"
@@ -308,11 +355,14 @@
     {
       "menuNumber": "51",
       "name": "Goi Xoai - Mango Salad",
-      "description": "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, cracker. Add grilled chicken and shrimp (6).",
+      "description": "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, cracker.",
       "price": 15.95,
       "category": "lunch",
       "tags": [
         "spicy"
+      ],
+      "addOns": [
+        { "name": "Grilled chicken and shrimp", "price": 6 }
       ]
     },
     {
@@ -321,7 +371,10 @@
       "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Caramel chicken.",
       "price": 9.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
+      ]
     },
     {
       "menuNumber": "62",
@@ -331,6 +384,9 @@
       "category": "lunch",
       "tags": [
         "spicy"
+      ],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
       ]
     },
     {
@@ -339,7 +395,10 @@
       "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Five spices pork belly.",
       "price": 9.5,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
+      ]
     },
     {
       "menuNumber": "64",
@@ -347,7 +406,10 @@
       "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Grilled lemongrass pork.",
       "price": 9.5,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
+      ]
     },
     {
       "menuNumber": "65",
@@ -358,6 +420,9 @@
       "tags": [
         "must-try",
         "creation"
+      ],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
       ]
     },
     {
@@ -366,7 +431,10 @@
       "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Chicken parmesan.",
       "price": 11.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
+      ]
     },
     {
       "menuNumber": "67",
@@ -374,7 +442,10 @@
       "description": "Tomato, cucumber, pickle daikon-carrot, onion, coriander, garlic aioli. Cheese steak.",
       "price": 12.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
+      ]
     },
     {
       "menuNumber": "68",
@@ -384,6 +455,9 @@
       "category": "lunch",
       "tags": [
         "seafood"
+      ],
+      "addOns": [
+        { "name": "Extra meat", "price": 4 }
       ]
     },
     {
@@ -431,23 +505,37 @@
     {
       "menuNumber": "81",
       "name": "Bun - Vermicelli Bowl",
-      "description": "Grilled chicken, beef, pork, shrimp, spring roll. Lettuce, basil, mint, cucumber, pickle carrot, onion, peanut. Choice of steamed or stir-fry vermicelli.",
+      "description": "Grilled chicken, beef, pork, shrimp, spring roll. Lettuce, basil, mint, cucumber, pickle carrot, onion, peanut.",
       "price": 19.95,
       "category": "lunch",
       "tags": [
         "seafood"
+      ],
+      "choices": [
+        {
+          "name": "Vermicelli",
+          "required": true,
+          "options": ["steamed", "stir-fry"]
+        }
       ]
     },
     {
       "menuNumber": "85",
       "name": "House Special Noodle Bowl",
-      "description": "Shrimp, calamari, fish cake, BBQ pork, shrimp cracker. Broth served on side. Choice of fresh egg noodle or clear noodle.",
+      "description": "Shrimp, calamari, fish cake, BBQ pork, shrimp cracker. Broth served on side.",
       "price": 20.95,
       "category": "lunch",
       "tags": [
         "seafood",
         "must-try",
         "creation"
+      ],
+      "choices": [
+        {
+          "name": "Noodle",
+          "required": true,
+          "options": ["fresh egg noodle", "clear noodle"]
+        }
       ]
     },
     {
@@ -744,11 +832,18 @@
     {
       "menuNumber": "D28",
       "name": "Seasonal Fruit Smoothie",
-      "description": "Fresh fruit in season. Flavors: mango, strawberry, avocado, pineapple, jackfruit.",
+      "description": "Fresh fruit in season.",
       "price": null,
       "category": "drink",
       "tags": [
         "vegan"
+      ],
+      "choices": [
+        {
+          "name": "Flavor",
+          "required": true,
+          "options": ["mango", "strawberry", "avocado", "pineapple", "jackfruit"]
+        }
       ]
     },
     {
@@ -882,11 +977,18 @@
     {
       "menuNumber": "D44",
       "name": "Homemade Soya",
-      "description": "Hot or iced.",
+      "description": "Homemade soya milk.",
       "price": 2,
       "category": "drink",
       "tags": [
         "vegan"
+      ],
+      "choices": [
+        {
+          "name": "Temperature",
+          "required": true,
+          "options": ["hot", "ice"]
+        }
       ]
     },
     {
