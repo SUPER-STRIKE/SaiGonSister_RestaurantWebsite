@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const db = require('../config/database');
 const { sendOtpEmail } = require('../config/mailer');
 
@@ -38,4 +39,48 @@ async function login(req, res) {
   }
 }
 
-module.exports = { login };
+function verifyOtp(req, res) {
+  try {
+    const { otp } = req.body || {};
+
+    if (!otp) {
+      return res.status(400).json({ error: 'OTP is required' });
+    }
+
+    const now = new Date().toISOString();
+    const row = db
+      .prepare(
+        'SELECT * FROM otp_verifications WHERE otp_code = ? AND expires_at > ? ORDER BY id DESC LIMIT 1'
+      )
+      .get(String(otp), now);
+
+    if (!row) {
+      return res.status(401).json({ error: 'Invalid or expired OTP' });
+    }
+
+    const user = db.prepare('SELECT id, username FROM users WHERE email = ?').get(row.email);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid or expired OTP' });
+    }
+
+    db.prepare('DELETE FROM otp_verifications WHERE id = ?').run(row.id);
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      return res.status(500).json({ error: 'JWT_SECRET is not configured' });
+    }
+
+    const token = jwt.sign(
+      { userId: user.id, username: user.username },
+      secret,
+      { expiresIn: '8h' }
+    );
+
+    return res.json({ token });
+  } catch (err) {
+    console.error('verifyOtp error:', err.message);
+    return res.status(500).json({ error: 'Failed to verify OTP' });
+  }
+}
+
+module.exports = { login, verifyOtp };
