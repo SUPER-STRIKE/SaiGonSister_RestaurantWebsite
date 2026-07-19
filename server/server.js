@@ -5,6 +5,7 @@ const cors = require('cors');
 require('./config/database');
 const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,6 +20,12 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/menu', menuRoutes);
+
+app.use((req, res) => {
+  res.status(404).json({ error: `Cannot ${req.method} ${req.path}` });
+});
+
+app.use(errorHandler);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);

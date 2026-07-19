@@ -36,6 +36,49 @@ function removeImageFile(imageUrl) {
   }
 }
 
+function getMenuItems(req, res) {
+  try {
+    const { category, tag, specialty } = req.query;
+    const clauses = [];
+    const params = [];
+
+    if (category) {
+      if (!CATEGORIES.has(category)) {
+        return res.status(400).json({
+          error: 'category must be breakfast, lunch, dinner, or drink',
+        });
+      }
+      clauses.push('m.category = ?');
+      params.push(category);
+    }
+
+    if (tag) {
+      clauses.push("m.tags LIKE ?");
+      params.push(`%"${tag}"%`);
+    }
+
+    let sql = 'SELECT m.* FROM menu_items m';
+
+    if (specialty === 'true') {
+      const today = new Date().toISOString().slice(0, 10);
+      sql += ' INNER JOIN daily_specials d ON d.menu_item_id = m.id AND d.special_date = ?';
+      params.unshift(today);
+    }
+
+    if (clauses.length) {
+      sql += ` WHERE ${clauses.join(' AND ')}`;
+    }
+
+    sql += ' ORDER BY m.id ASC';
+
+    const rows = db.prepare(sql).all(...params);
+    return res.json(rows.map(formatItem));
+  } catch (err) {
+    console.error('getMenuItems error:', err.message);
+    return res.status(500).json({ error: 'Failed to fetch menu items' });
+  }
+}
+
 function createMenuItem(req, res) {
   try {
     const { name, description, price, category, menuNumber } = req.body || {};
@@ -154,4 +197,9 @@ function formatItem(row) {
   };
 }
 
-module.exports = { createMenuItem, updateMenuItem, deleteMenuItem };
+module.exports = {
+  getMenuItems,
+  createMenuItem,
+  updateMenuItem,
+  deleteMenuItem,
+};
