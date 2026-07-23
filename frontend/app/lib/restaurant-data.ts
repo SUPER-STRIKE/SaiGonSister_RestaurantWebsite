@@ -1,37 +1,34 @@
-export type MenuCategory =
-  | "breakfast"
-  | "lunch"
-  | "dinner"
-  | "drinks"
-  | "vegan"
-  | "daily-specialty";
+export type MenuCategory = "breakfast" | "lunch" | "dinner" | "drinks";
 
-export type DailySpecial = {
-  id: string;
-  dayLabel: string;
-  name: string;
-  description: string;
-  price: string;
-  isVeganAvailable: boolean;
+export type DishTag = "Signature" | "Chef's choice" | "Vegan";
+
+export type DishOption = {
+  label: string;
+  options: string[];
 };
 
-export type MenuItem = {
+export type DishAddOn = {
+  name: string;
+  price: string;
+};
+
+export type MenuDish = {
   id: string;
-  category: MenuCategory;
   name: string;
   description: string;
   price: string;
-  diet: "vegan" | "classic" | "both";
-  isSignature?: boolean;
-  choices?: {
-    label: string;
-    options: string[];
-  }[];
-  addOns?: {
-    name: string;
-    price: string;
-  }[];
+  tags?: DishTag[];
   allergens?: string[];
+  veganOptionAvailable?: boolean;
+  options?: DishOption[];
+  addOns?: DishAddOn[];
+};
+
+export type MenuSection = {
+  id: string;
+  title: string;
+  note?: string;
+  dishes: MenuDish[];
 };
 
 export type MenuTab = {
@@ -40,13 +37,34 @@ export type MenuTab = {
   note: string;
 };
 
+export type DailySpecial = MenuDish & {
+  image: string;
+  dayLabel: string;
+};
+
+export type HouseFocusLink = {
+  label: string;
+  category: MenuCategory;
+  sectionId: string;
+  image: string;
+};
+
+export type HouseFocus = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  image: string;
+  links: HouseFocusLink[];
+};
+
 export type RestaurantContent = {
   restaurantName: string;
   tagline: string;
   heroCopy: string;
   menuTabs: MenuTab[];
   dailySpecials: DailySpecial[];
-  menuItems: MenuItem[];
+  houseFocus: HouseFocus;
+  menuSections: Record<MenuCategory, MenuSection[]>;
   contact: {
     location: string;
     hours: string;
@@ -59,444 +77,287 @@ export const restaurantContent: RestaurantContent = {
   restaurantName: "SaiGonSister",
   tagline: "Organic Vietnamese dining",
   heroCopy:
-    "A full-service Vietnamese restaurant built around fresh rolls, crispy cha gio, chef-created rice rolls, banh mi, and generous vegan choices.",
+    "A full-service Vietnamese kitchen serving breakfast, rolls, banh mi, pho, rice platters, dinner specials, drinks, and vegan-friendly choices.",
   menuTabs: [
-    { id: "daily-specialty", label: "Daily Specialty", note: "One dish highlighted fresh each day." },
-    { id: "breakfast", label: "Breakfast", note: "Light Vietnamese morning plates and coffee." },
-    { id: "lunch", label: "Lunch", note: "Rolls, banh mi, rice plates, and noodle bowls." },
-    { id: "dinner", label: "Dinner", note: "Full-service Vietnamese dishes for the evening." },
-    { id: "vegan", label: "Vegan", note: "A complete plant-based menu, not an afterthought." },
-    { id: "drinks", label: "Drinks", note: "Vietnamese coffee, teas, sodas, and fresh juice." },
+    { id: "breakfast", label: "Breakfast", note: "Eggs, baguette plates, pho breakfast, and vegan morning dishes." },
+    { id: "lunch", label: "Lunch", note: "Salad rolls, momo, wraps, crispy fry, banh mi, pho, rice, and noodles." },
+    { id: "dinner", label: "Dinner", note: "Dinner specials, rice platters, carpaccio, tuna salad, and beef steak." },
+    { id: "drinks", label: "Drinks", note: "Cocktails, wine, beer, smoothies, tea, juice, soya, and pop." },
   ],
   dailySpecials: [
     {
-      id: "rice-roll-signature",
+      id: "daily-rice-roll",
       dayLabel: "Today",
+      image: "/roll-rice-rolls.png",
       name: "Rice Roll Signature",
       description:
-        "A house creation inspired by sushi, rolled with Vietnamese herbs, pickled vegetables, soft rice, and chef sauce.",
+        "House rice roll with Vietnamese herbs, pickled vegetables, soft rice, and chef sauce.",
       price: "$16",
-      isVeganAvailable: true,
-    },
-  ],
-  menuItems: [
-    {
-      id: "simple-breakfast",
-      category: "breakfast",
-      name: "Simple Breakfast",
-      description: "Three eggs, home fries, and butter garlic toasted baguette.",
-      price: "$8.95",
-      diet: "classic",
-      choices: [
-        {
-          label: "Egg style",
-          options: ["Over easy", "Sunny side up", "Poached"],
-        },
-      ],
-      addOns: [
-        { name: "Bacon", price: "$2" },
-        { name: "Ham", price: "$2" },
-        { name: "Peameal bacon", price: "$4" },
-        { name: "Bratwurst sausage", price: "$4" },
-        { name: "Philly cheese steak", price: "$5" },
-        { name: "Chicken parmesan", price: "$5" },
-      ],
-      allergens: ["Egg", "Gluten", "Dairy"],
+      tags: ["Signature", "Chef's choice"],
+      allergens: ["Soy"],
+      veganOptionAvailable: true,
     },
     {
-      id: "banh-mi-chao-sg",
-      category: "breakfast",
-      name: "Banh Mi Chao SG",
-      description:
-        "Philly cheese steak, pork meatball, pork sausage, ham, sunny eggs, fries, and toasted baguette served in a hot cast iron skillet.",
-      price: "$19.95",
-      diet: "classic",
-      isSignature: true,
-      allergens: ["Egg", "Gluten", "Pork", "Dairy"],
-    },
-    {
-      id: "bo-kho-breakfast",
-      category: "breakfast",
-      name: "Bo Kho Breakfast",
-      description:
-        "Beef in red wine butter sauce with home fries, sunny eggs, and toasted baguette served in a cast iron skillet.",
-      price: "$14.95",
-      diet: "classic",
-      allergens: ["Egg", "Gluten", "Dairy"],
-    },
-    {
-      id: "pho-soup-breakfast",
-      category: "breakfast",
-      name: "Pho Soup Breakfast",
-      description:
-        "Rare beef tenderloin cooked in hot broth with basil, onion, coriander, hoisin, hot sauce, fresh lime, and toasted baguette.",
-      price: "$13.95",
-      diet: "classic",
-      allergens: ["Gluten"],
-    },
-    {
-      id: "avocado-toast",
-      category: "breakfast",
-      name: "Avocado Toast",
-      description:
-        "Avocado, grilled portobello mushroom, tomato, onion, jalapeno, red onion, coriander, lime juice, and vegan creamy sauce.",
-      price: "$11.95",
-      diet: "vegan",
-      addOns: [
-        { name: "Poached egg", price: "$2" },
-        { name: "Peameal bacon", price: "$4" },
-        { name: "Smoked salmon", price: "$6" },
-      ],
-      allergens: ["Gluten", "Egg", "Dairy", "Fish"],
-    },
-    {
-      id: "vegan-western-omelette",
-      category: "breakfast",
-      name: "Vegan Western Omelette",
-      description:
-        "Vegan egg, vegan ham, chickpea puree, onion, bell pepper, tomato, home fries, green salad, and toasted vegan butter baguette.",
-      price: "$13.95",
-      diet: "vegan",
-      isSignature: true,
-      allergens: ["Gluten"],
-    },
-    {
-      id: "hot-plate-poutine",
-      category: "breakfast",
-      name: "Hot Plate Poutine",
-      description:
-        "Vegan sausage, turmeric tofu crumble, jalapeno, tomato, bell pepper, onion, home fries, and vegan creamy sauce.",
-      price: "$12.95",
-      diet: "vegan",
-      addOns: [
-        { name: "Bacon", price: "$2" },
-        { name: "Sausage", price: "$3" },
-        { name: "Ham", price: "$2" },
-        { name: "Egg", price: "$1" },
-      ],
-      allergens: ["Soy", "Egg", "Pork"],
-    },
-    {
-      id: "salad-roll-rice-paper",
-      category: "lunch",
-      name: "Salad Roll",
-      description: "Rice paper rolls with lettuce, mint, basil, sprout, carrot, and mango.",
-      price: "From $3.50",
-      diet: "both",
-      isSignature: true,
-      choices: [
-        {
-          label: "Filling",
-          options: [
-            "Seared tuna and avocado",
-            "Grilled beef",
-            "Shrimp and pork belly",
-            "Shrimp tempura and avocado",
-            "Lemongrass tofu and avocado",
-            "Vegan fried chicken and avocado",
-            "Yam and avocado",
-            "Jicama and peanut",
-          ],
-        },
-      ],
-      allergens: ["Peanut", "Seafood"],
-    },
-    {
-      id: "momo",
-      category: "lunch",
-      name: "Momo",
-      description: "Six dumplings served pan-fried or steamed.",
-      price: "From $6.95",
-      diet: "both",
-      choices: [
-        { label: "Cooking style", options: ["Pan-fried", "Steamed"] },
-        { label: "Filling", options: ["Pork", "Beef, tomato, cheese", "Vegan chickpea and lentil"] },
-      ],
-      allergens: ["Gluten", "Dairy"],
-    },
-    {
-      id: "salad-wraps",
-      category: "lunch",
-      name: "Salad Wraps",
-      description:
-        "Two rice paper wraps with lettuce, mint, basil, onion, mango, carrot, and vermicelli.",
-      price: "From $10.95",
-      diet: "both",
-      isSignature: true,
-      choices: [
-        {
-          label: "Filling",
-          options: [
-            "Five spice pork belly",
-            "Beef on garlic bread",
-            "Shrimp sausage",
-            "Shrimp coco yam tempura",
-            "Seared tuna avocado",
-          ],
-        },
-      ],
-      allergens: ["Seafood", "Gluten"],
-    },
-    {
-      id: "crispy-fry",
-      category: "lunch",
-      name: "Crispy Fry",
-      description: "Crispy sides and share plates from the fryer.",
-      price: "From $3.50",
-      diet: "both",
-      isSignature: true,
-      choices: [
-        {
-          label: "Pick",
-          options: [
-            "Wings with onion rings",
-            "Pork spring roll",
-            "Vegetable spring roll",
-            "Shrimp, fish, calamari tempura",
-            "Vegetable tempura",
-            "Yam fries",
-            "French fries",
-          ],
-        },
-      ],
-      allergens: ["Egg", "Seafood", "Gluten"],
-    },
-    {
-      id: "classic-banh-mi",
-      category: "lunch",
-      name: "Banh Mi Baguette",
-      description:
-        "Tomato, cucumber, pickled daikon and carrot, onion, coriander, and garlic aioli on baguette.",
-      price: "From $9.50",
-      diet: "both",
-      choices: [
-        {
-          label: "Filling",
-          options: [
-            "Caramel chicken",
-            "Spicy lemongrass beef burger",
-            "Five spice pork belly",
-            "Grilled lemongrass pork",
-            "Saigon banh mi",
-            "Chicken parmesan",
-            "Cheese steak",
-            "Fillet O fish tomato sauce",
-          ],
-        },
-      ],
-      addOns: [{ name: "Extra meat", price: "$4" }],
-      allergens: ["Gluten", "Egg", "Dairy"],
-    },
-    {
-      id: "goi-xoai",
-      category: "lunch",
+      id: "daily-goi-xoai",
+      dayLabel: "Today",
+      image: "/roll-salad-rolls.png",
       name: "Goi Xoai Mango Salad",
       description:
         "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, and cracker.",
       price: "$15.95",
-      diet: "both",
+      tags: ["Chef's choice"],
+      allergens: ["Peanut", "Seafood"],
       addOns: [{ name: "Grilled chicken and shrimp", price: "$6" }],
-      allergens: ["Peanut", "Seafood"],
-    },
-    {
-      id: "pho",
-      category: "lunch",
-      name: "Pho",
-      description: "Vietnamese noodle soup with herbs, lime, hoisin, and hot sauce.",
-      price: "From $18.95",
-      diet: "classic",
-      choices: [
-        {
-          label: "Bowl",
-          options: [
-            "Special rib, rare beef, brisket, beef balls, tendon",
-            "Rare beef tenderloin",
-            "Brisket and beef",
-            "Free range chicken",
-            "Grilled chicken",
-          ],
-        },
-      ],
-      allergens: ["Gluten"],
-    },
-    {
-      id: "bun-vermicelli",
-      category: "lunch",
-      name: "Bun Vermicelli Bowl",
-      description:
-        "Grilled chicken, beef, pork, shrimp, spring roll, lettuce, herbs, cucumber, pickled carrot, onion, and peanut.",
-      price: "$19.95",
-      diet: "classic",
-      choices: [{ label: "Noodle style", options: ["Steamed vermicelli", "Stir-fry vermicelli"] }],
-      allergens: ["Peanut", "Seafood"],
-    },
-    {
-      id: "rice-roll-signature-menu",
-      category: "dinner",
-      name: "Signature Rice Roll",
-      description: "House rice roll with Vietnamese herbs, soft rice, crisp vegetables, and chef sauce.",
-      price: "$18",
-      diet: "both",
-      isSignature: true,
-      allergens: ["Soy"],
-    },
-    {
-      id: "house-noodle-bowl",
-      category: "dinner",
-      name: "House Special Noodle Bowl",
-      description:
-        "Shrimp, calamari, fish cake, BBQ pork, shrimp cracker, and broth on the side.",
-      price: "$20.95",
-      diet: "classic",
-      choices: [{ label: "Noodle", options: ["Fresh egg noodle", "Clear noodle"] }],
-      allergens: ["Egg", "Seafood", "Gluten"],
-    },
-    {
-      id: "com-rice-platter",
-      category: "dinner",
-      name: "Com Rice Platter",
-      description: "Rice platters with grilled proteins, salad, tomato fried rice, or ginger rice.",
-      price: "From $19.95",
-      diet: "classic",
-      choices: [
-        {
-          label: "Plate",
-          options: [
-            "Char-grill spicy lemongrass pork chop, grilled chicken, beef, sunny egg, jasmine rice",
-            "Crispy skin chicken thigh, grilled chicken, salad, tomato fried rice",
-            "Hot stone bowl free range chicken with mushroom, bamboo, ginger rice, and slaw",
-          ],
-        },
-      ],
-      allergens: ["Egg"],
-    },
-    {
-      id: "dinner-specials",
-      category: "dinner",
-      name: "Dinner Specials",
-      description: "Chef dinner plates with bright herbs, crackers, and richer sauces.",
-      price: "From $21.95",
-      diet: "classic",
-      choices: [
-        {
-          label: "Special",
-          options: ["Goi bo tai chanh beef carpaccio", "Goi tuna salad", "Bo luc lac beef steak"],
-        },
-      ],
-      allergens: ["Peanut", "Seafood"],
-    },
-    {
-      id: "vegan-garden-roll",
-      category: "vegan",
-      name: "Vegan Garden Roll",
-      description: "Rice paper, tofu, herbs, greens, pickles, vermicelli, and vegan peanut sauce.",
-      price: "$13",
-      diet: "vegan",
-      isSignature: true,
-      allergens: ["Peanut", "Soy"],
-    },
-    {
-      id: "vegan-tofu-banh-mi",
-      category: "vegan",
-      name: "Vegan Tofu Banh Mi",
-      description: "French baguette with tofu, cucumber, herbs, pickled vegetables, and vegan spread.",
-      price: "$14",
-      diet: "vegan",
-      allergens: ["Gluten", "Soy"],
-    },
-    {
-      id: "vegan-noodle-salad",
-      category: "vegan",
-      name: "Vegan Noodle Salad",
-      description: "Vermicelli, herbs, greens, pickles, tofu, roasted peanuts, and bright dressing.",
-      price: "$16",
-      diet: "vegan",
-      allergens: ["Peanut", "Soy"],
-    },
-    {
-      id: "vietnamese-iced-coffee",
-      category: "drinks",
-      name: "Vietnamese Iced Coffee",
-      description: "Bold slow-drip coffee served over ice.",
-      price: "$6",
-      diet: "classic",
-      allergens: ["Dairy"],
-    },
-    {
-      id: "fresh-lime-soda",
-      category: "drinks",
-      name: "Fresh Lime Soda",
-      description: "Lime, soda, cane sugar, and a clean bright finish.",
-      price: "$6",
-      diet: "vegan",
-    },
-    {
-      id: "lotus-tea",
-      category: "drinks",
-      name: "Lotus Tea",
-      description: "Fragrant tea served hot or iced.",
-      price: "$5",
-      diet: "vegan",
-    },
-    {
-      id: "cocktails",
-      category: "drinks",
-      name: "Cocktails",
-      description:
-        "Aperitif, Aperol spritz, lychee concubine, mango bellini, mezcalita, mojito, margarita, and more.",
-      price: "From $11",
-      diet: "classic",
-      choices: [
-        {
-          label: "Popular picks",
-          options: ["Lychee Concubine", "Mango Bellini", "Spicy Mango Mezcalita", "Mojito"],
-        },
-      ],
-    },
-    {
-      id: "wine-beer",
-      category: "drinks",
-      name: "Wine and Beer",
-      description:
-        "Red wine, white wine, and Asian beer selections including Saigon 33, Sapporo, Tiger, Singha, and Cass.",
-      price: "Ask staff",
-      diet: "vegan",
-      choices: [
-        { label: "Wine", options: ["Cabernet Sauvignon", "Merlot", "Pinot Noir", "Riesling"] },
-        { label: "Beer", options: ["Saigon 33", "Sapporo", "Tiger", "Singha", "Cass"] },
-      ],
-    },
-    {
-      id: "smoothies-cold-drinks",
-      category: "drinks",
-      name: "Smoothies and Cold Drinks",
-      description:
-        "Seasonal fruit smoothies, Thai tea, matcha latte, lychee juice, salted lime soda, calamansi soda, and tropical colada.",
-      price: "Ask staff",
-      diet: "both",
-      choices: [
-        {
-          label: "Smoothie",
-          options: ["Mango", "Strawberry", "Avocado", "Pineapple", "Jackfruit"],
-        },
-      ],
-      allergens: ["Dairy"],
-    },
-    {
-      id: "tea-juice-pop",
-      category: "drinks",
-      name: "Tea, Juice, Pop",
-      description:
-        "Hot tea, apple juice, orange juice, grapefruit juice, iced tea, homemade soya, and bottled pop.",
-      price: "From $2",
-      diet: "vegan",
-      choices: [
-        { label: "Hot tea", options: ["Ginger honey jasmine green tea", "Black oolong tea"] },
-        { label: "Pop", options: ["Coke", "Coke Zero", "Diet Coke", "Ginger Ale", "Root Beer"] },
-      ],
-      allergens: ["Soy"],
+      veganOptionAvailable: false,
     },
   ],
+  houseFocus: {
+    eyebrow: "House focus",
+    title: "Rolls stay at the center.",
+    description:
+      "Fresh rice paper, crisp herbs, crispy cha gio, chef sauces, vegan choices, and the house rice roll all shape the menu before anything else.",
+    image: "/roll-cha-gio.png",
+    links: [
+      { label: "Salad Rolls", category: "lunch", sectionId: "salad-rolls", image: "/roll-salad-rolls.png" },
+      { label: "Momo", category: "lunch", sectionId: "momo", image: "/vietnamese-rolls-hero.png" },
+      { label: "Crispy Fry", category: "lunch", sectionId: "crispy-fry", image: "/roll-cha-gio.png" },
+      { label: "Banh Mi", category: "lunch", sectionId: "banh-mi-baguettes", image: "/roll-rice-rolls.png" },
+    ],
+  },
+  menuSections: {
+    breakfast: [
+      {
+        id: "breakfast-plates",
+        title: "Breakfast Plates",
+        dishes: [
+          {
+            id: "simple-breakfast",
+            name: "Simple Breakfast",
+            description: "Three eggs of your style, home fries, and butter garlic toasted baguette.",
+            price: "$8.95",
+            options: [{ label: "Egg style", options: ["Over easy", "Sunny side up", "Poached"] }],
+            addOns: [
+              { name: "Bacon", price: "$2" },
+              { name: "Peameal bacon", price: "$4" },
+              { name: "Bratwurst sausage", price: "$4" },
+              { name: "Ham", price: "$2" },
+              { name: "Philly cheese steak", price: "$5" },
+              { name: "Chicken parmesan", price: "$5" },
+            ],
+            allergens: ["Egg", "Gluten", "Dairy"],
+          },
+          {
+            id: "banh-mi-chao-sg",
+            name: "Banh Mi Chao SG - Big Breakfast",
+            description:
+              "Philly cheese steak, pork meatball, pork sausage, ham, sunny eggs, fries, and toasted baguette.",
+            price: "$19.95",
+            tags: ["Signature"],
+            allergens: ["Egg", "Gluten", "Pork", "Dairy"],
+          },
+          {
+            id: "bo-kho-beef-bourguignon",
+            name: "Bo Kho - Beef Bourguignon",
+            description: "Beef in red wine butter sauce, home fries, sunny eggs, and toasted baguette.",
+            price: "$14.95",
+            allergens: ["Egg", "Gluten", "Dairy"],
+          },
+          {
+            id: "pho-soup-breakfast",
+            name: "Pho Soup Breakfast",
+            description:
+              "Rare beef tenderloin cooked in hot broth with basil, onion, coriander, hoisin, hot sauce, fresh lime, and toasted baguette.",
+            price: "$13.95",
+            allergens: ["Gluten"],
+          },
+          {
+            id: "avocado-toast",
+            name: "Avocado Toast",
+            description:
+              "Avocado, grilled portobello mushroom, tomato, onion, jalapeno, red onion, coriander, lime juice, and vegan creamy sauce.",
+            price: "$11.95",
+            tags: ["Vegan"],
+            veganOptionAvailable: true,
+            addOns: [
+              { name: "Poached egg", price: "$2" },
+              { name: "Peameal bacon", price: "$4" },
+              { name: "Smoked salmon", price: "$6" },
+            ],
+            allergens: ["Gluten"],
+          },
+          {
+            id: "vegan-western-omelette",
+            name: "Vegan Western Omelette",
+            description:
+              "Vegan egg, vegan ham, chickpea puree, onion, bell pepper, tomato, home fries, green salad, and toasted vegan butter baguette.",
+            price: "$13.95",
+            tags: ["Vegan"],
+            veganOptionAvailable: true,
+            allergens: ["Gluten"],
+          },
+          {
+            id: "hot-plate-poutine",
+            name: "Hot Plate Poutine",
+            description:
+              "Vegan sausage, turmeric tofu crumble, jalapeno, tomato, bell pepper, onion, home fries, and vegan creamy sauce.",
+            price: "$12.95",
+            tags: ["Vegan"],
+            veganOptionAvailable: true,
+            addOns: [
+              { name: "Bacon", price: "$2" },
+              { name: "Sausage", price: "$3" },
+              { name: "Ham", price: "$2" },
+              { name: "Egg", price: "$1" },
+            ],
+            allergens: ["Soy"],
+          },
+        ],
+      },
+    ],
+    lunch: [
+      {
+        id: "salad-rolls",
+        title: "Salad Rolls",
+        note: "Lettuce, mint, basil, sprout, carrot, and mango.",
+        dishes: [
+          { id: "seared-tuna-avo", name: "Seared Tuna-Avo", description: "Rice paper salad roll.", price: "$5.95", allergens: ["Fish"] },
+          { id: "grilled-beef-roll", name: "Grilled Beef", description: "Rice paper salad roll.", price: "$3.95" },
+          { id: "shrimp-pork-belly-roll", name: "Shrimp & Pork Belly", description: "Rice paper salad roll.", price: "$4.50", allergens: ["Seafood", "Pork"] },
+          { id: "shrimp-tempura-avo", name: "Shrimp Tempura-Avo", description: "Rice paper salad roll.", price: "$4.50", allergens: ["Seafood", "Gluten"] },
+          { id: "lemongrass-tofu-avo", name: "Lemongrass Tofu-Avo", description: "Rice paper salad roll.", price: "$3.50", tags: ["Vegan"], veganOptionAvailable: true, allergens: ["Soy"] },
+          { id: "vegan-fried-chicken-avo", name: "Vegan Fried Chicken-Avo", description: "Rice paper salad roll.", price: "$3.95", tags: ["Vegan"], veganOptionAvailable: true },
+          { id: "yam-avocado", name: "Yam - Avocado", description: "Rice paper salad roll.", price: "$3.75", tags: ["Vegan"], veganOptionAvailable: true },
+          { id: "jicama-peanut", name: "Jicama-Peanut", description: "Rice paper salad roll.", price: "$3.75", tags: ["Vegan"], veganOptionAvailable: true, allergens: ["Peanut"] },
+        ],
+      },
+      {
+        id: "momo",
+        title: "Momo",
+        note: "Six pieces, pan-fried or steamed.",
+        dishes: [
+          { id: "momo-pork", name: "Pork", description: "Choice of pan-fried or steamed momo.", price: "$6.95", options: [{ label: "Cooking style", options: ["Pan-fried", "Steamed"] }], allergens: ["Gluten", "Pork"] },
+          { id: "momo-beef", name: "Beef, Tomato, Cheese", description: "Choice of pan-fried or steamed momo.", price: "$7.95", options: [{ label: "Cooking style", options: ["Pan-fried", "Steamed"] }], allergens: ["Gluten", "Dairy"] },
+          { id: "momo-vegan", name: "Vegan Chickpea Lentil", description: "Choice of pan-fried or steamed momo.", price: "$6.95", tags: ["Vegan"], veganOptionAvailable: true, options: [{ label: "Cooking style", options: ["Pan-fried", "Steamed"] }], allergens: ["Gluten"] },
+        ],
+      },
+      {
+        id: "salad-wraps",
+        title: "Salad Wraps",
+        note: "Two rice paper wraps with lettuce, mint, basil, onion, mango, carrot, and vermicelli.",
+        dishes: [
+          { id: "five-spice-pork-wrap", name: "Five Spices Pork Belly", description: "Two salad wraps.", price: "$10.95", allergens: ["Pork"] },
+          { id: "beef-garlic-bread-wrap", name: "Beef on Garlic Bread", description: "Two salad wraps.", price: "$10.95", allergens: ["Gluten"] },
+          { id: "shrimp-sausage-wrap", name: "Shrimp Sausage", description: "Two salad wraps.", price: "$12.50", allergens: ["Seafood"] },
+          { id: "shrimp-coco-yam-wrap", name: "Shrimp-Coco Yam Tempura", description: "Two salad wraps.", price: "$10.95", allergens: ["Seafood", "Gluten"] },
+          { id: "seared-tuna-avocado-wrap", name: "Seared Tuna-Avocado", description: "Two salad wraps.", price: "$13.95", allergens: ["Fish"] },
+        ],
+      },
+      {
+        id: "crispy-fry",
+        title: "Crispy Fry",
+        dishes: [
+          { id: "wings-onion-ring", name: "Wings, Onion Ring", description: "Six wings with spicy egg yolk-calamansi sauce.", price: "$15.95", allergens: ["Egg"] },
+          { id: "pork-spring-roll", name: "Pork Spring Roll", description: "Crispy pork spring roll.", price: "$3.50", allergens: ["Pork", "Gluten"] },
+          { id: "vegetable-spring-roll", name: "Vegetable Spring Roll", description: "Crispy vegetable spring roll.", price: "$3.50", tags: ["Vegan"], veganOptionAvailable: true, allergens: ["Gluten"] },
+          { id: "seafood-tempura", name: "Shrimp, Fish, Calamari Tempura", description: "Crispy seafood tempura.", price: "$14.95", allergens: ["Seafood", "Gluten"] },
+          { id: "vegetable-tempura", name: "Vegetable Tempura", description: "Crispy vegetable tempura.", price: "$8.50", tags: ["Vegan"], veganOptionAvailable: true, allergens: ["Gluten"] },
+          { id: "yam-fries", name: "Yam Fries", description: "Crispy yam fries.", price: "$4.50", tags: ["Vegan"], veganOptionAvailable: true },
+          { id: "french-fries", name: "French Fries", description: "Classic french fries.", price: "$3.50", tags: ["Vegan"], veganOptionAvailable: true },
+        ],
+      },
+      {
+        id: "banh-mi-baguettes",
+        title: "Banh Mi - Baguettes",
+        note: "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli.",
+        dishes: [
+          { id: "caramel-chicken-banh-mi", name: "Caramel Chicken", description: "Vietnamese baguette.", price: "$9.95", allergens: ["Gluten"] },
+          { id: "lemongrass-beef-burger-banh-mi", name: "Spicy Lemongrass Beef Burger", description: "Vietnamese baguette.", price: "$9.95", allergens: ["Gluten"] },
+          { id: "five-spice-pork-banh-mi", name: "Five Spices Pork Belly", description: "Vietnamese baguette.", price: "$9.50", allergens: ["Gluten", "Pork"] },
+          { id: "grilled-lemongrass-pork-banh-mi", name: "Grilled Lemongrass Pork", description: "Vietnamese baguette.", price: "$9.50", allergens: ["Gluten", "Pork"] },
+          { id: "saigon-bm", name: "Saigon BM", description: "Pate, pork belly, ham, sausage, and shredded chicken.", price: "$9.95", tags: ["Signature"], allergens: ["Gluten", "Pork"] },
+          { id: "chicken-parmesan-banh-mi", name: "Chicken Parmesan", description: "Vietnamese baguette.", price: "$11.95", allergens: ["Gluten", "Dairy"] },
+          { id: "cheese-steak-banh-mi", name: "Cheese Steak", description: "Vietnamese baguette.", price: "$12.95", allergens: ["Gluten", "Dairy"] },
+          { id: "fillet-o-fish-banh-mi", name: "Fillet O Fish Tomato Sauce", description: "Vietnamese baguette.", price: "$10.95", allergens: ["Gluten", "Fish"] },
+        ],
+      },
+      {
+        id: "pho-noodles-rice",
+        title: "Pho, Noodles, Rice",
+        dishes: [
+          { id: "goi-xoai", name: "Goi Xoai - Mango Salad", description: "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, and cracker.", price: "$15.95", addOns: [{ name: "Grilled chicken and shrimp", price: "$6" }], allergens: ["Peanut", "Seafood"] },
+          { id: "pho-special", name: "Pho Special", description: "Rib, rare beef, brisket, beef balls, and tendon.", price: "$23.95" },
+          { id: "pho-rare-beef", name: "Rare Beef Tenderloin Pho", description: "Rare beef tenderloin noodle soup.", price: "$22.95" },
+          { id: "pho-brisket-beef", name: "Brisket and Beef Pho", description: "Brisket and beef noodle soup.", price: "$19.95" },
+          { id: "pho-free-range-chicken", name: "Free Range Chicken Pho", description: "Free range chicken noodle soup.", price: "$19.95" },
+          { id: "pho-grilled-chicken", name: "Grilled Chicken Pho", description: "Grilled chicken noodle soup.", price: "$18.95" },
+          { id: "bun-vermicelli", name: "Bun - Vermicelli Bowl", description: "Grilled chicken, beef, pork, shrimp, spring roll, lettuce, basil, mint, cucumber, pickled carrot, onion, and peanut.", price: "$19.95", options: [{ label: "Vermicelli", options: ["Steamed", "Stir-fry"] }], allergens: ["Peanut", "Seafood"] },
+          { id: "house-special-noodle-bowl", name: "House Special Noodle Bowl", description: "Shrimp, calamari, fish cake, BBQ pork, shrimp cracker, with broth on the side.", price: "$20.95", options: [{ label: "Noodle", options: ["Fresh egg noodle", "Clear noodle"] }], allergens: ["Seafood", "Egg"] },
+        ],
+      },
+    ],
+    dinner: [
+      {
+        id: "rice-platter",
+        title: "Com - Rice Platter",
+        dishes: [
+          { id: "lemongrass-pork-rice", name: "Char-Grill Spicy Lemongrass Pork Chop", description: "With grilled chicken, beef, sunny egg, and steamed jasmine rice.", price: "$19.95", allergens: ["Egg", "Pork"] },
+          { id: "crispy-skin-chicken-rice", name: "Crispy Skin Chicken Thigh", description: "With grilled chicken, salad, and tomato fried rice.", price: "$19.95" },
+          { id: "hot-stone-chicken", name: "Hot Stone Bowl Free Range Chicken", description: "Served with mushroom, bamboo, ginger rice, and fresh slaw on the side.", price: "$21.95" },
+        ],
+      },
+      {
+        id: "dinner-specials",
+        title: "Dinner Special",
+        dishes: [
+          { id: "goi-bo-tai-chanh", name: "Goi Bo Tai Chanh - Beef Carpaccio", description: "AAA rib eye rare steak slices, green papaya, onion, carrot, pepper, basil, peanut, and cracker.", price: "$21.95", tags: ["Chef's choice"], allergens: ["Peanut"] },
+          { id: "goi-tuna", name: "Goi Tuna - Tuna Salad", description: "Seared tuna slices with variety of herbs, fried onion, peanut, pepper, and cracker.", price: "$23.95", allergens: ["Fish", "Peanut"] },
+          { id: "bo-luc-lac", name: "Bo Luc Lac - Beef Steak", description: "AAA medium rare rib eye steak cubes, onion, bell pepper, mushroom in red wine butter sauce, fries, sunny egg, salad, and toasted baguette.", price: "$26.95", tags: ["Signature"], allergens: ["Egg", "Gluten", "Dairy"] },
+        ],
+      },
+    ],
+    drinks: [
+      {
+        id: "cocktails",
+        title: "Cocktails",
+        dishes: [
+          { id: "aperitif", name: "Aperitif", description: "Bourbon, Aperol, Amaro Nonino, and lemon juice.", price: "$12" },
+          { id: "aperol-spritz", name: "Aperol Spritz", description: "Prosecco, Aperol, and soda.", price: "$11" },
+          { id: "lychee-concubine", name: "Lychee Concubine", description: "Soho lychee, sake, lychee juice, lychee pearls, and whole lychee fruit.", price: "$12" },
+          { id: "mango-bellini", name: "Mango Bellini", description: "Prosecco, mango smoothie, grenadine, and raspberry.", price: "$11" },
+          { id: "spicy-mango-mezcalita", name: "Spicy Mango Mezcalita", description: "Mezcal, Cointreau, mango smoothie, fresh lime, and chili salt rim.", price: "$12" },
+          { id: "passion-memmo", name: "Passion Memmo", description: "Vodka, sparkling wine, passion juice, and lime.", price: "$12" },
+          { id: "sg-cool-day", name: "SG Cool Day", description: "Vodka, blue curacao, prosecco, calamansi juice, and lychee pearls.", price: "$13" },
+          { id: "hn-b52", name: "HN B-52", description: "Grand Marnier, Kahlua, Irish cream, coffee infused clove-cardamom, and condensed milk.", price: "$14" },
+          { id: "white-night", name: "White Night", description: "Irish whiskey, coffee liquor, black spices infused brewed coffee, and sugar syrup.", price: "$11" },
+          { id: "pina-colada", name: "Pina Colada", description: "White rum, cream of coco, pineapple juice, and sugar syrup blended with ice.", price: "$13" },
+          { id: "margarita", name: "Margarita", description: "Blanco tequila, Cointreau, lime juice, and spicy salted lime rim.", price: "$14" },
+          { id: "mojito", name: "Mojito", description: "White rum, sugar syrup, soda lime, and mint.", price: "$12" },
+          { id: "cuba-libre", name: "Cuba Libre", description: "Dark rum, cola, and lime juice.", price: "$11" },
+        ],
+      },
+      {
+        id: "wine-beer",
+        title: "Wine and Beer",
+        dishes: [
+          { id: "red-wine", name: "Red Wine", description: "Cabernet Sauvignon, Merlot, Pinot Noir, Shiraz, and Malbec.", price: "Ask staff" },
+          { id: "white-wine", name: "White Wine", description: "Sauvignon Blanc, Pinot Grigio, Chardonnay, and Riesling.", price: "Ask staff" },
+          { id: "beer", name: "Beers", description: "Saigon 33, Sapporo, Tiger, Singha, and Cass.", price: "Ask staff" },
+        ],
+      },
+      {
+        id: "non-alcohol",
+        title: "Non Alcohol",
+        dishes: [
+          { id: "smoothy", name: "Smoothy", description: "Fresh fruit in season: mango, strawberry, avocado, pineapple, or jackfruit.", price: "Ask staff" },
+          { id: "iced-cold-drinks", name: "Iced Cold Drinks", description: "Thai tea, matcha green latte, lychee juice, passion, salted lime soda, strawberry soda, calamansi soda, strawberry cream soda, or tropical colada.", price: "Ask staff", allergens: ["Dairy"] },
+          { id: "hot-tea", name: "Hot Tea", description: "Ginger honey jasmine green tea or black oolong tea.", price: "$3" },
+          { id: "juices", name: "Juices", description: "Apple, orange, grapefruit, or iced tea.", price: "$3" },
+          { id: "homemade-soya", name: "Home Made Soya", description: "Hot or iced.", price: "$2", allergens: ["Soy"] },
+          { id: "pop", name: "Pop", description: "Coke, Coke Zero, Diet Coke, Ginger Ale, or Root Beer.", price: "$2" },
+        ],
+      },
+    ],
+  },
   contact: {
     location: "Toronto, Ontario",
     hours: "Mon-Sun, 10:30 AM - 9:30 PM",

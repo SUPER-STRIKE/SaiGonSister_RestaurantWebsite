@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ScrollTopButton } from "./components/ScrollTopButton";
 import { SiteFooter } from "./components/SiteFooter";
 import "./globals.css";
 
@@ -6,7 +7,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://saigonsister.ca"),
   title: "SaiGonSister Vietnamese Kitchen",
   description:
-    "Organic Vietnamese restaurant with daily specialties, a roll-focused menu, vegan options, chef story, and contact details.",
+    "Organic Vietnamese restaurant with daily specialties, breakfast, lunch, dinner, drinks, vegan options, chef story, and contact details.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -27,6 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <ScrollTopButton />
         <SiteFooter />
       </body>
     </html>

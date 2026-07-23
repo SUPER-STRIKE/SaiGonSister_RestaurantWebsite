@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { LoginForm } from "../components/LoginForm";
 
@@ -7,7 +6,6 @@ export default function LoginPage() {
     <main className="login-page">
       <section className="login-shell" aria-labelledby="login-title">
         <Link className="login-brand" href="/">
-          <Image alt="" height={58} src="/logo.svg" width={58} />
           <span>
             <strong>SaiGonSister</strong>
             <small>Staff access</small>

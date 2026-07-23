@@ -3,7 +3,6 @@ import { restaurantContent } from "./lib/restaurant-data";
 
 export default function Home() {
   const { tagline, heroCopy, dailySpecials } = restaurantContent;
-  const today = dailySpecials[0];
 
   return (
     <main>
@@ -14,11 +13,6 @@ export default function Home() {
           <p className="eyebrow">{tagline}</p>
           <h1>Vietnamese rolls, daily specialties, and a full vegan menu.</h1>
           <p className="hero-copy">{heroCopy}</p>
-          <div className="hero-highlights" aria-label="Restaurant highlights">
-            <span>Fresh rolls daily</span>
-            <span>Full vegan menu</span>
-            <span>Toronto chef-owned</span>
-          </div>
           <div className="hero-actions">
             <a className="button primary" href="#daily">Today&apos;s specialty</a>
             <a className="button secondary" href="/menu">Explore menu</a>
@@ -34,24 +28,34 @@ export default function Home() {
 
       <section className="daily-feature" id="daily" aria-labelledby="daily-title">
         <div className="section-heading compact">
-          <p className="eyebrow">One special dish each day</p>
+          <p className="eyebrow">Fresh from the kitchen</p>
           <h2 id="daily-title">Today&apos;s kitchen highlight</h2>
-          <p>
-            The daily specialty is meant to feel like the thing regulars ask about first:
-            fresh, limited, and tied to what the kitchen wants to show off.
-          </p>
+          <p>Limited dishes prepared fresh for the day.</p>
         </div>
-        <div className="daily-spotlight">
-          <article>
-            <span className="pill">{today.dayLabel}</span>
-            <h3>{today.name}</h3>
-            <p>{today.description}</p>
-            <div className="price-line">
-              <strong>{today.price}</strong>
-              <span>{today.isVeganAvailable ? "Vegan option available" : "Chef special"}</span>
-            </div>
-          </article>
-          <div className="decorative-photo" aria-hidden="true" />
+        <div className="daily-showcase">
+          {dailySpecials.map((dish, index) => (
+            <article className="daily-dish" key={dish.id} style={{ animationDelay: `${index * 120}ms` }}>
+              <div className="daily-dish-image" style={{ backgroundImage: `url(${dish.image})` }} aria-hidden="true" />
+              <div className="daily-dish-copy">
+                <h3>{dish.name}</h3>
+                <p>{dish.description}</p>
+                <div className="dish-tags" aria-label={`${dish.name} tags`}>
+                  {dish.tags?.map((tag) => (
+                    <span className={tag === "Signature" ? "tag-signature" : tag === "Vegan" ? "tag-vegan" : "tag-choice"} key={tag}>
+                      {tag}
+                    </span>
+                  ))}
+                  {dish.veganOptionAvailable ? <span className="tag-vegan">Vegan option available</span> : null}
+                </div>
+                {dish.allergens?.length ? (
+                  <p className="allergen-note">Contains or may contain {dish.allergens.join(", ")}.</p>
+                ) : null}
+                <div className="price-line">
+                  <strong>{dish.price}</strong>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
 
@@ -74,25 +78,26 @@ export default function Home() {
       </section>
 
       <section className="chef-section" id="chef" aria-labelledby="chef-title">
-        <div className="chef-image" aria-hidden="true">
-          <div className="chef-frame">
-            <span>15+ years</span>
-            <strong>Vietnamese cuisine</strong>
-          </div>
-        </div>
         <div className="chef-copy">
           <p className="eyebrow">Chef owner</p>
-          <h2 id="chef-title">A proven Toronto Vietnamese restaurant creator.</h2>
+          <h2 id="chef-title">Built on proven Vietnamese restaurant experience.</h2>
           <p>
-            The chef-owner has built a successful series of Vietnamese restaurants in downtown
-            Toronto, including Saigon Sister at 774 Yonge Street, Hue Kitchen, and the fast-food
-            Ginger concept. The menu reflects deep experience with authentic Vietnamese cuisine
-            and the confidence that comes from restaurants guests returned to for years.
+            SaiGonSister is led by a chef-owner with a strong record of creating successful
+            Vietnamese restaurants in downtown Toronto. That background brings discipline to the
+            kitchen, confidence to the menu, and a clear understanding of the flavours guests
+            return for.
           </p>
           <div className="proof-list">
             <span>Saigon Sister</span>
             <span>Hue Kitchen</span>
-            <span>Ginger fast food</span>
+            <span>Ginger Fast Food</span>
+          </div>
+        </div>
+        <div className="chef-proof-panel" aria-label="Toronto restaurant experience">
+          <div className="chef-proof-image" aria-hidden="true" />
+          <div>
+            <strong>From Toronto kitchens</strong>
+            <p>Built from years of Vietnamese cooking, steady service, and neighbourhood regulars.</p>
           </div>
         </div>
       </section>
