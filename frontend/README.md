@@ -14,3 +14,7 @@ Open `http://localhost:3000`.
 ```powershell
 npm run build
 ```
+
+## Testing Acc
+Username: giabophannguyen@gmail.comn
+Password: 1

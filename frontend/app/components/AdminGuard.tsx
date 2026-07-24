@@ -1,22 +1,32 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-const staffSessionKey = "saigonSisterStaffSession";
+import { readStaffSession } from "../lib/staff-auth";
 
 export function AdminGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const isBrowser = typeof window !== "undefined";
-  const isAllowed = isBrowser && window.localStorage.getItem(staffSessionKey) === "active";
+  const [isAllowed, setIsAllowed] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    if (isBrowser && !isAllowed) {
-      router.replace("/#home");
-    }
-  }, [isAllowed, isBrowser, router]);
+    const timer = window.setTimeout(() => {
+      const session = readStaffSession();
 
-  if (!isAllowed) {
+      if (!session) {
+        router.replace("/login");
+        setIsChecking(false);
+        return;
+      }
+
+      setIsAllowed(true);
+      setIsChecking(false);
+    }, 0);
+
+    return () => window.clearTimeout(timer);
+  }, [router]);
+
+  if (isChecking || !isAllowed) {
     return (
       <main className="admin-loading">
         <p>Checking staff access...</p>
@@ -26,5 +36,3 @@ export function AdminGuard({ children }: { children: React.ReactNode }) {
 
   return children;
 }
-
-export { staffSessionKey };

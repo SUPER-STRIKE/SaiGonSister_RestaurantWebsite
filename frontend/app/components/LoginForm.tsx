@@ -3,47 +3,9 @@
 import { useState } from "react";
 import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { staffSessionKey } from "./AdminGuard";
-
-const staffEmailKey = "saigonSisterStaffEmails";
-const staffPasswordKey = "saigonSisterStaffPasswords";
+import { isStaffEmail, isStaffPassword, saveStaffSession } from "../lib/staff-auth";
 
 type LoginMode = "login" | "forgot" | "verify" | "reset" | "done";
-
-function readStaffEmails() {
-  try {
-    const savedEmails = window.localStorage.getItem(staffEmailKey);
-    return savedEmails ? (JSON.parse(savedEmails) as string[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveStaffEmail(email: string) {
-  const emails = readStaffEmails();
-  if (!emails.includes(email)) {
-    window.localStorage.setItem(staffEmailKey, JSON.stringify([...emails, email]));
-  }
-}
-
-function readStaffPasswords() {
-  try {
-    const savedPasswords = window.localStorage.getItem(staffPasswordKey);
-    return savedPasswords ? (JSON.parse(savedPasswords) as Record<string, string>) : {};
-  } catch {
-    return {};
-  }
-}
-
-function saveStaffPassword(email: string, password: string) {
-  window.localStorage.setItem(
-    staffPasswordKey,
-    JSON.stringify({
-      ...readStaffPasswords(),
-      [email]: password,
-    }),
-  );
-}
 
 export function LoginForm() {
   const router = useRouter();
@@ -60,16 +22,13 @@ export function LoginForm() {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const normalizedEmail = email.trim().toLowerCase();
-    const savedPassword = readStaffPasswords()[normalizedEmail];
 
-    if (savedPassword && savedPassword !== password) {
+    if (!isStaffEmail(normalizedEmail) || !isStaffPassword(password)) {
       setMessage("Email or password is not correct.");
       return;
     }
 
-    saveStaffEmail(normalizedEmail);
-    saveStaffPassword(normalizedEmail, password);
-    window.localStorage.setItem(staffSessionKey, "active");
+    saveStaffSession();
     router.push("/admin");
   }
 
@@ -77,7 +36,7 @@ export function LoginForm() {
     event.preventDefault();
     const normalizedEmail = recoveryEmail.trim().toLowerCase();
 
-    if (!readStaffEmails().includes(normalizedEmail)) {
+    if (!isStaffEmail(normalizedEmail)) {
       setMessage("No staff account found for that email.");
       return;
     }
@@ -115,7 +74,6 @@ export function LoginForm() {
       return;
     }
 
-    saveStaffPassword(recoveryEmail, newPassword);
     setPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -234,7 +192,6 @@ export function LoginForm() {
       <label>
         Password
         <input
-          minLength={8}
           onChange={(event) => setPassword(event.target.value)}
           required
           type="password"

@@ -537,53 +537,6 @@ h3 {
     url("/vietnamese-rolls-hero.png") 58% center / cover;
 }
 
-.story-strip {
-  background:
-    linear-gradient(90deg, rgba(215, 173, 69, 0.08), rgba(8, 38, 31, 0)),
-    var(--forest);
-  color: var(--paper);
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.story-card {
-  min-height: 220px;
-  padding: 34px;
-  border: 1px solid rgba(255, 250, 240, 0.13);
-  background: transparent;
-  animation: softRise 560ms ease both;
-  transition: background 180ms ease;
-}
-
-.story-card:nth-child(2) {
-  animation-delay: 100ms;
-}
-
-.story-card:nth-child(3) {
-  animation-delay: 200ms;
-}
-
-.story-card:hover {
-  background: rgba(255, 250, 240, 0.045);
-}
-
-.story-card span {
-  color: var(--gold);
-  font-weight: 900;
-}
-
-.story-card strong {
-  display: block;
-  margin: 18px 0 10px;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.55rem;
-}
-
-.story-card p {
-  color: rgba(255, 250, 240, 0.72);
-  line-height: 1.65;
-}
-
 .service-tabs {
   gap: 8px;
   flex-wrap: wrap;
@@ -1212,6 +1165,14 @@ h3 {
   line-height: 1.7;
 }
 
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .admin-view-site,
 .admin-card button,
 .admin-form button {
@@ -1338,6 +1299,14 @@ h3 {
   padding: 10px 12px;
   font: inherit;
   resize: vertical;
+}
+
+.admin-form small {
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 .check-row {
@@ -1597,6 +1566,19 @@ h3 {
 .footer-brand strong {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.8rem;
+}
+
+.footer-hours {
+  gap: 4px !important;
+}
+
+.footer-hours p {
+  display: flex;
+  gap: 8px;
+}
+
+.footer-hours strong {
+  min-width: 34px;
 }
 
 .site-footer a {
@@ -1862,13 +1844,15 @@ h3 {
 }
 
 .admin-daily-list,
-.admin-dish-editor {
+.admin-dish-editor,
+.header-editor-list {
   display: grid;
   gap: 14px;
 }
 
 .admin-daily-item,
-.admin-dish-line {
+.admin-dish-line,
+.header-editor-card {
   border: 1px solid rgba(8, 38, 31, 0.14);
   background:
     linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 250, 240, 0.72));
@@ -2256,6 +2240,33 @@ h3 {
   transform: translateY(-3px);
 }
 
+.admin-image-preview {
+  width: min(240px, 100%);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(215, 173, 69, 0.42);
+  box-shadow: 0 14px 28px rgba(8, 38, 31, 0.13);
+}
+
+.wide-preview {
+  width: min(420px, 100%);
+  aspect-ratio: 16 / 9;
+}
+
+.small-preview {
+  width: 140px;
+}
+
+.dish-editor-picker {
+  margin-bottom: 16px;
+}
+
+.hours-editor-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
 .account-verify-box {
   border: 1px solid rgba(215, 173, 69, 0.34);
   background: rgba(255, 250, 240, 0.72);
@@ -2499,11 +2510,13 @@ h3 {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
   gap: 14px;
+  align-items: start;
 }
 
 .dish-control-panel {
   display: grid;
   gap: 12px;
+  align-content: start;
   border: 1px solid rgba(8, 38, 31, 0.13);
   background: rgba(255, 255, 255, 0.58);
   padding: 14px;
@@ -2521,6 +2534,8 @@ h3 {
 .dish-control-heading {
   grid-template-columns: minmax(0, 1fr) 42px;
   align-items: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(8, 38, 31, 0.1);
 }
 
 .dish-control-heading strong {
@@ -2530,7 +2545,7 @@ h3 {
 }
 
 .dish-control-heading button,
-.option-info-row button,
+.option-info-list-heading button,
 .option-headline-row button,
 .addon-editor-row button {
   min-width: 42px;
@@ -2540,13 +2555,13 @@ h3 {
 }
 
 .dish-control-heading button,
-.option-info-row button:first-of-type {
+.option-info-list-heading button {
   background: var(--forest);
   color: var(--gold);
 }
 
 .option-headline-row button,
-.option-info-row button:last-of-type,
+.option-info-row button,
 .addon-editor-row button {
   background: rgba(255, 250, 240, 0.9);
   color: var(--forest);
@@ -2569,17 +2584,40 @@ h3 {
 
 .option-info-list {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   padding-left: 12px;
   border-left: 3px solid rgba(215, 173, 69, 0.48);
 }
 
+.option-info-list-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
+  align-items: center;
+  gap: 8px;
+}
+
+.option-info-list-heading strong {
+  color: var(--forest);
+  font-size: 0.82rem;
+}
+
 .option-info-row {
-  grid-template-columns: minmax(0, 1fr) 42px 42px;
+  grid-template-columns: minmax(0, 1fr) 42px;
 }
 
 .addon-editor-row {
   grid-template-columns: minmax(0, 1fr) 120px 42px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @media (max-width: 1180px) {
@@ -2663,7 +2701,6 @@ h3 {
     grid-template-columns: 1fr;
   }
 
-  .story-strip,
   .site-footer {
     grid-template-columns: 1fr;
   }

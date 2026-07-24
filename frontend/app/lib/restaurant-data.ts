@@ -67,7 +67,7 @@ export type RestaurantContent = {
   menuSections: Record<MenuCategory, MenuSection[]>;
   contact: {
     location: string;
-    hours: string;
+    hoursByDay: Record<string, string>;
     email: string;
     phone: string;
   };
@@ -360,7 +360,15 @@ export const restaurantContent: RestaurantContent = {
   },
   contact: {
     location: "Toronto, Ontario",
-    hours: "Mon-Sun, 10:30 AM - 9:30 PM",
+    hoursByDay: {
+      Monday: "10:30 AM - 9:30 PM",
+      Tuesday: "10:30 AM - 9:30 PM",
+      Wednesday: "10:30 AM - 9:30 PM",
+      Thursday: "10:30 AM - 9:30 PM",
+      Friday: "10:30 AM - 9:30 PM",
+      Saturday: "10:30 AM - 9:30 PM",
+      Sunday: "10:30 AM - 9:30 PM",
+    },
     email: "hello@saigonsister.ca",
     phone: "Email for opening details",
   },

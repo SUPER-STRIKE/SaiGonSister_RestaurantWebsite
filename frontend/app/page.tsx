@@ -59,24 +59,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="story-strip" aria-label="Restaurant highlights">
-        <div className="story-card">
-          <span>01</span>
-          <strong>Roll-first menu</strong>
-          <p>Goi cuon, cha gio, and the house rice roll are treated as the restaurant identity.</p>
-        </div>
-        <div className="story-card">
-          <span>02</span>
-          <strong>Vegan and classic</strong>
-          <p>A full vegan menu sits beside the traditional Vietnamese dishes, not below them.</p>
-        </div>
-        <div className="story-card">
-          <span>03</span>
-          <strong>Organic Vietnamese</strong>
-          <p>Fresh herbs, rice paper, crisp vegetables, and clean sauces keep the food bright.</p>
-        </div>
-      </section>
-
       <section className="chef-section" id="chef" aria-labelledby="chef-title">
         <div className="chef-copy">
           <p className="eyebrow">Chef owner</p>
