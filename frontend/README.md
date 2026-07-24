@@ -16,5 +16,5 @@ npm run build
 ```
 
 ## Testing Acc
-Username: giabophannguyen@gmail.comn
+Username: giabophannguyen@gmail.com
 Password: 1
