@@ -133,17 +133,39 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
   );
 })();
 
-(function ensureAdminFromEnv() {
+// Sync admin login from env without wiping DB (menu stays). Single-admin app.
+(function syncAdminFromEnv() {
   const username = process.env.ADMIN_USERNAME;
   const password = process.env.ADMIN_PASSWORD;
   const email = process.env.ADMIN_EMAIL;
   if (!username || !password || !email) return;
 
-  const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
-  if (existing) return;
-
   const bcrypt = require('bcrypt');
   const hash = bcrypt.hashSync(password, 10);
+
+  const byName = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+  if (byName) {
+    db.prepare('UPDATE users SET password = ?, email = ? WHERE id = ?').run(
+      hash,
+      email,
+      byName.id
+    );
+    console.log(`Synced admin "${username}" from env`);
+    return;
+  }
+
+  const any = db.prepare('SELECT id FROM users ORDER BY id ASC LIMIT 1').get();
+  if (any) {
+    db.prepare('UPDATE users SET username = ?, password = ?, email = ? WHERE id = ?').run(
+      username,
+      hash,
+      email,
+      any.id
+    );
+    console.log(`Renamed admin to "${username}" from env`);
+    return;
+  }
+
   db.prepare('INSERT INTO users (username, password, email) VALUES (?, ?, ?)').run(
     username,
     hash,
