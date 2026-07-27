@@ -51,11 +51,19 @@ export async function apiFetch<T>(
     headers.set("Content-Type", "application/json");
   }
 
-  const response = await fetch(`${API_URL}${path}`, {
-    ...init,
-    headers,
-    cache: "no-store",
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${API_URL}${path}`, {
+      ...init,
+      headers,
+      cache: "no-store",
+    });
+  } catch {
+    throw new ApiError(
+      0,
+      `Cannot reach API at ${API_URL}. Check NEXT_PUBLIC_API_URL on Vercel and redeploy.`,
+    );
+  }
 
   const data = (await response.json().catch(() => ({}))) as T & ApiErrorBody;
   if (!response.ok) {
