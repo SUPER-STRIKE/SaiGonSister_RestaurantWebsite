@@ -1,8 +1,30 @@
 const Database = require('better-sqlite3');
 const path = require('path');
+const fs = require('fs');
 
-const dbPath = process.env.DB_PATH || path.join(__dirname, '..', 'saigon.db');
-const db = new Database(dbPath);
+function resolveDbPath() {
+  if (process.env.DB_PATH) {
+    return path.isAbsolute(process.env.DB_PATH)
+      ? process.env.DB_PATH
+      : path.join(process.cwd(), process.env.DB_PATH);
+  }
+  return path.join(__dirname, '..', 'saigon.db');
+}
+
+function openDatabase() {
+  const preferred = resolveDbPath();
+  try {
+    fs.mkdirSync(path.dirname(preferred), { recursive: true });
+    return new Database(preferred);
+  } catch (err) {
+    const fallback = path.join('/tmp', 'saigon.db');
+    console.error(`DB open failed at ${preferred}: ${err.message}`);
+    console.error(`Falling back to ${fallback}`);
+    return new Database(fallback);
+  }
+}
+
+const db = openDatabase();
 
 db.pragma('journal_mode = WAL');
 db.pragma('foreign_keys = ON');

@@ -2,33 +2,40 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
-require('./config/database');
-const authRoutes = require('./routes/authRoutes');
-const menuRoutes = require('./routes/menuRoutes');
-const restaurantRoutes = require('./routes/restaurantRoutes');
-const errorHandler = require('./middleware/errorHandler');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
-app.use(cors());
-app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+try {
+  require('./config/database');
+  const authRoutes = require('./routes/authRoutes');
+  const menuRoutes = require('./routes/menuRoutes');
+  const restaurantRoutes = require('./routes/restaurantRoutes');
+  const errorHandler = require('./middleware/errorHandler');
 
-app.get('/health', (req, res) => {
-  res.json({ ok: true });
-});
+  const app = express();
 
-app.use('/api/auth', authRoutes);
-app.use('/api/menu', menuRoutes);
-app.use('/api/restaurant', restaurantRoutes);
+  app.use(cors());
+  app.use(express.json());
+  app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use((req, res) => {
-  res.status(404).json({ error: `Cannot ${req.method} ${req.path}` });
-});
+  app.get('/health', (req, res) => {
+    res.json({ ok: true });
+  });
 
-app.use(errorHandler);
+  app.use('/api/auth', authRoutes);
+  app.use('/api/menu', menuRoutes);
+  app.use('/api/restaurant', restaurantRoutes);
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on http://0.0.0.0:${PORT}`);
-});
+  app.use((req, res) => {
+    res.status(404).json({ error: `Cannot ${req.method} ${req.path}` });
+  });
+
+  app.use(errorHandler);
+
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server listening on 0.0.0.0:${PORT}`);
+  });
+} catch (err) {
+  console.error('Fatal startup error:', err);
+  process.exit(1);
+}
