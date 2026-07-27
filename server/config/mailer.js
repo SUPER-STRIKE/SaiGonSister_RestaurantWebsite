@@ -17,34 +17,36 @@ const transporter = smtpConfigured()
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
+      connectionTimeout: 5000,
+      greetingTimeout: 5000,
+      socketTimeout: 5000,
     })
   : null;
 
 async function sendOtpEmail(to, code) {
-  // Local/dev or missing SMTP: print OTP so login still works.
-  if (!transporter) {
-    console.log(`[dev OTP] to=${to} code=${code}`);
-    return;
-  }
+  // Always print OTP to Railway logs so login can continue even if email hangs.
+  console.log(`[OTP] to=${to} code=${code}`);
+
+  if (!transporter) return;
 
   const from = process.env.MAIL_FROM || 'noreply@saigonsisterrestaurant.com';
+  const mail = {
+    from,
+    to,
+    subject: '[Saigon Sister] Your Admin Verification Code',
+    text: `Your verification code is ${code}. It expires in 10 minutes.`,
+    html: `<p>Your verification code is <strong>${code}</strong>.</p><p>It expires in 10 minutes.</p>`,
+  };
 
-  try {
-    await transporter.sendMail({
-      from,
-      to,
-      subject: '[Saigon Sister] Your Admin Verification Code',
-      text: `Your verification code is ${code}. It expires in 10 minutes.`,
-      html: `<p>Your verification code is <strong>${code}</strong>.</p><p>It expires in 10 minutes.</p>`,
-    });
-  } catch (err) {
-    // Don't block login if Mailtrap/SMTP is down. Read code from Railway logs.
+  // Fire-and-forget with a hard timeout so login never waits on SMTP.
+  Promise.race([
+    transporter.sendMail(mail),
+    new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('SMTP timeout')), 5000);
+    }),
+  ]).catch((err) => {
     console.error(`SMTP send failed: ${err.message}`);
-    console.log(`[fallback OTP] to=${to} code=${code}`);
-  }
+  });
 }
 
 module.exports = { sendOtpEmail };

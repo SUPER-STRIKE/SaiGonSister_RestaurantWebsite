@@ -133,4 +133,23 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
   );
 })();
 
+(function ensureAdminFromEnv() {
+  const username = process.env.ADMIN_USERNAME;
+  const password = process.env.ADMIN_PASSWORD;
+  const email = process.env.ADMIN_EMAIL;
+  if (!username || !password || !email) return;
+
+  const existing = db.prepare('SELECT id FROM users WHERE username = ?').get(username);
+  if (existing) return;
+
+  const bcrypt = require('bcrypt');
+  const hash = bcrypt.hashSync(password, 10);
+  db.prepare('INSERT INTO users (username, password, email) VALUES (?, ?, ?)').run(
+    username,
+    hash,
+    email
+  );
+  console.log(`Bootstrapped admin user "${username}" from env`);
+})();
+
 module.exports = db;
