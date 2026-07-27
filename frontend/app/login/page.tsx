@@ -16,8 +16,8 @@ export default function LoginPage() {
             <p className="eyebrow">Staff login</p>
             <h1 id="login-title">Sign in to manage the restaurant.</h1>
             <p>
-              Menu changes, daily specials, add-ons, images, and restaurant details live behind
-              staff access.
+              Sign in with your admin username and password. A one-time code is emailed for
+              verification.
             </p>
           </div>
           <LoginForm />

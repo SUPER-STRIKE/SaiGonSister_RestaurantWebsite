@@ -2,31 +2,23 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { readStaffSession } from "../lib/staff-auth";
+import { clearStaffToken, getStaffToken, isStaffTokenValid } from "../lib/auth";
 
 export function AdminGuard({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [isAllowed, setIsAllowed] = useState(false);
-  const [isChecking, setIsChecking] = useState(true);
+  const [allowed, setAllowed] = useState(false);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      const session = readStaffSession();
-
-      if (!session) {
-        router.replace("/login");
-        setIsChecking(false);
-        return;
-      }
-
-      setIsAllowed(true);
-      setIsChecking(false);
-    }, 0);
-
-    return () => window.clearTimeout(timer);
+    const token = getStaffToken();
+    if (!isStaffTokenValid(token)) {
+      clearStaffToken();
+      router.replace("/login");
+      return;
+    }
+    setAllowed(true);
   }, [router]);
 
-  if (isChecking || !isAllowed) {
+  if (!allowed) {
     return (
       <main className="admin-loading">
         <p>Checking staff access...</p>
