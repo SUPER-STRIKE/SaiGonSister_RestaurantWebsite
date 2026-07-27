@@ -78,6 +78,8 @@ Restart the server after changing backend code.
 | POST | `/api/auth/verify-otp` | No | Verify OTP and return JWT |
 | GET | `/api/menu` | No | Read menu and apply filters |
 | POST | `/api/menu` | JWT | Create a menu item |
+| GET | `/api/restaurant` | No | Read contact info and opening hours |
+| PUT | `/api/restaurant` | JWT | Update contact info and opening hours |
 | PUT | `/api/menu/specialty` | JWT | Replace today's specialty list (`menuItemIds`) |
 | PUT | `/api/menu/:id` | JWT | Update a menu item |
 | DELETE | `/api/menu/:id` | JWT | Delete a menu item |

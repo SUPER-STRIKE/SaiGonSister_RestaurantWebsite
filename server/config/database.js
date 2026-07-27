@@ -48,6 +48,16 @@ db.exec(`
     special_date TEXT NOT NULL,
     UNIQUE(menu_item_id, special_date)
   );
+
+  CREATE TABLE IF NOT EXISTS restaurant_info (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    location TEXT NOT NULL,
+    city TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT NOT NULL DEFAULT '',
+    hours_by_day TEXT NOT NULL DEFAULT '{}',
+    hours_note TEXT NOT NULL DEFAULT ''
+  );
 `);
 
 addColumnIfMissing('menu_items', 'choices', "TEXT DEFAULT '[]'");
@@ -72,6 +82,33 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
     DROP TABLE daily_specials;
     ALTER TABLE daily_specials_new RENAME TO daily_specials;
   `);
+})();
+
+(function seedRestaurantInfo() {
+  const existing = db.prepare('SELECT id FROM restaurant_info WHERE id = 1').get();
+  if (existing) return;
+
+  const hoursByDay = {
+    Monday: '11:00 AM - 10:00 PM',
+    Tuesday: '11:00 AM - 10:00 PM',
+    Wednesday: '11:00 AM - 10:00 PM',
+    Thursday: '11:00 AM - 10:00 PM',
+    Friday: '11:00 AM - 11:00 PM',
+    Saturday: '11:00 AM - 11:00 PM',
+    Sunday: '11:00 AM - 9:00 PM',
+  };
+
+  db.prepare(
+    `INSERT INTO restaurant_info (id, location, city, email, phone, hours_by_day, hours_note)
+     VALUES (1, ?, ?, ?, ?, ?, ?)`
+  ).run(
+    '774 Yonge Street',
+    'Toronto, ON',
+    'hello@saigonsister.ca',
+    '(416) 555-0199',
+    JSON.stringify(hoursByDay),
+    'Breakfast served weekends until 3 PM'
+  );
 })();
 
 module.exports = db;
