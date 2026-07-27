@@ -2,14 +2,12 @@
 
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { ApiError, loginRequest, verifyOtpRequest } from "../lib/api";
 import { setStaffToken } from "../lib/auth";
 
 type LoginMode = "login" | "verify";
 
 export function LoginForm() {
-  const router = useRouter();
   const [mode, setMode] = useState<LoginMode>("login");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -46,7 +44,7 @@ export function LoginForm() {
     try {
       const result = await verifyOtpRequest(otp.trim());
       setStaffToken(result.token);
-      router.push("/admin");
+      window.location.assign("/admin");
     } catch (error) {
       setMessage(error instanceof ApiError ? error.message : "OTP verification failed.");
       inFlight.current = false;
@@ -82,6 +80,7 @@ export function LoginForm() {
               setMessage("");
               setOtp("");
               inFlight.current = false;
+              setBusy(false);
             }}
             type="button"
           >
