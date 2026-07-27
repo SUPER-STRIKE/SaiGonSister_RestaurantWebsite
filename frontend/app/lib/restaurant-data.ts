@@ -67,7 +67,9 @@ export type RestaurantContent = {
   menuSections: Record<MenuCategory, MenuSection[]>;
   contact: {
     location: string;
+    city: string;
     hoursByDay: Record<string, string>;
+    hoursNote?: string;
     email: string;
     phone: string;
   };
@@ -359,17 +361,19 @@ export const restaurantContent: RestaurantContent = {
     ],
   },
   contact: {
-    location: "Toronto, Ontario",
+    location: "774 Yonge Street",
+    city: "Toronto, ON",
     hoursByDay: {
-      Monday: "10:30 AM - 9:30 PM",
-      Tuesday: "10:30 AM - 9:30 PM",
-      Wednesday: "10:30 AM - 9:30 PM",
-      Thursday: "10:30 AM - 9:30 PM",
-      Friday: "10:30 AM - 9:30 PM",
-      Saturday: "10:30 AM - 9:30 PM",
-      Sunday: "10:30 AM - 9:30 PM",
+      Monday: "11:00 AM - 10:00 PM",
+      Tuesday: "11:00 AM - 10:00 PM",
+      Wednesday: "11:00 AM - 10:00 PM",
+      Thursday: "11:00 AM - 10:00 PM",
+      Friday: "11:00 AM - 11:00 PM",
+      Saturday: "11:00 AM - 11:00 PM",
+      Sunday: "11:00 AM - 9:00 PM",
     },
+    hoursNote: "Breakfast served weekends until 3 PM",
     email: "hello@saigonsister.ca",
-    phone: "Email for opening details",
+    phone: "(416) 555-0199",
   },
 };
