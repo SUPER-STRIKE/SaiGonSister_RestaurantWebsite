@@ -152,4 +152,37 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
   console.log(`Bootstrapped admin user "${username}" from env`);
 })();
 
+// ponytail: Railway disk is ephemeral; re-seed stock menu when DB is empty. Ceiling: admin wipe-all returns on restart until persistent volume.
+(function seedMenuIfEmpty() {
+  const count = db.prepare('SELECT COUNT(*) AS n FROM menu_items').get().n;
+  if (count > 0) return;
+
+  const dataPath = path.join(__dirname, '..', 'menu-data.json');
+  if (!fs.existsSync(dataPath)) return;
+
+  const { items } = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (!Array.isArray(items) || items.length === 0) return;
+
+  const insert = db.prepare(`
+    INSERT INTO menu_items (menuNumber, name, description, price, category, tags, choices, addOns)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  `);
+  const seed = db.transaction((rows) => {
+    for (const item of rows) {
+      insert.run(
+        item.menuNumber,
+        item.name,
+        item.description ?? null,
+        item.price ?? 0,
+        item.category,
+        JSON.stringify(item.tags || []),
+        JSON.stringify(item.choices || []),
+        JSON.stringify(item.addOns || [])
+      );
+    }
+  });
+  seed(items);
+  console.log(`Bootstrapped ${items.length} menu items from menu-data.json`);
+})();
+
 module.exports = db;
