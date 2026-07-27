@@ -33,8 +33,8 @@ async function sendOtpEmail(to, code) {
     from,
     to,
     subject: '[Saigon Sister] Your Admin Verification Code',
-    text: `Your verification code is ${code}. It expires in 5 minutes.`,
-    html: `<p>Your verification code is <strong>${code}</strong>.</p><p>It expires in 5 minutes.</p>`,
+    text: `Your verification code is ${code}. It expires in 10 minutes.`,
+    html: `<p>Your verification code is <strong>${code}</strong>.</p><p>It expires in 10 minutes.</p>`,
   });
 }
 

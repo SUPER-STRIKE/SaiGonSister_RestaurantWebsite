@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ApiError, loginRequest, verifyOtpRequest } from "../lib/api";
@@ -16,25 +16,31 @@ export function LoginForm() {
   const [otp, setOtp] = useState("");
   const [message, setMessage] = useState("");
   const [busy, setBusy] = useState(false);
+  const inFlight = useRef(false);
 
   async function handleLogin(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setMessage("");
     try {
       const result = await loginRequest(username.trim(), password);
-      setMessage(result.message);
+      setMessage(`${result.message} Use the newest Mailtrap email.`);
       setMode("verify");
       setOtp("");
     } catch (error) {
       setMessage(error instanceof ApiError ? error.message : "Login failed.");
     } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
 
   async function handleVerify(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
     setBusy(true);
     setMessage("");
     try {
@@ -43,7 +49,7 @@ export function LoginForm() {
       router.push("/admin");
     } catch (error) {
       setMessage(error instanceof ApiError ? error.message : "OTP verification failed.");
-    } finally {
+      inFlight.current = false;
       setBusy(false);
     }
   }
@@ -51,19 +57,22 @@ export function LoginForm() {
   if (mode === "verify") {
     return (
       <form className="admin-form" onSubmit={handleVerify}>
-        <p className="login-message">{message || "Enter the 6-digit code sent to your admin email."}</p>
+        <p className="login-message">
+          {message || "Enter the 6-digit code sent to your admin email."}
+        </p>
         <label>
           Verification code
           <input
+            autoComplete="one-time-code"
             inputMode="numeric"
             maxLength={6}
-            onChange={(event) => setOtp(event.target.value)}
+            onChange={(event) => setOtp(event.target.value.replace(/\D/g, ""))}
             required
             value={otp}
           />
         </label>
         <div className="login-inline-actions">
-          <button disabled={busy} type="submit">
+          <button disabled={busy || otp.length !== 6} type="submit">
             {busy ? "Checking..." : "Verify code"}
           </button>
           <button
@@ -72,6 +81,7 @@ export function LoginForm() {
               setMode("login");
               setMessage("");
               setOtp("");
+              inFlight.current = false;
             }}
             type="button"
           >

@@ -23,7 +23,7 @@ async function login(req, res) {
     }
 
     const otp = String(crypto.randomInt(100000, 1000000));
-    const expiresAt = new Date(Date.now() + 5 * 60 * 1000).toISOString();
+    const expiresAt = new Date(Date.now() + 10 * 60 * 1000).toISOString();
 
     db.prepare('DELETE FROM otp_verifications WHERE email = ?').run(user.email);
     db.prepare(
@@ -41,26 +41,30 @@ async function login(req, res) {
 
 function verifyOtp(req, res) {
   try {
-    const { otp } = req.body || {};
+    const otp = String(req.body?.otp ?? '').trim();
 
     if (!otp) {
       return res.status(400).json({ error: 'OTP is required' });
     }
 
-    const now = new Date().toISOString();
     const row = db
-      .prepare(
-        'SELECT * FROM otp_verifications WHERE otp_code = ? AND expires_at > ? ORDER BY id DESC LIMIT 1'
-      )
-      .get(String(otp), now);
+      .prepare('SELECT * FROM otp_verifications WHERE otp_code = ? ORDER BY id DESC LIMIT 1')
+      .get(otp);
 
     if (!row) {
-      return res.status(401).json({ error: 'Invalid or expired OTP' });
+      return res.status(401).json({
+        error: 'Invalid OTP. Use the newest email, or sign in again for a new code.',
+      });
+    }
+
+    if (Date.parse(row.expires_at) <= Date.now()) {
+      db.prepare('DELETE FROM otp_verifications WHERE id = ?').run(row.id);
+      return res.status(401).json({ error: 'OTP expired. Sign in again for a new code.' });
     }
 
     const user = db.prepare('SELECT id, username FROM users WHERE email = ?').get(row.email);
     if (!user) {
-      return res.status(401).json({ error: 'Invalid or expired OTP' });
+      return res.status(401).json({ error: 'Invalid OTP. Sign in again for a new code.' });
     }
 
     db.prepare('DELETE FROM otp_verifications WHERE id = ?').run(row.id);
