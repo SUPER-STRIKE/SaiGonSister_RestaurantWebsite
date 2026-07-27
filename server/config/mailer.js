@@ -23,11 +23,14 @@ const transporter = smtpConfigured()
     })
   : null;
 
+// ponytail: Railway often blocks outbound SMTP; after one failure, stop retrying this process.
+let smtpDead = process.env.SMTP_DISABLED === '1';
+
 async function sendOtpEmail(to, code) {
   // Always print OTP to Railway logs so login can continue even if email hangs.
   console.log(`[OTP] to=${to} code=${code}`);
 
-  if (!transporter) return;
+  if (!transporter || smtpDead) return;
 
   const from = process.env.MAIL_FROM || 'noreply@saigonsisterrestaurant.com';
   const mail = {
@@ -45,7 +48,9 @@ async function sendOtpEmail(to, code) {
       setTimeout(() => reject(new Error('SMTP timeout')), 5000);
     }),
   ]).catch((err) => {
+    smtpDead = true;
     console.error(`SMTP send failed: ${err.message}`);
+    console.warn('SMTP disabled for this process; copy OTP from [OTP] log lines');
   });
 }
 

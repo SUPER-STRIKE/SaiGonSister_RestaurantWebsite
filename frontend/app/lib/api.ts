@@ -1,8 +1,12 @@
 function normalizeApiUrl(value: string) {
   const trimmed = value.trim().replace(/\/$/, "");
   if (!trimmed) return "http://localhost:4000";
-  if (/^https?:\/\//i.test(trimmed)) return trimmed;
-  return `https://${trimmed}`;
+  // Strip repeated schemes (e.g. https://https://host from env typos).
+  const bare = trimmed.replace(/^(https?:\/\/)+/i, "");
+  if (/^localhost\b/i.test(bare) || /^127\./.test(bare)) {
+    return `http://${bare}`;
+  }
+  return `https://${bare}`;
 }
 
 export const API_URL = normalizeApiUrl(
