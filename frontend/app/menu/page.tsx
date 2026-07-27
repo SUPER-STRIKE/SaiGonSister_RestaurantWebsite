@@ -1,10 +1,22 @@
 import { HouseFocusShowcase } from "../components/HouseFocusShowcase";
 import { MenuExplorer } from "../components/MenuExplorer";
 import { SiteNav } from "../components/SiteNav";
+import { fetchMenu } from "../lib/api";
+import { groupMenuSections, menuTabs } from "../lib/menu-map";
 import { restaurantContent } from "../lib/restaurant-data";
 
-export default function MenuPage() {
-  const { houseFocus, menuTabs, menuSections } = restaurantContent;
+export default async function MenuPage() {
+  const { houseFocus, menuSections: fallbackSections } = restaurantContent;
+  let sections = fallbackSections;
+
+  try {
+    const items = await fetchMenu();
+    if (items.length) {
+      sections = groupMenuSections(items);
+    }
+  } catch {
+    // Keep static fallback when the API is offline.
+  }
 
   return (
     <main>
@@ -26,13 +38,10 @@ export default function MenuPage() {
         <div className="section-heading">
           <p className="eyebrow">Choose a category</p>
           <h2 id="menu-title">Explore the menu</h2>
-          <p>
-            Browse by service, then scan each menu header the way guests read a printed menu.
-          </p>
+          <p>Browse by service, then scan each menu header the way guests read a printed menu.</p>
         </div>
-        <MenuExplorer tabs={menuTabs} sections={menuSections} />
+        <MenuExplorer tabs={menuTabs} sections={sections} />
       </section>
-
     </main>
   );
 }

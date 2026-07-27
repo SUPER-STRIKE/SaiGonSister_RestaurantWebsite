@@ -1,8 +1,20 @@
 import { SiteNav } from "./components/SiteNav";
+import { fetchMenu } from "./lib/api";
+import { toDailySpecial } from "./lib/menu-map";
 import { restaurantContent } from "./lib/restaurant-data";
 
-export default function Home() {
-  const { tagline, heroCopy, dailySpecials } = restaurantContent;
+export default async function Home() {
+  const { tagline, heroCopy } = restaurantContent;
+  let dailySpecials = restaurantContent.dailySpecials;
+  let specialtyLoaded = false;
+
+  try {
+    const specialty = await fetchMenu("?specialty=true");
+    dailySpecials = specialty.map(toDailySpecial);
+    specialtyLoaded = true;
+  } catch {
+    // Keep static fallback when the API is offline.
+  }
 
   return (
     <main>
@@ -14,8 +26,12 @@ export default function Home() {
           <h1>Vietnamese rolls, daily specialties, and a full vegan menu.</h1>
           <p className="hero-copy">{heroCopy}</p>
           <div className="hero-actions">
-            <a className="button primary" href="#daily">Today&apos;s specialty</a>
-            <a className="button secondary" href="/menu">Explore menu</a>
+            <a className="button primary" href="#daily">
+              Today&apos;s specialty
+            </a>
+            <a className="button secondary" href="/menu">
+              Explore menu
+            </a>
           </div>
         </div>
 
@@ -33,29 +49,58 @@ export default function Home() {
           <p>Limited dishes prepared fresh for the day.</p>
         </div>
         <div className="daily-showcase">
-          {dailySpecials.map((dish, index) => (
-            <article className="daily-dish" key={dish.id} style={{ animationDelay: `${index * 120}ms` }}>
-              <div className="daily-dish-image" style={{ backgroundImage: `url(${dish.image})` }} aria-hidden="true" />
-              <div className="daily-dish-copy">
-                <h3>{dish.name}</h3>
-                <p>{dish.description}</p>
-                <div className="dish-tags" aria-label={`${dish.name} tags`}>
-                  {dish.tags?.map((tag) => (
-                    <span className={tag === "Signature" ? "tag-signature" : tag === "Vegan" ? "tag-vegan" : "tag-choice"} key={tag}>
-                      {tag}
-                    </span>
-                  ))}
-                  {dish.veganOptionAvailable ? <span className="tag-vegan">Vegan option available</span> : null}
+          {dailySpecials.length ? (
+            dailySpecials.map((dish, index) => (
+              <article
+                className="daily-dish"
+                key={dish.id}
+                style={{ animationDelay: `${index * 120}ms` }}
+              >
+                <div
+                  className="daily-dish-image"
+                  style={{ backgroundImage: `url(${dish.image})` }}
+                  aria-hidden="true"
+                />
+                <div className="daily-dish-copy">
+                  <h3>{dish.name}</h3>
+                  <p>{dish.description}</p>
+                  <div className="dish-tags" aria-label={`${dish.name} tags`}>
+                    {dish.tags?.map((tag) => (
+                      <span
+                        className={
+                          tag === "Signature"
+                            ? "tag-signature"
+                            : tag === "Vegan"
+                              ? "tag-vegan"
+                              : "tag-choice"
+                        }
+                        key={tag}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                    {dish.veganOptionAvailable ? (
+                      <span className="tag-vegan">Vegan option available</span>
+                    ) : null}
+                  </div>
+                  {dish.allergens?.length ? (
+                    <p className="allergen-note">
+                      Contains or may contain {dish.allergens.join(", ")}.
+                    </p>
+                  ) : null}
+                  <div className="price-line">
+                    <strong>{dish.price}</strong>
+                  </div>
                 </div>
-                {dish.allergens?.length ? (
-                  <p className="allergen-note">Contains or may contain {dish.allergens.join(", ")}.</p>
-                ) : null}
-                <div className="price-line">
-                  <strong>{dish.price}</strong>
-                </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            ))
+          ) : (
+            <p>
+              {specialtyLoaded
+                ? "No specialty set for today yet."
+                : "Menu API offline. Start the server to load today's specialty."}
+            </p>
+          )}
         </div>
       </section>
 
@@ -79,7 +124,9 @@ export default function Home() {
           <div className="chef-proof-image" aria-hidden="true" />
           <div>
             <strong>From Toronto kitchens</strong>
-            <p>Built from years of Vietnamese cooking, steady service, and neighbourhood regulars.</p>
+            <p>
+              Built from years of Vietnamese cooking, steady service, and neighbourhood regulars.
+            </p>
           </div>
         </div>
       </section>
