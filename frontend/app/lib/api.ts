@@ -107,3 +107,24 @@ export function setSpecialtyRequest(token: string, menuItemIds: number[]) {
     body: JSON.stringify({ menuItemIds }),
   });
 }
+
+export type ApiRestaurantInfo = {
+  location: string;
+  city: string;
+  email: string;
+  phone: string;
+  hoursByDay: Record<string, string>;
+  hoursNote: string;
+};
+
+export function fetchRestaurantInfo() {
+  return apiFetch<ApiRestaurantInfo>("/api/restaurant");
+}
+
+export function updateRestaurantInfoRequest(token: string, body: Partial<ApiRestaurantInfo>) {
+  return apiFetch<ApiRestaurantInfo>("/api/restaurant", {
+    method: "PUT",
+    token,
+    body: JSON.stringify(body),
+  });
+}

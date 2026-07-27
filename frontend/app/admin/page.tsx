@@ -10,10 +10,13 @@ import {
   createMenuItemRequest,
   deleteMenuItemRequest,
   fetchMenu,
+  fetchRestaurantInfo,
   mediaUrl,
   setSpecialtyRequest,
   updateMenuItemRequest,
+  updateRestaurantInfoRequest,
   type ApiMenuItem,
+  type ApiRestaurantInfo,
 } from "../lib/api";
 import { clearStaffToken, getStaffToken } from "../lib/auth";
 import {
@@ -25,6 +28,8 @@ import {
   toUiCategory,
 } from "../lib/menu-map";
 import { restaurantContent, type MenuCategory } from "../lib/restaurant-data";
+
+const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 type DraftDish = {
   id?: number;
@@ -104,6 +109,14 @@ export default function AdminPage() {
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [filterCategory, setFilterCategory] = useState<MenuCategory | "all">("all");
+  const [restaurantInfo, setRestaurantInfo] = useState<ApiRestaurantInfo>({
+    location: restaurantContent.contact.location,
+    city: restaurantContent.contact.city,
+    email: restaurantContent.contact.email,
+    phone: restaurantContent.contact.phone,
+    hoursByDay: restaurantContent.contact.hoursByDay,
+    hoursNote: restaurantContent.contact.hoursNote ?? "",
+  });
 
   const token = () => {
     const value = getStaffToken();
@@ -112,12 +125,14 @@ export default function AdminPage() {
   };
 
   const load = useCallback(async () => {
-    const [menu, specialty] = await Promise.all([
+    const [menu, specialty, info] = await Promise.all([
       fetchMenu(),
       fetchMenu("?specialty=true"),
+      fetchRestaurantInfo(),
     ]);
     setItems(menu);
     setSpecialtyIds(specialty.map((item) => item.id));
+    setRestaurantInfo(info);
   }, []);
 
   useEffect(() => {
@@ -203,6 +218,20 @@ export default function AdminPage() {
       setNotice("Today's specialty saved.");
     } catch (error) {
       setNotice(error instanceof ApiError ? error.message : "Specialty save failed.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function saveRestaurant(event: FormEvent) {
+    event.preventDefault();
+    setBusy(true);
+    try {
+      const updated = await updateRestaurantInfoRequest(token(), restaurantInfo);
+      setRestaurantInfo(updated);
+      setNotice("Restaurant contact and hours saved.");
+    } catch (error) {
+      setNotice(error instanceof ApiError ? error.message : "Restaurant save failed.");
     } finally {
       setBusy(false);
     }
@@ -449,26 +478,81 @@ export default function AdminPage() {
               <div>
                 <p className="eyebrow">Restaurant details</p>
                 <h2 id="settings-title">Contact and hours</h2>
-                <p>Static site copy for now. Not stored in the API yet.</p>
+                <p>Saved to the database and shown in the site footer.</p>
               </div>
+              <button disabled={busy} form="restaurant-settings-form" type="submit">
+                Save details
+              </button>
             </div>
-            <form className="admin-form two-col">
+            <form className="admin-form" id="restaurant-settings-form" onSubmit={saveRestaurant}>
+              <div className="two-col">
+                <label>
+                  Location
+                  <input
+                    onChange={(event) =>
+                      setRestaurantInfo((info) => ({ ...info, location: event.target.value }))
+                    }
+                    required
+                    value={restaurantInfo.location}
+                  />
+                </label>
+                <label>
+                  City
+                  <input
+                    onChange={(event) =>
+                      setRestaurantInfo((info) => ({ ...info, city: event.target.value }))
+                    }
+                    required
+                    value={restaurantInfo.city}
+                  />
+                </label>
+                <label>
+                  Email
+                  <input
+                    onChange={(event) =>
+                      setRestaurantInfo((info) => ({ ...info, email: event.target.value }))
+                    }
+                    required
+                    type="email"
+                    value={restaurantInfo.email}
+                  />
+                </label>
+                <label>
+                  Phone
+                  <input
+                    onChange={(event) =>
+                      setRestaurantInfo((info) => ({ ...info, phone: event.target.value }))
+                    }
+                    value={restaurantInfo.phone}
+                  />
+                </label>
+              </div>
               <label>
-                Location
-                <input defaultValue={restaurantContent.contact.location} readOnly />
+                Hours note
+                <input
+                  onChange={(event) =>
+                    setRestaurantInfo((info) => ({ ...info, hoursNote: event.target.value }))
+                  }
+                  value={restaurantInfo.hoursNote}
+                />
               </label>
-              <label>
-                Hours
-                <input defaultValue={restaurantContent.contact.hours} readOnly />
-              </label>
-              <label>
-                Email
-                <input defaultValue={restaurantContent.contact.email} readOnly type="email" />
-              </label>
-              <label>
-                Phone
-                <input defaultValue={restaurantContent.contact.phone} readOnly />
-              </label>
+              <div className="admin-dish-editor">
+                {weekDays.map((day) => (
+                  <label key={day}>
+                    {day}
+                    <input
+                      onChange={(event) =>
+                        setRestaurantInfo((info) => ({
+                          ...info,
+                          hoursByDay: { ...info.hoursByDay, [day]: event.target.value },
+                        }))
+                      }
+                      required
+                      value={restaurantInfo.hoursByDay[day] ?? ""}
+                    />
+                  </label>
+                ))}
+              </div>
             </form>
           </section>
         </section>
