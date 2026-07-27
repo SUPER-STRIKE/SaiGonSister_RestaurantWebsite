@@ -188,6 +188,59 @@ function deleteMenuItem(req, res) {
   }
 }
 
+function todayIsoDate() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function getTodaySpecialtyRows() {
+  const today = todayIsoDate();
+  return db
+    .prepare(
+      `SELECT m.* FROM menu_items m
+       INNER JOIN daily_specials d ON d.menu_item_id = m.id AND d.special_date = ?
+       ORDER BY m.id ASC`
+    )
+    .all(today)
+    .map(formatItem);
+}
+
+function setSpecialty(req, res) {
+  try {
+    const menuItemIds = req.body?.menuItemIds;
+    if (!Array.isArray(menuItemIds)) {
+      return res.status(400).json({ error: 'menuItemIds must be an array' });
+    }
+
+    const today = todayIsoDate();
+    const ids = menuItemIds.map(Number);
+
+    const replace = db.transaction((itemIds) => {
+      db.prepare('DELETE FROM daily_specials WHERE special_date = ?').run(today);
+      const insert = db.prepare(
+        'INSERT INTO daily_specials (menu_item_id, special_date) VALUES (?, ?)'
+      );
+      for (const id of itemIds) {
+        const item = db.prepare('SELECT id FROM menu_items WHERE id = ?').get(id);
+        if (!item) {
+          const err = new Error(`Menu item ${id} not found`);
+          err.status = 404;
+          throw err;
+        }
+        insert.run(id, today);
+      }
+    });
+
+    replace(ids);
+    return res.json(getTodaySpecialtyRows());
+  } catch (err) {
+    if (err.status === 404) {
+      return res.status(404).json({ error: err.message });
+    }
+    console.error('setSpecialty error:', err.message);
+    return res.status(500).json({ error: 'Failed to set daily specialty' });
+  }
+}
+
 function formatItem(row) {
   return {
     ...row,
@@ -202,4 +255,5 @@ module.exports = {
   createMenuItem,
   updateMenuItem,
   deleteMenuItem,
+  setSpecialty,
 };

@@ -6,12 +6,14 @@ const {
   createMenuItem,
   updateMenuItem,
   deleteMenuItem,
+  setSpecialty,
 } = require('../controllers/menuController');
 
 const router = express.Router();
 
 router.get('/', getMenuItems);
 router.post('/', auth, upload.single('image'), createMenuItem);
+router.put('/specialty', auth, setSpecialty);
 router.put('/:id', auth, upload.single('image'), updateMenuItem);
 router.delete('/:id', auth, deleteMenuItem);
 

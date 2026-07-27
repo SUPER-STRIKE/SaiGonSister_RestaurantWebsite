@@ -45,11 +45,33 @@ db.exec(`
   CREATE TABLE IF NOT EXISTS daily_specials (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     menu_item_id INTEGER NOT NULL REFERENCES menu_items(id) ON DELETE CASCADE,
-    special_date TEXT NOT NULL UNIQUE
+    special_date TEXT NOT NULL,
+    UNIQUE(menu_item_id, special_date)
   );
 `);
 
 addColumnIfMissing('menu_items', 'choices', "TEXT DEFAULT '[]'");
 addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
+
+// Older DBs used UNIQUE(special_date) (one specialty per day). Allow several.
+(function migrateDailySpecials() {
+  const row = db
+    .prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'daily_specials'")
+    .get();
+  if (!row?.sql || !row.sql.includes('special_date TEXT NOT NULL UNIQUE')) return;
+
+  db.exec(`
+    CREATE TABLE daily_specials_new (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      menu_item_id INTEGER NOT NULL REFERENCES menu_items(id) ON DELETE CASCADE,
+      special_date TEXT NOT NULL,
+      UNIQUE(menu_item_id, special_date)
+    );
+    INSERT OR IGNORE INTO daily_specials_new (id, menu_item_id, special_date)
+      SELECT id, menu_item_id, special_date FROM daily_specials;
+    DROP TABLE daily_specials;
+    ALTER TABLE daily_specials_new RENAME TO daily_specials;
+  `);
+})();
 
 module.exports = db;

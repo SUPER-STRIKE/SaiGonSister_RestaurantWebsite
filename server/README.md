@@ -15,7 +15,7 @@ Copy-Item .env.example .env
 Edit `.env`:
 
 ```env
-PORT=3000
+PORT=4000
 DB_PATH=./saigon.db
 JWT_SECRET=replace-with-a-long-random-secret
 
@@ -53,12 +53,12 @@ npm run seed:menu:force
 npm start
 ```
 
-The API runs at `http://localhost:3000`.
+The API runs at `http://localhost:4000` (frontend uses 3000).
 
 Test the server:
 
 ```powershell
-Invoke-RestMethod "http://localhost:3000/health"
+Invoke-RestMethod "http://localhost:4000/health"
 ```
 
 Expected:
@@ -78,6 +78,7 @@ Restart the server after changing backend code.
 | POST | `/api/auth/verify-otp` | No | Verify OTP and return JWT |
 | GET | `/api/menu` | No | Read menu and apply filters |
 | POST | `/api/menu` | JWT | Create a menu item |
+| PUT | `/api/menu/specialty` | JWT | Replace today's specialty list (`menuItemIds`) |
 | PUT | `/api/menu/:id` | JWT | Update a menu item |
 | DELETE | `/api/menu/:id` | JWT | Delete a menu item |
 
