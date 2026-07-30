@@ -9,7 +9,7 @@ const sample: ApiMenuItem = {
   description: "Hello",
   price: 8.95,
   category: "drink",
-  tags: ["must-try", "vegan"],
+  tags: ["vegan"],
   choices: [{ name: "Egg style", options: ["Poached"] }],
   addOns: [{ name: "Bacon", price: 2 }],
   imageUrl: "/uploads/x.jpg",
@@ -22,7 +22,7 @@ assert.equal(formatPrice(10), "$10");
 
 const dish = toMenuDish(sample);
 assert.equal(dish.id, "7");
-assert.deepEqual(dish.tags, ["Signature", "Vegan"]);
+assert.deepEqual(dish.tags, ["Vegan"]);
 assert.equal(dish.veganOptionAvailable, true);
 assert.equal(dish.options?.[0]?.label, "Egg style");
 assert.equal(dish.addOns?.[0]?.price, "$2");

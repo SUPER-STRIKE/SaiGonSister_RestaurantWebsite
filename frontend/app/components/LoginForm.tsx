@@ -3,9 +3,11 @@
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { ApiError, loginRequest, verifyOtpRequest } from "../lib/api";
-import { setStaffToken } from "../lib/auth";
+import { createFrontendTestStaffToken, setStaffToken } from "../lib/auth";
 
 type LoginMode = "login" | "verify";
+
+const showFrontendAdminTestButton = true;
 
 export function LoginForm() {
   const [mode, setMode] = useState<LoginMode>("login");
@@ -24,7 +26,7 @@ export function LoginForm() {
     setMessage("");
     try {
       const result = await loginRequest(username.trim(), password);
-      setMessage(`${result.message} Use the newest Mailtrap email.`);
+      setMessage(result.message);
       setMode("verify");
       setOtp("");
     } catch (error) {
@@ -50,6 +52,11 @@ export function LoginForm() {
       inFlight.current = false;
       setBusy(false);
     }
+  }
+
+  function openAdminForTesting() {
+    setStaffToken(createFrontendTestStaffToken());
+    window.location.assign("/admin");
   }
 
   if (mode === "verify") {
@@ -119,6 +126,11 @@ export function LoginForm() {
           {busy ? "Sending OTP..." : "Sign in"}
         </button>
       </div>
+      {showFrontendAdminTestButton ? (
+        <button className="admin-test-access" onClick={openAdminForTesting} type="button">
+          Open admin for testing
+        </button>
+      ) : null}
     </form>
   );
 }

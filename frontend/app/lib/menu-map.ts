@@ -10,14 +10,10 @@ import type {
 import { restaurantContent } from "./restaurant-data";
 
 const TAG_MAP: Record<string, DishTag> = {
-  "must-try": "Signature",
-  creation: "Chef's choice",
   vegan: "Vegan",
 };
 
 const REVERSE_TAG_MAP: Record<string, string> = {
-  Signature: "must-try",
-  "Chef's choice": "creation",
   Vegan: "vegan",
 };
 

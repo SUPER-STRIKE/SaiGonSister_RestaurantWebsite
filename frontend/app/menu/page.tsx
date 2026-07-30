@@ -15,7 +15,6 @@ export default async function MenuPage() {
       sections = groupMenuSections(items);
     }
   } catch {
-    // Keep static fallback when the API is offline.
   }
 
   return (

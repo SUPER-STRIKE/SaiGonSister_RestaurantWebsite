@@ -46,13 +46,6 @@ function visibleAllergens(dish: MenuDish) {
   return cleanList(dish.allergens).filter((allergen) => !isObviousAllergen(dish.name, allergen));
 }
 
-function dishHasDetails(dish: MenuDish) {
-  return Boolean(
-    dish.options?.some((option) => cleanList(option.options).length > 0) ||
-      dish.addOns?.some((addOn) => addOn.name.trim().length > 0),
-  );
-}
-
 function hasVisibleDetails(dish: MenuDish) {
   return Boolean(
     dish.options?.some((option) => option.label.trim() && cleanList(option.options).length > 0) ||
@@ -112,7 +105,7 @@ function DetailButtons({ dish }: { dish: MenuDish }) {
 
 export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
   const [activeTab, setActiveTab] = useState<MenuCategory>("lunch");
-  const [filter, setFilter] = useState<"all" | "signature" | "vegan" | "choice">("all");
+  const [filter, setFilter] = useState<"all" | "vegan">("all");
 
   useEffect(() => {
     function openSectionFromHash() {
@@ -141,9 +134,8 @@ export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
         ...section,
         dishes: section.dishes.filter((dish) => {
           if (filter === "all") return true;
-          if (filter === "signature") return cleanList(dish.tags).includes("Signature");
           if (filter === "vegan") return dish.veganOptionAvailable || cleanList(dish.tags).includes("Vegan");
-          return dishHasDetails(dish) || cleanList(dish.tags).includes("Chef's choice");
+          return true;
         }),
       }))
       .filter((section) => section.dishes.length > 0);
@@ -177,9 +169,7 @@ export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
         <div className="menu-filter-group" aria-label="Menu filters">
           {[
             { id: "all", label: "All" },
-            { id: "signature", label: "Signature" },
             { id: "vegan", label: "Vegan" },
-            { id: "choice", label: "Chef's choice" },
           ].map((option) => (
             <button
               className={filter === option.id ? "active" : ""}
@@ -232,7 +222,7 @@ export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
                               </span>
                             ))}
                             {dish.veganOptionAvailable && !tags.includes("Vegan") ? (
-                              <span className="tag-vegan">Vegan option available</span>
+                              <span className="tag-vegan">Vegan</span>
                             ) : null}
                           </div>
                         ) : null}

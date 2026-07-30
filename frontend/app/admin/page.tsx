@@ -21,7 +21,6 @@ import {
 import { clearStaffToken, getStaffToken } from "../lib/auth";
 import {
   formatPrice,
-  parseCommaList,
   parsePriceInput,
   tagsToApi,
   toApiCategory,
@@ -37,7 +36,6 @@ type DraftDish = {
   price: string;
   description: string;
   category: MenuCategory;
-  tags: string;
   vegan: boolean;
   choicesJson: string;
   addOnsJson: string;
@@ -50,7 +48,6 @@ const emptyDraft = (): DraftDish => ({
   price: "",
   description: "",
   category: "lunch",
-  tags: "",
   vegan: false,
   choicesJson: "[]",
   addOnsJson: "[]",
@@ -65,7 +62,6 @@ function itemToDraft(item: ApiMenuItem): DraftDish {
     price: String(item.price),
     description: item.description ?? "",
     category: toUiCategory(item.category),
-    tags: item.tags.join(", "),
     vegan: item.tags.includes("vegan"),
     choicesJson: JSON.stringify(item.choices ?? [], null, 2),
     addOnsJson: JSON.stringify(item.addOns ?? [], null, 2),
@@ -80,7 +76,7 @@ function buildFormData(draft: DraftDish) {
   form.set("price", String(parsePriceInput(draft.price)));
   form.set("description", draft.description.trim());
   form.set("category", toApiCategory(draft.category));
-  form.set("tags", JSON.stringify(tagsToApi(parseCommaList(draft.tags), draft.vegan)));
+  form.set("tags", JSON.stringify(tagsToApi([], draft.vegan)));
 
   let choices: unknown = [];
   let addOns: unknown = [];
@@ -354,12 +350,13 @@ export default function AdminPage() {
                     ))}
                   </select>
                 </label>
-                <label>
-                  Tags (Signature, Chef&apos;s choice, Vegan, or API tags)
+                <label className="check-row tag-checkbox-card">
                   <input
-                    onChange={(event) => setDraft((d) => ({ ...d, tags: event.target.value }))}
-                    value={draft.tags}
+                    checked={draft.vegan}
+                    onChange={(event) => setDraft((d) => ({ ...d, vegan: event.target.checked }))}
+                    type="checkbox"
                   />
+                  Vegan
                 </label>
               </div>
               <label>
@@ -405,14 +402,6 @@ export default function AdminPage() {
                   <input readOnly value={draft.imageUrl ? mediaUrl(draft.imageUrl) : ""} />
                 </label>
               </div>
-              <label className="check-row">
-                <input
-                  checked={draft.vegan}
-                  onChange={(event) => setDraft((d) => ({ ...d, vegan: event.target.checked }))}
-                  type="checkbox"
-                />
-                Vegan option available
-              </label>
               <button disabled={busy} type="submit">
                 {busy ? "Saving..." : editingId == null ? "Create dish" : "Save dish"}
               </button>

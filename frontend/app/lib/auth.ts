@@ -21,7 +21,6 @@ export function getStaffToken() {
 export function setStaffToken(token: string) {
   clearLegacyAuth();
   window.localStorage.setItem(staffTokenKey, token);
-  // proxy.ts gates /admin with this cookie
   document.cookie = `${staffAccessCookie}=allowed; path=/; SameSite=Lax`;
 }
 
@@ -47,4 +46,17 @@ export function isStaffTokenValid(token: string | null) {
   } catch {
     return false;
   }
+}
+
+function base64Url(value: object) {
+  return btoa(JSON.stringify(value)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+}
+
+export function createFrontendTestStaffToken() {
+  const header = base64Url({ alg: "none", typ: "JWT" });
+  const payload = base64Url({
+    sub: "frontend-test-admin",
+    exp: Math.floor(Date.now() / 1000) + 60 * 60 * 8,
+  });
+  return `${header}.${payload}.frontend-test`;
 }

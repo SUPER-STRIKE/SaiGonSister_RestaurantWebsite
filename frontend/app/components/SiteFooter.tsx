@@ -91,7 +91,6 @@ export function SiteFooter() {
         });
       })
       .catch(() => {
-        // Keep static fallback when the API is offline.
       });
     return () => {
       alive = false;

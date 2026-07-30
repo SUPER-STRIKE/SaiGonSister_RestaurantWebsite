@@ -13,7 +13,6 @@ export default async function Home() {
     dailySpecials = specialty.map(toDailySpecial);
     specialtyLoaded = true;
   } catch {
-    // Keep static fallback when the API is offline.
   }
 
   return (
@@ -64,25 +63,11 @@ export default async function Home() {
                 <div className="daily-dish-copy">
                   <h3>{dish.name}</h3>
                   <p>{dish.description}</p>
-                  <div className="dish-tags" aria-label={`${dish.name} tags`}>
-                    {dish.tags?.map((tag) => (
-                      <span
-                        className={
-                          tag === "Signature"
-                            ? "tag-signature"
-                            : tag === "Vegan"
-                              ? "tag-vegan"
-                              : "tag-choice"
-                        }
-                        key={tag}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                    {dish.veganOptionAvailable ? (
-                      <span className="tag-vegan">Vegan option available</span>
-                    ) : null}
-                  </div>
+                  {dish.veganOptionAvailable || dish.tags?.includes("Vegan") ? (
+                    <div className="dish-tags" aria-label={`${dish.name} tags`}>
+                      <span className="tag-vegan">Vegan</span>
+                    </div>
+                  ) : null}
                   {dish.allergens?.length ? (
                     <p className="allergen-note">
                       Contains or may contain {dish.allergens.join(", ")}.
@@ -98,7 +83,7 @@ export default async function Home() {
             <p>
               {specialtyLoaded
                 ? "No specialty set for today yet."
-                : "Menu API offline. Start the server to load today's specialty."}
+                : "Today's kitchen highlight is being prepared."}
             </p>
           )}
         </div>

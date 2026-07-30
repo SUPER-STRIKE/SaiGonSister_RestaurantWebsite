@@ -1,6 +1,6 @@
 export type MenuCategory = "breakfast" | "lunch" | "dinner" | "drinks";
 
-export type DishTag = "Signature" | "Chef's choice" | "Vegan";
+export type DishTag = "Vegan";
 
 export type DishOption = {
   label: string;
@@ -91,11 +91,11 @@ export const restaurantContent: RestaurantContent = {
       id: "daily-rice-roll",
       dayLabel: "Today",
       image: "/roll-rice-rolls.png",
-      name: "Rice Roll Signature",
+      name: "Rice Roll",
       description:
         "House rice roll with Vietnamese herbs, pickled vegetables, soft rice, and chef sauce.",
       price: "$16",
-      tags: ["Signature", "Chef's choice"],
+      tags: ["Vegan"],
       allergens: ["Soy"],
       veganOptionAvailable: true,
     },
@@ -107,7 +107,6 @@ export const restaurantContent: RestaurantContent = {
       description:
         "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, and cracker.",
       price: "$15.95",
-      tags: ["Chef's choice"],
       allergens: ["Peanut", "Seafood"],
       addOns: [{ name: "Grilled chicken and shrimp", price: "$6" }],
       veganOptionAvailable: false,
@@ -154,7 +153,6 @@ export const restaurantContent: RestaurantContent = {
             description:
               "Philly cheese steak, pork meatball, pork sausage, ham, sunny eggs, fries, and toasted baguette.",
             price: "$19.95",
-            tags: ["Signature"],
             allergens: ["Egg", "Gluten", "Pork", "Dairy"],
           },
           {
@@ -276,7 +274,7 @@ export const restaurantContent: RestaurantContent = {
           { id: "lemongrass-beef-burger-banh-mi", name: "Spicy Lemongrass Beef Burger", description: "Vietnamese baguette.", price: "$9.95", allergens: ["Gluten"] },
           { id: "five-spice-pork-banh-mi", name: "Five Spices Pork Belly", description: "Vietnamese baguette.", price: "$9.50", allergens: ["Gluten", "Pork"] },
           { id: "grilled-lemongrass-pork-banh-mi", name: "Grilled Lemongrass Pork", description: "Vietnamese baguette.", price: "$9.50", allergens: ["Gluten", "Pork"] },
-          { id: "saigon-bm", name: "Saigon BM", description: "Pate, pork belly, ham, sausage, and shredded chicken.", price: "$9.95", tags: ["Signature"], allergens: ["Gluten", "Pork"] },
+          { id: "saigon-bm", name: "Saigon BM", description: "Pate, pork belly, ham, sausage, and shredded chicken.", price: "$9.95", allergens: ["Gluten", "Pork"] },
           { id: "chicken-parmesan-banh-mi", name: "Chicken Parmesan", description: "Vietnamese baguette.", price: "$11.95", allergens: ["Gluten", "Dairy"] },
           { id: "cheese-steak-banh-mi", name: "Cheese Steak", description: "Vietnamese baguette.", price: "$12.95", allergens: ["Gluten", "Dairy"] },
           { id: "fillet-o-fish-banh-mi", name: "Fillet O Fish Tomato Sauce", description: "Vietnamese baguette.", price: "$10.95", allergens: ["Gluten", "Fish"] },
@@ -311,9 +309,9 @@ export const restaurantContent: RestaurantContent = {
         id: "dinner-specials",
         title: "Dinner Special",
         dishes: [
-          { id: "goi-bo-tai-chanh", name: "Goi Bo Tai Chanh - Beef Carpaccio", description: "AAA rib eye rare steak slices, green papaya, onion, carrot, pepper, basil, peanut, and cracker.", price: "$21.95", tags: ["Chef's choice"], allergens: ["Peanut"] },
+          { id: "goi-bo-tai-chanh", name: "Goi Bo Tai Chanh - Beef Carpaccio", description: "AAA rib eye rare steak slices, green papaya, onion, carrot, pepper, basil, peanut, and cracker.", price: "$21.95", allergens: ["Peanut"] },
           { id: "goi-tuna", name: "Goi Tuna - Tuna Salad", description: "Seared tuna slices with variety of herbs, fried onion, peanut, pepper, and cracker.", price: "$23.95", allergens: ["Fish", "Peanut"] },
-          { id: "bo-luc-lac", name: "Bo Luc Lac - Beef Steak", description: "AAA medium rare rib eye steak cubes, onion, bell pepper, mushroom in red wine butter sauce, fries, sunny egg, salad, and toasted baguette.", price: "$26.95", tags: ["Signature"], allergens: ["Egg", "Gluten", "Dairy"] },
+          { id: "bo-luc-lac", name: "Bo Luc Lac - Beef Steak", description: "AAA medium rare rib eye steak cubes, onion, bell pepper, mushroom in red wine butter sauce, fries, sunny egg, salad, and toasted baguette.", price: "$26.95", allergens: ["Egg", "Gluten", "Dairy"] },
         ],
       },
     ],
