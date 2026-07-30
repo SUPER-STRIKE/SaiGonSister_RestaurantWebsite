@@ -158,6 +158,7 @@ export default function AdminPage() {
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [filterCategory, setFilterCategory] = useState<MenuCategory | "all">("all");
+  const [dailyFilterCategory, setDailyFilterCategory] = useState<MenuCategory | "all">("all");
   const [restaurantInfo, setRestaurantInfo] = useState<ApiRestaurantInfo>({
     location: restaurantContent.contact.location,
     city: restaurantContent.contact.city,
@@ -194,6 +195,11 @@ export default function AdminPage() {
     if (filterCategory === "all") return items;
     return items.filter((item) => toUiCategory(item.category) === filterCategory);
   }, [filterCategory, items]);
+
+  const visibleDailyItems = useMemo(() => {
+    if (dailyFilterCategory === "all") return items;
+    return items.filter((item) => toUiCategory(item.category) === dailyFilterCategory);
+  }, [dailyFilterCategory, items]);
 
   const headerOptions = useMemo(() => headerOptionsFor(draft.category), [draft.category]);
 
@@ -472,8 +478,30 @@ export default function AdminPage() {
                 Save specialty
               </button>
             </div>
+            <div className="admin-daily-filter-bar">
+              <div className="admin-daily-filter" aria-label="Daily specialty category filter">
+                <button
+                  className={dailyFilterCategory === "all" ? "active" : ""}
+                  onClick={() => setDailyFilterCategory("all")}
+                  type="button"
+                >
+                  All
+                </button>
+                {restaurantContent.menuTabs.map((tab) => (
+                  <button
+                    className={dailyFilterCategory === tab.id ? "active" : ""}
+                    key={tab.id}
+                    onClick={() => setDailyFilterCategory(tab.id)}
+                    type="button"
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+              <p>{visibleDailyItems.length} dishes showing</p>
+            </div>
             <div className="admin-daily-list">
-              {items.map((item) => (
+              {visibleDailyItems.map((item) => (
                 <label className="check-row admin-daily-item" key={item.id}>
                   <input
                     checked={specialtyIds.includes(item.id)}
