@@ -138,6 +138,17 @@ function slugifyHeader(value: string) {
     .replace(/^-+|-+$/g, "");
 }
 
+function scrollToDishEditor() {
+  window.requestAnimationFrame(() => {
+    const editor = document.getElementById("dish-editor");
+    if (!editor) return;
+
+    const top = editor.getBoundingClientRect().top + window.scrollY - 18;
+    window.history.replaceState(null, "", "#dish-editor");
+    window.scrollTo({ top, behavior: "smooth" });
+  });
+}
+
 export default function AdminPage() {
   const router = useRouter();
   const [items, setItems] = useState<ApiMenuItem[]>([]);
@@ -327,9 +338,8 @@ export default function AdminPage() {
     setEditingId(item.id);
     setDraft(itemToDraft(item));
     setNotice(`Editing ${item.name}.`);
-    window.setTimeout(() => {
-      document.getElementById("dish-editor")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 50);
+    window.setTimeout(scrollToDishEditor, 0);
+    window.setTimeout(scrollToDishEditor, 140);
   }
 
   async function saveDish(event: FormEvent) {
