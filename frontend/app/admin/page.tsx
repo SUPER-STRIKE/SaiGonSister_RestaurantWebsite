@@ -327,6 +327,9 @@ export default function AdminPage() {
     setEditingId(item.id);
     setDraft(itemToDraft(item));
     setNotice(`Editing ${item.name}.`);
+    window.setTimeout(() => {
+      document.getElementById("dish-editor")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
   }
 
   async function saveDish(event: FormEvent) {
@@ -680,6 +683,9 @@ export default function AdminPage() {
                 <label>
                   Current image
                   <input readOnly value={draft.imageUrl ? mediaUrl(draft.imageUrl) : ""} />
+                  <small>
+                    Shown only when this dish is featured as a daily specialty.
+                  </small>
                 </label>
               </div>
               <button disabled={busy} type="submit">

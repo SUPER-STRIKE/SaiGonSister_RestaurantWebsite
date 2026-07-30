@@ -1365,11 +1365,13 @@ h3 {
 .option-editor-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
   gap: 14px;
 }
 
 .option-editor-grid article {
   display: grid;
+  align-content: start;
   gap: 12px;
   border: 1px solid var(--line);
   background: rgba(255, 250, 240, 0.72);
