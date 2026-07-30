@@ -159,6 +159,7 @@ export default function AdminPage() {
   const [busy, setBusy] = useState(false);
   const [filterCategory, setFilterCategory] = useState<MenuCategory | "all">("all");
   const [dailyFilterCategory, setDailyFilterCategory] = useState<MenuCategory | "all">("all");
+  const [imagePreviewUrl, setImagePreviewUrl] = useState("");
   const [restaurantInfo, setRestaurantInfo] = useState<ApiRestaurantInfo>({
     location: restaurantContent.contact.location,
     city: restaurantContent.contact.city,
@@ -202,6 +203,17 @@ export default function AdminPage() {
   }, [dailyFilterCategory, items]);
 
   const headerOptions = useMemo(() => headerOptionsFor(draft.category), [draft.category]);
+
+  useEffect(() => {
+    if (draft.imageFile) {
+      const localUrl = URL.createObjectURL(draft.imageFile);
+      setImagePreviewUrl(localUrl);
+      return () => URL.revokeObjectURL(localUrl);
+    }
+
+    setImagePreviewUrl(draft.imageUrl ? mediaUrl(draft.imageUrl) : "");
+    return undefined;
+  }, [draft.imageFile, draft.imageUrl]);
 
   function updateDraftCategory(category: MenuCategory) {
     const header = defaultHeaderFor(category);
@@ -726,6 +738,12 @@ export default function AdminPage() {
                   </small>
                 </label>
               </div>
+              {imagePreviewUrl ? (
+                <div className="admin-preview-panel">
+                  <span>Image preview</span>
+                  <img alt={draft.name ? `${draft.name} preview` : "Dish preview"} src={imagePreviewUrl} />
+                </div>
+              ) : null}
               <button disabled={busy} type="submit">
                 {busy ? "Saving..." : editingId == null ? "Create dish" : "Save dish"}
               </button>

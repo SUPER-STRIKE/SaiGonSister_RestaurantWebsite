@@ -1268,11 +1268,12 @@ h3 {
 
 .admin-card .admin-daily-filter button.active,
 .admin-card .admin-daily-filter button:hover {
-  background: linear-gradient(135deg, var(--forest), #174d3f);
-  border-color: var(--forest);
-  color: var(--gold);
+  background:
+    linear-gradient(135deg, rgba(215, 173, 69, 0.32), rgba(255, 250, 240, 0.94));
+  border-color: rgba(215, 173, 69, 0.76);
+  color: var(--forest);
   transform: translateY(-2px);
-  box-shadow: 0 10px 18px rgba(8, 38, 31, 0.2);
+  box-shadow: 0 5px 0 rgba(8, 38, 31, 0.14), 0 14px 22px rgba(8, 38, 31, 0.1);
 }
 
 .admin-daily-filter-bar p {
@@ -2451,6 +2452,28 @@ h3 {
 
 .admin-image-preview {
   width: min(240px, 100%);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(215, 173, 69, 0.42);
+  box-shadow: 0 14px 28px rgba(8, 38, 31, 0.13);
+}
+
+.admin-preview-panel {
+  display: grid;
+  gap: 10px;
+  width: min(320px, 100%);
+  margin-top: -2px;
+}
+
+.admin-preview-panel span {
+  color: var(--forest);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.admin-preview-panel img {
+  width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
   border: 1px solid rgba(215, 173, 69, 0.42);
