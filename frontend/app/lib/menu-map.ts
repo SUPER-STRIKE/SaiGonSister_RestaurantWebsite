@@ -70,18 +70,29 @@ export function groupMenuSections(items: ApiMenuItem[]): Record<MenuCategory, Me
   const sections = {} as Record<MenuCategory, MenuSection[]>;
 
   for (const category of categories) {
-    const dishes = items.filter((item) => toUiCategory(item.category) === category).map(toMenuDish);
     const tab = menuTabs.find((entry) => entry.id === category);
-    sections[category] = dishes.length
-      ? [
-          {
-            id: "all",
-            title: tab?.label ?? category,
-            note: tab?.note,
-            dishes,
-          },
-        ]
-      : [];
+    const categoryItems = items.filter((item) => toUiCategory(item.category) === category);
+    const grouped = new Map<string, MenuSection>();
+
+    for (const item of categoryItems) {
+      const sectionId = item.sectionId?.trim() || "all";
+      const sectionTitle = item.sectionTitle?.trim() || tab?.label || category;
+      const sectionNote = item.sectionNote?.trim() || tab?.note;
+      const existing = grouped.get(sectionId);
+
+      if (existing) {
+        existing.dishes.push(toMenuDish(item));
+      } else {
+        grouped.set(sectionId, {
+          id: sectionId,
+          title: sectionTitle,
+          note: sectionNote,
+          dishes: [toMenuDish(item)],
+        });
+      }
+    }
+
+    sections[category] = [...grouped.values()];
   }
 
   return sections;

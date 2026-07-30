@@ -33,6 +33,9 @@ export type ApiMenuItem = {
   description: string | null;
   price: number;
   category: ApiCategory;
+  sectionId?: string | null;
+  sectionTitle?: string | null;
+  sectionNote?: string | null;
   tags: string[];
   choices: ApiChoice[];
   addOns: ApiAddOn[];

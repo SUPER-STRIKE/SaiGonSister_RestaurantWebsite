@@ -1353,6 +1353,15 @@ h3 {
   padding: 10px 12px;
 }
 
+.header-picker-panel {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(215, 173, 69, 0.34);
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.9), rgba(249, 231, 187, 0.42));
+  padding: 14px;
+}
+
 .option-editor-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1363,56 +1372,67 @@ h3 {
   display: grid;
   gap: 12px;
   border: 1px solid var(--line);
-  background: white;
+  background: rgba(255, 250, 240, 0.72);
   padding: 16px;
 }
 
-.option-editor-grid article > strong {
-  color: var(--forest);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.25rem;
-}
-
-.choice-admin-block {
+.choice-admin-header,
+.choice-admin-heading {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
-  border-top: 1px solid var(--line);
-  padding-top: 12px;
+  align-items: end;
 }
 
-.choice-admin-list,
-.addon-admin-block {
-  display: grid;
-  gap: 8px;
+.choice-admin-header.compact {
+  align-items: center;
 }
 
-.addon-admin-block {
-  border-top: 1px solid var(--line);
-  padding-top: 12px;
-}
-
-.addon-admin-block > strong {
+.choice-admin-header strong {
   color: var(--forest);
   font-size: 0.86rem;
   text-transform: uppercase;
 }
 
-.choice-admin-list label span {
+.choice-admin-list,
+.addon-admin-block {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 40px 40px;
+  gap: 10px;
+}
+
+.choice-admin-card {
+  display: grid;
+  gap: 12px;
+  border: 1px solid rgba(215, 173, 69, 0.34);
+  background: rgba(255, 255, 255, 0.66);
+  padding: 12px;
+}
+
+.choice-option-list {
+  display: grid;
+  gap: 8px;
+  padding-left: 12px;
+  border-left: 3px solid rgba(215, 173, 69, 0.48);
+}
+
+.choice-option-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 42px;
   gap: 8px;
 }
 
-.addon-admin-block label span {
+.addon-admin-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 90px 40px 40px;
+  grid-template-columns: minmax(0, 1fr) 120px 42px;
   gap: 8px;
+  align-items: end;
 }
 
 .choice-admin-list button,
-.addon-admin-block button {
-  min-width: 40px;
-  padding: 0;
+.addon-admin-block button,
+.choice-option-row button {
+  min-width: 42px;
+  padding-inline: 10px;
 }
 
 .login-page {

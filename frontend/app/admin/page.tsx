@@ -15,6 +15,7 @@ import {
   setSpecialtyRequest,
   updateMenuItemRequest,
   updateRestaurantInfoRequest,
+  type ApiChoice,
   type ApiMenuItem,
   type ApiRestaurantInfo,
 } from "../lib/api";
@@ -30,15 +31,23 @@ import { restaurantContent, type MenuCategory } from "../lib/restaurant-data";
 
 const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
+type DraftAddOn = {
+  name: string;
+  price: string;
+};
+
 type DraftDish = {
   id?: number;
   name: string;
   price: string;
   description: string;
   category: MenuCategory;
+  sectionId: string;
+  sectionTitle: string;
+  sectionNote: string;
   vegan: boolean;
-  choicesJson: string;
-  addOnsJson: string;
+  choices: ApiChoice[];
+  addOns: DraftAddOn[];
   imageFile: File | null;
   imageUrl: string | null;
 };
@@ -48,23 +57,35 @@ const emptyDraft = (): DraftDish => ({
   price: "",
   description: "",
   category: "lunch",
+  sectionId: "salad-rolls",
+  sectionTitle: "Salad Rolls",
+  sectionNote: "Lettuce, mint, basil, sprout, carrot, and mango.",
   vegan: false,
-  choicesJson: "[]",
-  addOnsJson: "[]",
+  choices: [],
+  addOns: [],
   imageFile: null,
   imageUrl: null,
 });
 
 function itemToDraft(item: ApiMenuItem): DraftDish {
+  const category = toUiCategory(item.category);
+  const fallbackHeader = defaultHeaderFor(category);
+
   return {
     id: item.id,
     name: item.name,
     price: String(item.price),
     description: item.description ?? "",
-    category: toUiCategory(item.category),
+    category,
+    sectionId: item.sectionId ?? fallbackHeader.id,
+    sectionTitle: item.sectionTitle ?? fallbackHeader.title,
+    sectionNote: item.sectionNote ?? fallbackHeader.note ?? "",
     vegan: item.tags.includes("vegan"),
-    choicesJson: JSON.stringify(item.choices ?? [], null, 2),
-    addOnsJson: JSON.stringify(item.addOns ?? [], null, 2),
+    choices: item.choices ?? [],
+    addOns: (item.addOns ?? []).map((addOn) => ({
+      name: addOn.name,
+      price: addOn.price ? formatPrice(addOn.price) : "",
+    })),
     imageFile: null,
     imageUrl: item.imageUrl,
   };
@@ -76,24 +97,45 @@ function buildFormData(draft: DraftDish) {
   form.set("price", String(parsePriceInput(draft.price)));
   form.set("description", draft.description.trim());
   form.set("category", toApiCategory(draft.category));
+  form.set("sectionId", draft.sectionId.trim());
+  form.set("sectionTitle", draft.sectionTitle.trim());
+  form.set("sectionNote", draft.sectionNote.trim());
   form.set("tags", JSON.stringify(tagsToApi([], draft.vegan)));
 
-  let choices: unknown = [];
-  let addOns: unknown = [];
-  try {
-    choices = JSON.parse(draft.choicesJson || "[]");
-  } catch {
-    throw new Error("Choices must be valid JSON.");
-  }
-  try {
-    addOns = JSON.parse(draft.addOnsJson || "[]");
-  } catch {
-    throw new Error("Add-ons must be valid JSON.");
-  }
+  const choices = draft.choices
+    .map((choice) => ({
+      name: choice.name.trim(),
+      required: Boolean(choice.required),
+      options: choice.options.map((option) => option.trim()).filter(Boolean),
+    }))
+    .filter((choice) => choice.name || choice.options.length);
+  const addOns = draft.addOns
+    .map((addOn) => ({
+      name: addOn.name.trim(),
+      price: parsePriceInput(addOn.price),
+    }))
+    .filter((addOn) => addOn.name);
+
   form.set("choices", JSON.stringify(choices));
   form.set("addOns", JSON.stringify(addOns));
   if (draft.imageFile) form.set("image", draft.imageFile);
   return form;
+}
+
+function headerOptionsFor(category: MenuCategory) {
+  return restaurantContent.menuSections[category] ?? [];
+}
+
+function defaultHeaderFor(category: MenuCategory) {
+  return headerOptionsFor(category)[0] ?? { id: "", title: "", note: "" };
+}
+
+function slugifyHeader(value: string) {
+  return value
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
 }
 
 export default function AdminPage() {
@@ -141,6 +183,134 @@ export default function AdminPage() {
     if (filterCategory === "all") return items;
     return items.filter((item) => toUiCategory(item.category) === filterCategory);
   }, [filterCategory, items]);
+
+  const headerOptions = useMemo(() => headerOptionsFor(draft.category), [draft.category]);
+
+  function updateDraftCategory(category: MenuCategory) {
+    const header = defaultHeaderFor(category);
+    setDraft((current) => ({
+      ...current,
+      category,
+      sectionId: header.id,
+      sectionTitle: header.title,
+      sectionNote: header.note ?? "",
+    }));
+  }
+
+  function selectHeader(sectionId: string) {
+    if (sectionId === "custom") {
+      setDraft((current) => ({
+        ...current,
+        sectionId: "",
+        sectionTitle: "",
+        sectionNote: "",
+      }));
+      return;
+    }
+
+    const header = headerOptions.find((section) => section.id === sectionId);
+    if (!header) return;
+
+    setDraft((current) => ({
+      ...current,
+      sectionId: header.id,
+      sectionTitle: header.title,
+      sectionNote: header.note ?? "",
+    }));
+  }
+
+  function updateSectionTitle(sectionTitle: string) {
+    setDraft((current) => ({
+      ...current,
+      sectionTitle,
+      sectionId: slugifyHeader(sectionTitle),
+    }));
+  }
+
+  function addChoice() {
+    setDraft((current) => ({
+      ...current,
+      choices: [...current.choices, { name: "", options: [""] }],
+    }));
+  }
+
+  function updateChoiceName(choiceIndex: number, name: string) {
+    setDraft((current) => ({
+      ...current,
+      choices: current.choices.map((choice, index) =>
+        index === choiceIndex ? { ...choice, name } : choice,
+      ),
+    }));
+  }
+
+  function removeChoice(choiceIndex: number) {
+    setDraft((current) => ({
+      ...current,
+      choices: current.choices.filter((_, index) => index !== choiceIndex),
+    }));
+  }
+
+  function addChoiceOption(choiceIndex: number) {
+    setDraft((current) => ({
+      ...current,
+      choices: current.choices.map((choice, index) =>
+        index === choiceIndex ? { ...choice, options: [...choice.options, ""] } : choice,
+      ),
+    }));
+  }
+
+  function updateChoiceOption(choiceIndex: number, optionIndex: number, option: string) {
+    setDraft((current) => ({
+      ...current,
+      choices: current.choices.map((choice, index) =>
+        index === choiceIndex
+          ? {
+              ...choice,
+              options: choice.options.map((value, currentOptionIndex) =>
+                currentOptionIndex === optionIndex ? option : value,
+              ),
+            }
+          : choice,
+      ),
+    }));
+  }
+
+  function removeChoiceOption(choiceIndex: number, optionIndex: number) {
+    setDraft((current) => ({
+      ...current,
+      choices: current.choices.map((choice, index) =>
+        index === choiceIndex
+          ? {
+              ...choice,
+              options: choice.options.filter((_, currentOptionIndex) => currentOptionIndex !== optionIndex),
+            }
+          : choice,
+      ),
+    }));
+  }
+
+  function addAddOn() {
+    setDraft((current) => ({
+      ...current,
+      addOns: [...current.addOns, { name: "", price: "" }],
+    }));
+  }
+
+  function updateAddOn(addOnIndex: number, field: keyof DraftAddOn, value: string) {
+    setDraft((current) => ({
+      ...current,
+      addOns: current.addOns.map((addOn, index) =>
+        index === addOnIndex ? { ...addOn, [field]: value } : addOn,
+      ),
+    }));
+  }
+
+  function removeAddOn(addOnIndex: number) {
+    setDraft((current) => ({
+      ...current,
+      addOns: current.addOns.filter((_, index) => index !== addOnIndex),
+    }));
+  }
 
   function logout() {
     clearStaffToken();
@@ -338,9 +508,7 @@ export default function AdminPage() {
                 <label>
                   Category
                   <select
-                    onChange={(event) =>
-                      setDraft((d) => ({ ...d, category: event.target.value as MenuCategory }))
-                    }
+                    onChange={(event) => updateDraftCategory(event.target.value as MenuCategory)}
                     value={draft.category}
                   >
                     {restaurantContent.menuTabs.map((tab) => (
@@ -359,6 +527,40 @@ export default function AdminPage() {
                   Vegan
                 </label>
               </div>
+              <div className="header-picker-panel">
+                <label>
+                  Menu header
+                  <select
+                    onChange={(event) => selectHeader(event.target.value)}
+                    value={headerOptions.some((section) => section.id === draft.sectionId) ? draft.sectionId : "custom"}
+                  >
+                    {headerOptions.map((section) => (
+                      <option key={section.id} value={section.id}>
+                        {section.title}
+                      </option>
+                    ))}
+                    <option value="custom">Custom header</option>
+                  </select>
+                </label>
+                <div className="two-col">
+                  <label>
+                    Header name
+                    <input
+                      onChange={(event) => updateSectionTitle(event.target.value)}
+                      placeholder="Salad Rolls"
+                      value={draft.sectionTitle}
+                    />
+                  </label>
+                  <label>
+                    Header note
+                    <input
+                      onChange={(event) => setDraft((d) => ({ ...d, sectionNote: event.target.value }))}
+                      placeholder="Lettuce, mint, basil, sprout, carrot, and mango."
+                      value={draft.sectionNote}
+                    />
+                  </label>
+                </div>
+              </div>
               <label>
                 Description
                 <textarea
@@ -367,23 +569,101 @@ export default function AdminPage() {
                   value={draft.description}
                 />
               </label>
-              <div className="two-col">
-                <label>
-                  Choices JSON
-                  <textarea
-                    onChange={(event) => setDraft((d) => ({ ...d, choicesJson: event.target.value }))}
-                    rows={4}
-                    value={draft.choicesJson}
-                  />
-                </label>
-                <label>
-                  Add-ons JSON
-                  <textarea
-                    onChange={(event) => setDraft((d) => ({ ...d, addOnsJson: event.target.value }))}
-                    rows={4}
-                    value={draft.addOnsJson}
-                  />
-                </label>
+              <div className="option-editor-grid">
+                <article>
+                  <div className="choice-admin-header">
+                    <strong>Choices</strong>
+                    <button onClick={addChoice} type="button">
+                      + Choice
+                    </button>
+                  </div>
+                  <div className="choice-admin-list">
+                    {draft.choices.length ? (
+                      draft.choices.map((choice, choiceIndex) => (
+                        <section className="choice-admin-card" key={`choice-${choiceIndex}`}>
+                          <div className="choice-admin-heading">
+                            <label>
+                              Choice name
+                              <input
+                                onChange={(event) => updateChoiceName(choiceIndex, event.target.value)}
+                                placeholder="Egg style, filling, noodle style"
+                                value={choice.name}
+                              />
+                            </label>
+                            <button onClick={() => removeChoice(choiceIndex)} type="button">
+                              -
+                            </button>
+                          </div>
+                          <div className="choice-option-list">
+                            <div className="choice-admin-header compact">
+                              <strong>Options</strong>
+                              <button onClick={() => addChoiceOption(choiceIndex)} type="button">
+                                + Option
+                              </button>
+                            </div>
+                            {choice.options.length ? (
+                              choice.options.map((option, optionIndex) => (
+                                <div className="choice-option-row" key={`choice-${choiceIndex}-option-${optionIndex}`}>
+                                  <input
+                                    onChange={(event) =>
+                                      updateChoiceOption(choiceIndex, optionIndex, event.target.value)
+                                    }
+                                    placeholder="Sunny side up"
+                                    value={option}
+                                  />
+                                  <button onClick={() => removeChoiceOption(choiceIndex, optionIndex)} type="button">
+                                    -
+                                  </button>
+                                </div>
+                              ))
+                            ) : (
+                              <p className="muted">No options added.</p>
+                            )}
+                          </div>
+                        </section>
+                      ))
+                    ) : (
+                      <p className="muted">No choices added.</p>
+                    )}
+                  </div>
+                </article>
+                <article>
+                  <div className="choice-admin-header">
+                    <strong>Add-ons</strong>
+                    <button onClick={addAddOn} type="button">
+                      + Add-on
+                    </button>
+                  </div>
+                  <div className="addon-admin-block">
+                    {draft.addOns.length ? (
+                      draft.addOns.map((addOn, addOnIndex) => (
+                        <div className="addon-admin-row" key={`add-on-${addOnIndex}`}>
+                          <label>
+                            Add-on
+                            <input
+                              onChange={(event) => updateAddOn(addOnIndex, "name", event.target.value)}
+                              placeholder="Bacon"
+                              value={addOn.name}
+                            />
+                          </label>
+                          <label>
+                            Price
+                            <input
+                              onChange={(event) => updateAddOn(addOnIndex, "price", event.target.value)}
+                              placeholder="$2"
+                              value={addOn.price}
+                            />
+                          </label>
+                          <button onClick={() => removeAddOn(addOnIndex)} type="button">
+                            -
+                          </button>
+                        </div>
+                      ))
+                    ) : (
+                      <p className="muted">No add-ons added.</p>
+                    )}
+                  </div>
+                </article>
               </div>
               <div className="two-col">
                 <label className="upload-picker">
