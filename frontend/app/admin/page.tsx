@@ -30,6 +30,7 @@ import {
 import { restaurantContent, type MenuCategory } from "../lib/restaurant-data";
 
 const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+type DailyFilterCategory = MenuCategory | "all" | "shown";
 
 type DraftAddOn = {
   name: string;
@@ -158,7 +159,7 @@ export default function AdminPage() {
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
   const [filterCategory, setFilterCategory] = useState<MenuCategory | "all">("all");
-  const [dailyFilterCategory, setDailyFilterCategory] = useState<MenuCategory | "all">("all");
+  const [dailyFilterCategory, setDailyFilterCategory] = useState<DailyFilterCategory>("all");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
   const [restaurantInfo, setRestaurantInfo] = useState<ApiRestaurantInfo>({
     location: restaurantContent.contact.location,
@@ -192,6 +193,13 @@ export default function AdminPage() {
     });
   }, [load]);
 
+  useEffect(() => {
+    if (!notice) return undefined;
+
+    const timeout = window.setTimeout(() => setNotice(""), 4500);
+    return () => window.clearTimeout(timeout);
+  }, [notice]);
+
   const visibleItems = useMemo(() => {
     if (filterCategory === "all") return items;
     return items.filter((item) => toUiCategory(item.category) === filterCategory);
@@ -199,8 +207,11 @@ export default function AdminPage() {
 
   const visibleDailyItems = useMemo(() => {
     if (dailyFilterCategory === "all") return items;
+    if (dailyFilterCategory === "shown") {
+      return items.filter((item) => specialtyIds.includes(item.id));
+    }
     return items.filter((item) => toUiCategory(item.category) === dailyFilterCategory);
-  }, [dailyFilterCategory, items]);
+  }, [dailyFilterCategory, items, specialtyIds]);
 
   const headerOptions = useMemo(() => headerOptionsFor(draft.category), [draft.category]);
 
@@ -498,6 +509,13 @@ export default function AdminPage() {
                   type="button"
                 >
                   All
+                </button>
+                <button
+                  className={dailyFilterCategory === "shown" ? "active" : ""}
+                  onClick={() => setDailyFilterCategory("shown")}
+                  type="button"
+                >
+                  Shown dishes
                 </button>
                 {restaurantContent.menuTabs.map((tab) => (
                   <button
