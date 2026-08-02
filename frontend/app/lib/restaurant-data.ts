@@ -233,7 +233,7 @@ export const restaurantContent: RestaurantContent = {
       {
         id: "momo",
         title: "Momo",
-        note: "Six pieces, pan-fried or steamed.",
+        note: "Pan fry or steamed, 6 pieces.",
         dishes: [
           { id: "momo-pork", name: "Pork", description: "Choice of pan-fried or steamed momo.", price: "$6.95", options: [{ label: "Cooking style", options: ["Pan-fried", "Steamed"] }], allergens: ["Gluten", "Pork"] },
           { id: "momo-beef", name: "Beef, Tomato, Cheese", description: "Choice of pan-fried or steamed momo.", price: "$7.95", options: [{ label: "Cooking style", options: ["Pan-fried", "Steamed"] }], allergens: ["Gluten", "Dairy"] },
@@ -243,7 +243,7 @@ export const restaurantContent: RestaurantContent = {
       {
         id: "salad-wraps",
         title: "Salad Wraps",
-        note: "Two rice paper wraps with lettuce, mint, basil, onion, mango, carrot, and vermicelli.",
+        note: "Lettuce, mint, basil, onion, mango, carrot, vermicelli, wrapped in rice paper. 2 pieces.",
         dishes: [
           { id: "five-spice-pork-wrap", name: "Five Spices Pork Belly", description: "Two salad wraps.", price: "$10.95", allergens: ["Pork"] },
           { id: "beef-garlic-bread-wrap", name: "Beef on Garlic Bread", description: "Two salad wraps.", price: "$10.95", allergens: ["Gluten"] },
@@ -266,6 +266,13 @@ export const restaurantContent: RestaurantContent = {
         ],
       },
       {
+        id: "goi-xoai",
+        title: "Goi Xoai - Mango Salad",
+        dishes: [
+          { id: "goi-xoai", name: "Goi Xoai - Mango Salad", description: "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, and cracker.", price: "$15.95", addOns: [{ name: "Grilled chicken and shrimp", price: "$6" }], allergens: ["Peanut", "Seafood"] },
+        ],
+      },
+      {
         id: "banh-mi-baguettes",
         title: "Banh Mi - Baguettes",
         note: "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli.",
@@ -281,23 +288,33 @@ export const restaurantContent: RestaurantContent = {
         ],
       },
       {
-        id: "pho-noodles-rice",
-        title: "Pho, Noodles, Rice",
+        id: "pho",
+        title: "Pho",
         dishes: [
-          { id: "goi-xoai", name: "Goi Xoai - Mango Salad", description: "Green mango, lotus root, onion, carrot, pepper, basil, mint, coriander, peanut, and cracker.", price: "$15.95", addOns: [{ name: "Grilled chicken and shrimp", price: "$6" }], allergens: ["Peanut", "Seafood"] },
           { id: "pho-special", name: "Pho Special", description: "Rib, rare beef, brisket, beef balls, and tendon.", price: "$23.95" },
           { id: "pho-rare-beef", name: "Rare Beef Tenderloin Pho", description: "Rare beef tenderloin noodle soup.", price: "$22.95" },
           { id: "pho-brisket-beef", name: "Brisket and Beef Pho", description: "Brisket and beef noodle soup.", price: "$19.95" },
           { id: "pho-free-range-chicken", name: "Free Range Chicken Pho", description: "Free range chicken noodle soup.", price: "$19.95" },
           { id: "pho-grilled-chicken", name: "Grilled Chicken Pho", description: "Grilled chicken noodle soup.", price: "$18.95" },
+        ],
+      },
+      {
+        id: "bun-vermicelli",
+        title: "Bun - Vermicelli Bowl",
+        dishes: [
           { id: "bun-vermicelli", name: "Bun - Vermicelli Bowl", description: "Grilled chicken, beef, pork, shrimp, spring roll, lettuce, basil, mint, cucumber, pickled carrot, onion, and peanut.", price: "$19.95", options: [{ label: "Vermicelli", options: ["Steamed", "Stir-fry"] }], allergens: ["Peanut", "Seafood"] },
+        ],
+      },
+      {
+        id: "house-special-noodle",
+        title: "House Special Noodle Bowl",
+        note: "With broth on the side.",
+        dishes: [
           { id: "house-special-noodle-bowl", name: "House Special Noodle Bowl", description: "Shrimp, calamari, fish cake, BBQ pork, shrimp cracker, with broth on the side.", price: "$20.95", options: [{ label: "Noodle", options: ["Fresh egg noodle", "Clear noodle"] }], allergens: ["Seafood", "Egg"] },
         ],
       },
-    ],
-    dinner: [
       {
-        id: "rice-platter",
+        id: "com-rice-platter",
         title: "Com - Rice Platter",
         dishes: [
           { id: "lemongrass-pork-rice", name: "Char-Grill Spicy Lemongrass Pork Chop", description: "With grilled chicken, beef, sunny egg, and steamed jasmine rice.", price: "$19.95", allergens: ["Egg", "Pork"] },
@@ -305,8 +322,10 @@ export const restaurantContent: RestaurantContent = {
           { id: "hot-stone-chicken", name: "Hot Stone Bowl Free Range Chicken", description: "Served with mushroom, bamboo, ginger rice, and fresh slaw on the side.", price: "$21.95" },
         ],
       },
+    ],
+    dinner: [
       {
-        id: "dinner-specials",
+        id: "dinner-special",
         title: "Dinner Special",
         dishes: [
           { id: "goi-bo-tai-chanh", name: "Goi Bo Tai Chanh - Beef Carpaccio", description: "AAA rib eye rare steak slices, green papaya, onion, carrot, pepper, basil, peanut, and cracker.", price: "$21.95", allergens: ["Peanut"] },
@@ -336,12 +355,35 @@ export const restaurantContent: RestaurantContent = {
         ],
       },
       {
-        id: "wine-beer",
-        title: "Wine and Beer",
+        id: "red-wine",
+        title: "Red Wine",
         dishes: [
-          { id: "red-wine", name: "Red Wine", description: "Cabernet Sauvignon, Merlot, Pinot Noir, Shiraz, and Malbec.", price: "Ask staff" },
-          { id: "white-wine", name: "White Wine", description: "Sauvignon Blanc, Pinot Grigio, Chardonnay, and Riesling.", price: "Ask staff" },
-          { id: "beer", name: "Beers", description: "Saigon 33, Sapporo, Tiger, Singha, and Cass.", price: "Ask staff" },
+          { id: "cabernet-sauvignon", name: "Cabernet Sauvignon", description: "Red wine.", price: "Ask staff" },
+          { id: "merlot", name: "Merlot", description: "Red wine.", price: "Ask staff" },
+          { id: "pinot-noir", name: "Pinot Noir", description: "Red wine.", price: "Ask staff" },
+          { id: "shiraz", name: "Shiraz", description: "Red wine.", price: "Ask staff" },
+          { id: "malbec", name: "Malbec", description: "Red wine.", price: "Ask staff" },
+        ],
+      },
+      {
+        id: "white-wine",
+        title: "White Wine",
+        dishes: [
+          { id: "sauvignon-blanc", name: "Sauvignon Blanc", description: "White wine.", price: "Ask staff" },
+          { id: "pinot-grigio", name: "Pinot Grigio", description: "White wine.", price: "Ask staff" },
+          { id: "chardonnay", name: "Chardonnay", description: "White wine.", price: "Ask staff" },
+          { id: "riesling", name: "Riesling", description: "Good with spicy food.", price: "Ask staff" },
+        ],
+      },
+      {
+        id: "beers",
+        title: "Beers",
+        dishes: [
+          { id: "saigon-33", name: "Saigon 33", description: "Vietnam.", price: "Ask staff" },
+          { id: "sapporo", name: "Sapporo", description: "Japan.", price: "Ask staff" },
+          { id: "tiger", name: "Tiger", description: "Singapore.", price: "Ask staff" },
+          { id: "singha", name: "Singha", description: "Thailand.", price: "Ask staff" },
+          { id: "cass", name: "Cass", description: "Korea.", price: "Ask staff" },
         ],
       },
       {

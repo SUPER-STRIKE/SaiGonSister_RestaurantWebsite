@@ -51,6 +51,9 @@ db.exec(`
     description TEXT,
     price REAL NOT NULL,
     category TEXT NOT NULL CHECK(category IN ('breakfast','lunch','dinner','drink')),
+    sectionId TEXT,
+    sectionTitle TEXT,
+    sectionNote TEXT,
     tags TEXT DEFAULT '[]',
     choices TEXT DEFAULT '[]',
     addOns TEXT DEFAULT '[]',
@@ -84,6 +87,9 @@ db.exec(`
 
 addColumnIfMissing('menu_items', 'choices', "TEXT DEFAULT '[]'");
 addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
+addColumnIfMissing('menu_items', 'sectionId', 'TEXT');
+addColumnIfMissing('menu_items', 'sectionTitle', 'TEXT');
+addColumnIfMissing('menu_items', 'sectionNote', 'TEXT');
 
 // Older DBs used UNIQUE(special_date) (one specialty per day). Allow several.
 (function migrateDailySpecials() {
@@ -186,8 +192,8 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
   if (!Array.isArray(items) || items.length === 0) return;
 
   const insert = db.prepare(`
-    INSERT INTO menu_items (menuNumber, name, description, price, category, tags, choices, addOns)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO menu_items (menuNumber, name, description, price, category, sectionId, sectionTitle, sectionNote, tags, choices, addOns)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
   const seed = db.transaction((rows) => {
     for (const item of rows) {
@@ -197,6 +203,9 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
         item.description ?? null,
         item.price ?? 0,
         item.category,
+        item.sectionId ?? null,
+        item.sectionTitle ?? null,
+        item.sectionNote ?? null,
         JSON.stringify(item.tags || []),
         JSON.stringify(item.choices || []),
         JSON.stringify(item.addOns || [])
@@ -205,6 +214,44 @@ addColumnIfMissing('menu_items', 'addOns', "TEXT DEFAULT '[]'");
   });
   seed(items);
   console.log(`Bootstrapped ${items.length} menu items from menu-data.json`);
+})();
+
+// Backfill headers on existing rows that predate section columns.
+(function backfillMenuHeaders() {
+  const dataPath = path.join(__dirname, '..', 'menu-data.json');
+  if (!fs.existsSync(dataPath)) return;
+
+  const { items } = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
+  if (!Array.isArray(items) || items.length === 0) return;
+
+  const byNumber = new Map();
+  for (const item of items) {
+    if (!item.menuNumber || !item.sectionId) continue;
+    byNumber.set(String(item.menuNumber), item);
+  }
+
+  const update = db.prepare(
+    `UPDATE menu_items
+     SET sectionId = ?, sectionTitle = ?, sectionNote = ?
+     WHERE menuNumber = ? AND (sectionId IS NULL OR sectionId = '')`
+  );
+
+  const run = db.transaction(() => {
+    let n = 0;
+    for (const [menuNumber, item] of byNumber) {
+      const result = update.run(
+        item.sectionId,
+        item.sectionTitle ?? null,
+        item.sectionNote ?? null,
+        menuNumber
+      );
+      n += result.changes;
+    }
+    return n;
+  });
+
+  const changed = run();
+  if (changed) console.log(`Backfilled menu headers on ${changed} items`);
 })();
 
 module.exports = db;

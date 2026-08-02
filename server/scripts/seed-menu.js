@@ -19,8 +19,8 @@ if (existing > 0 && force) {
 }
 
 const insert = db.prepare(`
-  INSERT INTO menu_items (menuNumber, name, description, price, category, tags, choices, addOns)
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+  INSERT INTO menu_items (menuNumber, name, description, price, category, sectionId, sectionTitle, sectionNote, tags, choices, addOns)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `);
 
 const seed = db.transaction((rows) => {
@@ -31,6 +31,9 @@ const seed = db.transaction((rows) => {
       item.description ?? null,
       item.price ?? 0,
       item.category,
+      item.sectionId ?? null,
+      item.sectionTitle ?? null,
+      item.sectionNote ?? null,
       JSON.stringify(item.tags || []),
       JSON.stringify(item.choices || []),
       JSON.stringify(item.addOns || [])

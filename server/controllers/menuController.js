@@ -81,7 +81,8 @@ function getMenuItems(req, res) {
 
 function createMenuItem(req, res) {
   try {
-    const { name, description, price, category, menuNumber } = req.body || {};
+    const { name, description, price, category, menuNumber, sectionId, sectionTitle, sectionNote } =
+      req.body || {};
 
     if (!name || price == null || !category) {
       return res.status(400).json({ error: 'name, price, and category are required' });
@@ -97,8 +98,8 @@ function createMenuItem(req, res) {
 
     const result = db
       .prepare(
-        `INSERT INTO menu_items (menuNumber, name, description, price, category, tags, choices, addOns, imageUrl)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        `INSERT INTO menu_items (menuNumber, name, description, price, category, sectionId, sectionTitle, sectionNote, tags, choices, addOns, imageUrl)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
       )
       .run(
         menuNumber ?? null,
@@ -106,6 +107,9 @@ function createMenuItem(req, res) {
         description ?? null,
         Number(price),
         category,
+        sectionId?.trim() || null,
+        sectionTitle?.trim() || null,
+        sectionNote?.trim() || null,
         tags,
         choices,
         addOns,
@@ -135,6 +139,18 @@ function updateMenuItem(req, res) {
     const category = req.body.category ?? existing.category;
     const menuNumber =
       req.body.menuNumber !== undefined ? req.body.menuNumber : existing.menuNumber;
+    const sectionId =
+      req.body.sectionId !== undefined
+        ? String(req.body.sectionId || '').trim() || null
+        : existing.sectionId;
+    const sectionTitle =
+      req.body.sectionTitle !== undefined
+        ? String(req.body.sectionTitle || '').trim() || null
+        : existing.sectionTitle;
+    const sectionNote =
+      req.body.sectionNote !== undefined
+        ? String(req.body.sectionNote || '').trim() || null
+        : existing.sectionNote;
 
     if (!CATEGORIES.has(category)) {
       return res.status(400).json({ error: 'category must be breakfast, lunch, dinner, or drink' });
@@ -158,9 +174,24 @@ function updateMenuItem(req, res) {
     db.prepare(
       `UPDATE menu_items
        SET menuNumber = ?, name = ?, description = ?, price = ?, category = ?,
+           sectionId = ?, sectionTitle = ?, sectionNote = ?,
            tags = ?, choices = ?, addOns = ?, imageUrl = ?
        WHERE id = ?`
-    ).run(menuNumber, name, description, price, category, tags, choices, addOns, imageUrl, id);
+    ).run(
+      menuNumber,
+      name,
+      description,
+      price,
+      category,
+      sectionId,
+      sectionTitle,
+      sectionNote,
+      tags,
+      choices,
+      addOns,
+      imageUrl,
+      id
+    );
 
     const item = db.prepare('SELECT * FROM menu_items WHERE id = ?').get(id);
     return res.json(formatItem(item));

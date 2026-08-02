@@ -27,17 +27,42 @@
         {
           "name": "Egg style",
           "required": true,
-          "options": ["over easy", "sunny side up", "poached"]
+          "options": [
+            "over easy",
+            "sunny side up",
+            "poached"
+          ]
         }
       ],
       "addOns": [
-        { "name": "Bacon", "price": 2 },
-        { "name": "Peameal Bacon", "price": 4 },
-        { "name": "Bratwurst sausage", "price": 4 },
-        { "name": "Ham", "price": 2 },
-        { "name": "Philly Cheese Steak", "price": 5 },
-        { "name": "Chicken Parmesan", "price": 5 }
-      ]
+        {
+          "name": "Bacon",
+          "price": 2
+        },
+        {
+          "name": "Peameal Bacon",
+          "price": 4
+        },
+        {
+          "name": "Bratwurst sausage",
+          "price": 4
+        },
+        {
+          "name": "Ham",
+          "price": 2
+        },
+        {
+          "name": "Philly Cheese Steak",
+          "price": 5
+        },
+        {
+          "name": "Chicken Parmesan",
+          "price": 5
+        }
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "2",
@@ -48,7 +73,10 @@
       "tags": [
         "must-try",
         "creation"
-      ]
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "3",
@@ -58,7 +86,10 @@
       "category": "breakfast",
       "tags": [
         "creation"
-      ]
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "4",
@@ -68,7 +99,10 @@
       "category": "breakfast",
       "tags": [
         "must-try"
-      ]
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "6",
@@ -80,10 +114,22 @@
         "vegan"
       ],
       "addOns": [
-        { "name": "Poached eggs", "price": 2 },
-        { "name": "Peameal Bacon", "price": 4 },
-        { "name": "Smoked salmon", "price": 6 }
-      ]
+        {
+          "name": "Poached eggs",
+          "price": 2
+        },
+        {
+          "name": "Peameal Bacon",
+          "price": 4
+        },
+        {
+          "name": "Smoked salmon",
+          "price": 6
+        }
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "7",
@@ -93,7 +139,10 @@
       "category": "breakfast",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "8",
@@ -106,11 +155,26 @@
         "spicy"
       ],
       "addOns": [
-        { "name": "Bacon", "price": 2 },
-        { "name": "Sausage", "price": 3 },
-        { "name": "Ham", "price": 2 },
-        { "name": "Egg", "price": 1 }
-      ]
+        {
+          "name": "Bacon",
+          "price": 2
+        },
+        {
+          "name": "Sausage",
+          "price": 3
+        },
+        {
+          "name": "Ham",
+          "price": 2
+        },
+        {
+          "name": "Egg",
+          "price": 1
+        }
+      ],
+      "sectionId": "breakfast-plates",
+      "sectionTitle": "Breakfast Plates",
+      "sectionNote": ""
     },
     {
       "menuNumber": "11",
@@ -120,7 +184,10 @@
       "category": "lunch",
       "tags": [
         "seafood"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "12",
@@ -128,7 +195,10 @@
       "description": "Lettuce, mint, basil, sprout, carrot, mango. Grilled beef.",
       "price": 3.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "13",
@@ -138,7 +208,10 @@
       "category": "lunch",
       "tags": [
         "seafood"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "14",
@@ -148,7 +221,10 @@
       "category": "lunch",
       "tags": [
         "seafood"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "15",
@@ -158,7 +234,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "16",
@@ -168,7 +247,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "17",
@@ -178,7 +260,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "18",
@@ -188,7 +273,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "salad-rolls",
+      "sectionTitle": "Salad Rolls",
+      "sectionNote": "Lettuce, mint, basil, sprout, carrot, and mango."
     },
     {
       "menuNumber": "21",
@@ -201,9 +289,15 @@
         {
           "name": "Preparation",
           "required": true,
-          "options": ["pan fry", "steamed"]
+          "options": [
+            "pan fry",
+            "steamed"
+          ]
         }
-      ]
+      ],
+      "sectionId": "momo",
+      "sectionTitle": "Momo",
+      "sectionNote": "Pan fry or steamed, 6 pieces."
     },
     {
       "menuNumber": "22",
@@ -216,9 +310,15 @@
         {
           "name": "Preparation",
           "required": true,
-          "options": ["pan fry", "steamed"]
+          "options": [
+            "pan fry",
+            "steamed"
+          ]
         }
-      ]
+      ],
+      "sectionId": "momo",
+      "sectionTitle": "Momo",
+      "sectionNote": "Pan fry or steamed, 6 pieces."
     },
     {
       "menuNumber": "23",
@@ -233,9 +333,15 @@
         {
           "name": "Preparation",
           "required": true,
-          "options": ["pan fry", "steamed"]
+          "options": [
+            "pan fry",
+            "steamed"
+          ]
         }
-      ]
+      ],
+      "sectionId": "momo",
+      "sectionTitle": "Momo",
+      "sectionNote": "Pan fry or steamed, 6 pieces."
     },
     {
       "menuNumber": "31",
@@ -243,7 +349,10 @@
       "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Five spices pork belly.",
       "price": 10.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "salad-wraps",
+      "sectionTitle": "Salad Wraps",
+      "sectionNote": "Lettuce, mint, basil, onion, mango, carrot, vermicelli, wrapped in rice paper. 2 pieces."
     },
     {
       "menuNumber": "32",
@@ -251,7 +360,10 @@
       "description": "2 pcs. Lettuce, mint, basil, onion, mango, carrot, vermicelli wrapped in rice paper. Beef on garlic bread.",
       "price": 10.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "salad-wraps",
+      "sectionTitle": "Salad Wraps",
+      "sectionNote": "Lettuce, mint, basil, onion, mango, carrot, vermicelli, wrapped in rice paper. 2 pieces."
     },
     {
       "menuNumber": "33",
@@ -261,7 +373,10 @@
       "category": "lunch",
       "tags": [
         "seafood"
-      ]
+      ],
+      "sectionId": "salad-wraps",
+      "sectionTitle": "Salad Wraps",
+      "sectionNote": "Lettuce, mint, basil, onion, mango, carrot, vermicelli, wrapped in rice paper. 2 pieces."
     },
     {
       "menuNumber": "34",
@@ -271,7 +386,10 @@
       "category": "lunch",
       "tags": [
         "seafood"
-      ]
+      ],
+      "sectionId": "salad-wraps",
+      "sectionTitle": "Salad Wraps",
+      "sectionNote": "Lettuce, mint, basil, onion, mango, carrot, vermicelli, wrapped in rice paper. 2 pieces."
     },
     {
       "menuNumber": "35",
@@ -282,7 +400,10 @@
       "tags": [
         "seafood",
         "must-try"
-      ]
+      ],
+      "sectionId": "salad-wraps",
+      "sectionTitle": "Salad Wraps",
+      "sectionNote": "Lettuce, mint, basil, onion, mango, carrot, vermicelli, wrapped in rice paper. 2 pieces."
     },
     {
       "menuNumber": "41",
@@ -292,7 +413,10 @@
       "category": "lunch",
       "tags": [
         "spicy"
-      ]
+      ],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "42",
@@ -300,7 +424,10 @@
       "description": "Crispy fried pork spring roll.",
       "price": 3.5,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "43",
@@ -310,7 +437,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "44",
@@ -320,7 +450,10 @@
       "category": "lunch",
       "tags": [
         "seafood"
-      ]
+      ],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "45",
@@ -330,7 +463,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "46",
@@ -340,7 +476,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "47",
@@ -350,7 +489,10 @@
       "category": "lunch",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "crispy-fry",
+      "sectionTitle": "Crispy Fry",
+      "sectionNote": ""
     },
     {
       "menuNumber": "51",
@@ -362,8 +504,14 @@
         "spicy"
       ],
       "addOns": [
-        { "name": "Grilled chicken and shrimp", "price": 6 }
-      ]
+        {
+          "name": "Grilled chicken and shrimp",
+          "price": 6
+        }
+      ],
+      "sectionId": "goi-xoai",
+      "sectionTitle": "Goi Xoai - Mango Salad",
+      "sectionNote": ""
     },
     {
       "menuNumber": "61",
@@ -373,8 +521,14 @@
       "category": "lunch",
       "tags": [],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "62",
@@ -386,8 +540,14 @@
         "spicy"
       ],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "63",
@@ -397,8 +557,14 @@
       "category": "lunch",
       "tags": [],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "64",
@@ -408,8 +574,14 @@
       "category": "lunch",
       "tags": [],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "65",
@@ -422,8 +594,14 @@
         "creation"
       ],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "66",
@@ -433,8 +611,14 @@
       "category": "lunch",
       "tags": [],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "67",
@@ -444,8 +628,14 @@
       "category": "lunch",
       "tags": [],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "68",
@@ -457,8 +647,14 @@
         "seafood"
       ],
       "addOns": [
-        { "name": "Extra meat", "price": 4 }
-      ]
+        {
+          "name": "Extra meat",
+          "price": 4
+        }
+      ],
+      "sectionId": "banh-mi-baguettes",
+      "sectionTitle": "Banh Mi - Baguettes",
+      "sectionNote": "Tomato, cucumber, pickled daikon-carrot, onion, coriander, and garlic aioli."
     },
     {
       "menuNumber": "71",
@@ -468,7 +664,10 @@
       "category": "lunch",
       "tags": [
         "must-try"
-      ]
+      ],
+      "sectionId": "pho",
+      "sectionTitle": "Pho",
+      "sectionNote": ""
     },
     {
       "menuNumber": "72",
@@ -476,7 +675,10 @@
       "description": "Rare beef tenderloin pho.",
       "price": 22.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "pho",
+      "sectionTitle": "Pho",
+      "sectionNote": ""
     },
     {
       "menuNumber": "73",
@@ -484,7 +686,10 @@
       "description": "Brisket and beef pho.",
       "price": 19.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "pho",
+      "sectionTitle": "Pho",
+      "sectionNote": ""
     },
     {
       "menuNumber": "74",
@@ -492,7 +697,10 @@
       "description": "Free range chicken pho.",
       "price": 19.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "pho",
+      "sectionTitle": "Pho",
+      "sectionNote": ""
     },
     {
       "menuNumber": "75",
@@ -500,7 +708,10 @@
       "description": "Grilled chicken pho.",
       "price": 18.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "pho",
+      "sectionTitle": "Pho",
+      "sectionNote": ""
     },
     {
       "menuNumber": "81",
@@ -515,9 +726,15 @@
         {
           "name": "Vermicelli",
           "required": true,
-          "options": ["steamed", "stir-fry"]
+          "options": [
+            "steamed",
+            "stir-fry"
+          ]
         }
-      ]
+      ],
+      "sectionId": "bun-vermicelli",
+      "sectionTitle": "Bun - Vermicelli Bowl",
+      "sectionNote": ""
     },
     {
       "menuNumber": "85",
@@ -534,9 +751,15 @@
         {
           "name": "Noodle",
           "required": true,
-          "options": ["fresh egg noodle", "clear noodle"]
+          "options": [
+            "fresh egg noodle",
+            "clear noodle"
+          ]
         }
-      ]
+      ],
+      "sectionId": "house-special-noodle",
+      "sectionTitle": "House Special Noodle Bowl",
+      "sectionNote": "With broth on the side."
     },
     {
       "menuNumber": "91",
@@ -546,7 +769,10 @@
       "category": "lunch",
       "tags": [
         "spicy"
-      ]
+      ],
+      "sectionId": "com-rice-platter",
+      "sectionTitle": "Com - Rice Platter",
+      "sectionNote": ""
     },
     {
       "menuNumber": "92",
@@ -554,7 +780,10 @@
       "description": "Crispy skin chicken thigh, grilled chicken, salad, tomato fried rice.",
       "price": 19.95,
       "category": "lunch",
-      "tags": []
+      "tags": [],
+      "sectionId": "com-rice-platter",
+      "sectionTitle": "Com - Rice Platter",
+      "sectionNote": ""
     },
     {
       "menuNumber": "93",
@@ -564,7 +793,10 @@
       "category": "lunch",
       "tags": [
         "creation"
-      ]
+      ],
+      "sectionId": "com-rice-platter",
+      "sectionTitle": "Com - Rice Platter",
+      "sectionNote": ""
     },
     {
       "menuNumber": "52",
@@ -575,7 +807,10 @@
       "tags": [
         "must-try",
         "creation"
-      ]
+      ],
+      "sectionId": "dinner-special",
+      "sectionTitle": "Dinner Special",
+      "sectionNote": ""
     },
     {
       "menuNumber": "53",
@@ -586,7 +821,10 @@
       "tags": [
         "seafood",
         "must-try"
-      ]
+      ],
+      "sectionId": "dinner-special",
+      "sectionTitle": "Dinner Special",
+      "sectionNote": ""
     },
     {
       "menuNumber": "94",
@@ -597,7 +835,10 @@
       "tags": [
         "must-try",
         "creation"
-      ]
+      ],
+      "sectionId": "dinner-special",
+      "sectionTitle": "Dinner Special",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D1",
@@ -605,7 +846,10 @@
       "description": "1oz bourbon, 1oz aperol, amaro nonino, lemon juice.",
       "price": 12,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D2",
@@ -613,7 +857,10 @@
       "description": "Prosecco, aperol, soda.",
       "price": 11,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D3",
@@ -623,7 +870,10 @@
       "category": "drink",
       "tags": [
         "creation"
-      ]
+      ],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D4",
@@ -631,7 +881,10 @@
       "description": "5oz prosecco, mango smoothie, grenadine, raspberry.",
       "price": 11,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D5",
@@ -642,7 +895,10 @@
       "tags": [
         "spicy",
         "creation"
-      ]
+      ],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D6",
@@ -650,7 +906,10 @@
       "description": "2oz vodka, sparkling wine, passion juice, lime.",
       "price": 12,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D7",
@@ -661,7 +920,10 @@
       "tags": [
         "creation",
         "must-try"
-      ]
+      ],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D8",
@@ -671,7 +933,10 @@
       "category": "drink",
       "tags": [
         "creation"
-      ]
+      ],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D9",
@@ -679,7 +944,10 @@
       "description": "1oz irish whiskey, 1oz coffee liquor, black spices infused brewed coffee, sugar syrup.",
       "price": 11,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D10",
@@ -687,7 +955,10 @@
       "description": "2oz white rum, cream of coco, pineapple juice, sugar syrup blended with ice.",
       "price": 13,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D11",
@@ -697,7 +968,10 @@
       "category": "drink",
       "tags": [
         "spicy"
-      ]
+      ],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D12",
@@ -705,7 +979,10 @@
       "description": "2oz white rum, sugar syrup, soda lime, mint.",
       "price": 12,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D13",
@@ -713,7 +990,10 @@
       "description": "2oz dark rum, cola, lime juice.",
       "price": 11,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "cocktails",
+      "sectionTitle": "Cocktails",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D14",
@@ -721,7 +1001,10 @@
       "description": "Red wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "red-wine",
+      "sectionTitle": "Red Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D15",
@@ -729,7 +1012,10 @@
       "description": "Red wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "red-wine",
+      "sectionTitle": "Red Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D16",
@@ -737,7 +1023,10 @@
       "description": "Red wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "red-wine",
+      "sectionTitle": "Red Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D17",
@@ -745,7 +1034,10 @@
       "description": "Red wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "red-wine",
+      "sectionTitle": "Red Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D18",
@@ -753,7 +1045,10 @@
       "description": "Red wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "red-wine",
+      "sectionTitle": "Red Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D19",
@@ -761,7 +1056,10 @@
       "description": "White wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "white-wine",
+      "sectionTitle": "White Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D20",
@@ -769,7 +1067,10 @@
       "description": "White wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "white-wine",
+      "sectionTitle": "White Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D21",
@@ -777,7 +1078,10 @@
       "description": "White wine by the glass. Ask server for current pour price.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "white-wine",
+      "sectionTitle": "White Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D22",
@@ -787,7 +1091,10 @@
       "category": "drink",
       "tags": [
         "spicy"
-      ]
+      ],
+      "sectionId": "white-wine",
+      "sectionTitle": "White Wine",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D23",
@@ -795,7 +1102,10 @@
       "description": "Vietnamese lager.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "beers",
+      "sectionTitle": "Beers",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D24",
@@ -803,7 +1113,10 @@
       "description": "Japanese lager.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "beers",
+      "sectionTitle": "Beers",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D25",
@@ -811,7 +1124,10 @@
       "description": "Singapore lager.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "beers",
+      "sectionTitle": "Beers",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D26",
@@ -819,7 +1135,10 @@
       "description": "Thai lager.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "beers",
+      "sectionTitle": "Beers",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D27",
@@ -827,7 +1146,10 @@
       "description": "Korean lager.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "beers",
+      "sectionTitle": "Beers",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D28",
@@ -842,9 +1164,18 @@
         {
           "name": "Flavor",
           "required": true,
-          "options": ["mango", "strawberry", "avocado", "pineapple", "jackfruit"]
+          "options": [
+            "mango",
+            "strawberry",
+            "avocado",
+            "pineapple",
+            "jackfruit"
+          ]
         }
-      ]
+      ],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D29",
@@ -852,7 +1183,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D30",
@@ -860,7 +1194,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D31",
@@ -868,7 +1205,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D32",
@@ -876,7 +1216,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D33",
@@ -884,7 +1227,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D34",
@@ -892,7 +1238,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D35",
@@ -902,7 +1251,10 @@
       "category": "drink",
       "tags": [
         "creation"
-      ]
+      ],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D36",
@@ -910,7 +1262,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D37",
@@ -918,7 +1273,10 @@
       "description": "Iced cold drink.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D38",
@@ -926,7 +1284,10 @@
       "description": "Hot tea.",
       "price": 3,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D39",
@@ -934,7 +1295,10 @@
       "description": "Hot tea.",
       "price": null,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D40",
@@ -944,7 +1308,10 @@
       "category": "drink",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D41",
@@ -954,7 +1321,10 @@
       "category": "drink",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D42",
@@ -964,7 +1334,10 @@
       "category": "drink",
       "tags": [
         "vegan"
-      ]
+      ],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D43",
@@ -972,7 +1345,10 @@
       "description": "Fresh juice.",
       "price": 3,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D44",
@@ -987,9 +1363,15 @@
         {
           "name": "Temperature",
           "required": true,
-          "options": ["hot", "ice"]
+          "options": [
+            "hot",
+            "ice"
+          ]
         }
-      ]
+      ],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D45",
@@ -997,7 +1379,10 @@
       "description": "Soft drink.",
       "price": 2,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D46",
@@ -1005,7 +1390,10 @@
       "description": "Soft drink.",
       "price": 2,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D47",
@@ -1013,7 +1401,10 @@
       "description": "Soft drink.",
       "price": 2,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D48",
@@ -1021,7 +1412,10 @@
       "description": "Soft drink.",
       "price": 2,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     },
     {
       "menuNumber": "D49",
@@ -1029,7 +1423,10 @@
       "description": "Soft drink.",
       "price": 2,
       "category": "drink",
-      "tags": []
+      "tags": [],
+      "sectionId": "non-alcohol",
+      "sectionTitle": "Non Alcohol",
+      "sectionNote": ""
     }
   ]
 }
