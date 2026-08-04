@@ -112,6 +112,22 @@ export function verifyOtpRequest(otp: string) {
   });
 }
 
+export function updateUsernameRequest(token: string, username: string) {
+  return apiFetch<{ message: string }>("/api/auth/username", {
+    method: "PUT",
+    token,
+    body: JSON.stringify({ username }),
+  });
+}
+
+export function updatePasswordRequest(token: string, currentPassword: string, newPassword: string) {
+  return apiFetch<{ message: string }>("/api/auth/password", {
+    method: "PUT",
+    token,
+    body: JSON.stringify({ currentPassword, newPassword }),
+  });
+}
+
 export function createMenuItemRequest(token: string, form: FormData) {
   return apiFetch<ApiMenuItem>("/api/menu", { method: "POST", token, body: form });
 }

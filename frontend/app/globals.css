@@ -1478,6 +1478,25 @@ h3 {
   align-items: end;
 }
 
+.account-settings-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: 14px;
+}
+
+.account-panel {
+  align-content: start;
+  border: 1px solid rgba(215, 173, 69, 0.34);
+  background: rgba(255, 255, 255, 0.62);
+  padding: 16px;
+}
+
+.account-panel > strong {
+  color: var(--forest);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
 .choice-admin-list button,
 .addon-admin-block button,
 .choice-option-row button {
@@ -2895,8 +2914,16 @@ h3 {
 }
 
 @media (max-width: 1180px) {
+  .nav {
+    width: min(100% - 24px, 1040px);
+  }
+
   .menu-lines {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-main {
+    width: min(100% - 28px, 980px);
   }
 }
 
@@ -3036,6 +3063,7 @@ h3 {
   .admin-shell,
   .admin-grid,
   .option-editor-grid,
+  .account-settings-grid,
   .admin-mini-grid,
   .admin-dish-line-top,
   .three-col,
@@ -3053,9 +3081,33 @@ h3 {
     position: static;
   }
 
+  .admin-sidebar nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+  }
+
+  .admin-sidebar nav a {
+    flex: 0 0 auto;
+  }
+
   .admin-header,
   .admin-card-heading {
     flex-direction: column;
+  }
+
+  .admin-daily-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    width: 100%;
+    scrollbar-width: thin;
+  }
+
+  .admin-card .admin-daily-filter button {
+    flex: 0 0 auto;
   }
 
   .login-brand {
@@ -3072,12 +3124,46 @@ h3 {
 }
 
 @media (max-width: 560px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .nav {
+    align-items: stretch;
+    gap: 8px;
+    top: 8px;
+    width: calc(100% - 16px);
+  }
+
+  .brand {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .brand strong {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    padding: 5px;
+  }
+
   .nav-links a,
   .service-tabs button,
   .button {
     width: 100%;
     justify-content: center;
     text-align: center;
+  }
+
+  .nav-links a {
+    min-height: 38px;
+    padding: 8px 7px;
+    font-size: 0.9rem;
   }
 
   .hero-copy {
@@ -3092,7 +3178,7 @@ h3 {
   .daily-feature,
   .menu-section,
   .chef-section {
-    padding: 64px 0;
+    padding: 56px 0;
   }
 
   .hero-carousel {
@@ -3130,4 +3216,56 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .admin-main {
+    width: calc(100% - 18px);
+    padding: 22px 0 58px;
+  }
+
+  .admin-card {
+    padding: 18px;
+  }
+
+  .admin-header h1 {
+    font-size: clamp(2.1rem, 15vw, 3.2rem);
+  }
+
+  .account-notice {
+    top: 10px;
+    right: 10px;
+    width: calc(100vw - 20px);
+  }
+
+  .choice-option-row,
+  .addon-admin-row,
+  .admin-item-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .login-inline-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .login-inline-actions button {
+    width: 100%;
+  }
+
+}
+
+@media (max-width: 420px) {
+  .menu-lines {
+    gap: 36px;
+  }
+
+  .menu-section-title h3 {
+    font-size: clamp(2.35rem, 16vw, 3.4rem);
+  }
+
+  .daily-dish-copy {
+    padding: 18px;
+  }
+
+  .admin-daily-item {
+    padding: 14px;
+  }
 }

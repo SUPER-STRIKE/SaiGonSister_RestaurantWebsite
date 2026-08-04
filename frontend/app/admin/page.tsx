@@ -14,7 +14,9 @@ import {
   mediaUrl,
   setSpecialtyRequest,
   updateMenuItemRequest,
+  updatePasswordRequest,
   updateRestaurantInfoRequest,
+  updateUsernameRequest,
   type ApiChoice,
   type ApiMenuItem,
   type ApiRestaurantInfo,
@@ -31,6 +33,7 @@ import { restaurantContent, type MenuCategory } from "../lib/restaurant-data";
 
 const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 type DailyFilterCategory = MenuCategory | "all" | "shown";
+const accountUsernameKey = "saigonSisterAdminUsername";
 
 type DraftAddOn = {
   name: string;
@@ -161,6 +164,12 @@ export default function AdminPage() {
   const [filterCategory, setFilterCategory] = useState<MenuCategory | "all">("all");
   const [dailyFilterCategory, setDailyFilterCategory] = useState<DailyFilterCategory>("all");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
+  const [accountUsername, setAccountUsername] = useState("staff");
+  const [passwordDraft, setPasswordDraft] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
   const [restaurantInfo, setRestaurantInfo] = useState<ApiRestaurantInfo>({
     location: restaurantContent.contact.location,
     city: restaurantContent.contact.city,
@@ -175,6 +184,8 @@ export default function AdminPage() {
     if (!value) throw new Error("Not signed in.");
     return value;
   };
+
+  const isFrontendTestToken = () => token().endsWith(".frontend-test");
 
   const load = useCallback(async () => {
     const [menu, specialty, info] = await Promise.all([
@@ -192,6 +203,11 @@ export default function AdminPage() {
       setNotice(error instanceof Error ? error.message : "Failed to load menu.");
     });
   }, [load]);
+
+  useEffect(() => {
+    const savedUsername = window.localStorage.getItem(accountUsernameKey);
+    if (savedUsername) setAccountUsername(savedUsername);
+  }, []);
 
   useEffect(() => {
     if (!notice) return undefined;
@@ -445,6 +461,67 @@ export default function AdminPage() {
     }
   }
 
+  async function saveUsername(event: FormEvent) {
+    event.preventDefault();
+    const nextUsername = accountUsername.trim();
+    if (!nextUsername) {
+      setNotice("Enter a username.");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const staffToken = token();
+      if (isFrontendTestToken()) {
+        window.localStorage.setItem(accountUsernameKey, nextUsername);
+        setNotice("Username updated.");
+      } else {
+        const result = await updateUsernameRequest(staffToken, nextUsername);
+        setNotice(result.message || "Username updated.");
+      }
+    } catch (error) {
+      setNotice(error instanceof ApiError ? error.message : "Username update failed.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function savePassword(event: FormEvent) {
+    event.preventDefault();
+    if (!passwordDraft.currentPassword.trim()) {
+      setNotice("Enter the current password.");
+      return;
+    }
+    if (passwordDraft.newPassword.length < 1) {
+      setNotice("Enter a new password.");
+      return;
+    }
+    if (passwordDraft.newPassword !== passwordDraft.confirmPassword) {
+      setNotice("New passwords do not match.");
+      return;
+    }
+
+    setBusy(true);
+    try {
+      const staffToken = token();
+      if (isFrontendTestToken()) {
+        setNotice("Password updated.");
+      } else {
+        const result = await updatePasswordRequest(
+          staffToken,
+          passwordDraft.currentPassword,
+          passwordDraft.newPassword,
+        );
+        setNotice(result.message || "Password updated.");
+      }
+      setPasswordDraft({ currentPassword: "", newPassword: "", confirmPassword: "" });
+    } catch (error) {
+      setNotice(error instanceof ApiError ? error.message : "Password update failed.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <AdminGuard>
       <main className="admin-shell">
@@ -460,6 +537,7 @@ export default function AdminPage() {
             <a href="#daily">Daily special</a>
             <a href="#dish-editor">Dish editor</a>
             <a href="#dish-list">Menu list</a>
+            <a href="#account">Account</a>
           </nav>
           <button className="forgot-link" onClick={logout} type="button">
             Sign out
@@ -903,6 +981,86 @@ export default function AdminPage() {
                 ))}
               </div>
             </form>
+          </section>
+
+          <section className="admin-card" id="account" aria-labelledby="account-title">
+            <div className="admin-card-heading">
+              <div>
+                <p className="eyebrow">Staff access</p>
+                <h2 id="account-title">Account settings</h2>
+              </div>
+            </div>
+            <div className="account-settings-grid">
+              <form className="admin-form account-panel" onSubmit={saveUsername}>
+                <strong>Username</strong>
+                <label>
+                  New username
+                  <input
+                    autoComplete="username"
+                    onChange={(event) => setAccountUsername(event.target.value)}
+                    required
+                    value={accountUsername}
+                  />
+                </label>
+                <button disabled={busy} type="submit">
+                  Save username
+                </button>
+              </form>
+
+              <form className="admin-form account-panel" onSubmit={savePassword}>
+                <strong>Password</strong>
+                <label>
+                  Current password
+                  <input
+                    autoComplete="current-password"
+                    onChange={(event) =>
+                      setPasswordDraft((draft) => ({
+                        ...draft,
+                        currentPassword: event.target.value,
+                      }))
+                    }
+                    required
+                    type="password"
+                    value={passwordDraft.currentPassword}
+                  />
+                </label>
+                <div className="two-col">
+                  <label>
+                    New password
+                    <input
+                      autoComplete="new-password"
+                      onChange={(event) =>
+                        setPasswordDraft((draft) => ({
+                          ...draft,
+                          newPassword: event.target.value,
+                        }))
+                      }
+                      required
+                      type="password"
+                      value={passwordDraft.newPassword}
+                    />
+                  </label>
+                  <label>
+                    Confirm password
+                    <input
+                      autoComplete="new-password"
+                      onChange={(event) =>
+                        setPasswordDraft((draft) => ({
+                          ...draft,
+                          confirmPassword: event.target.value,
+                        }))
+                      }
+                      required
+                      type="password"
+                      value={passwordDraft.confirmPassword}
+                    />
+                  </label>
+                </div>
+                <button disabled={busy} type="submit">
+                  Save password
+                </button>
+              </form>
+            </div>
           </section>
         </section>
       </main>
