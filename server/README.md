@@ -29,6 +29,18 @@ ADMIN_EMAIL=superstrikehsgs@gmail.com
 
 Get a free API key at [resend.com](https://resend.com). With `onboarding@resend.dev`, Resend only delivers to the email on your Resend account (use that Gmail for testing). After you verify a domain, change `MAIL_FROM` to something like `noreply@yourdomain.com`. Never commit `.env`.
 
+## Railway: keep SQLite across deploys
+
+Without a volume, redeploys wipe the DB. In the Railway project canvas:
+
+1. Right-click → **Add Volume** (or Command Palette → volume)
+2. Attach it to the backend service
+3. Mount path: `/data`
+4. Optional: set `DB_PATH=/data/saigon.db` (or omit it; the app uses `$RAILWAY_VOLUME_MOUNT_PATH/saigon.db`)
+5. If the DB fails to open, set `RAILWAY_RUN_UID=0`
+
+Redeploy once. Startup logs should show `SQLite open: /data/saigon.db`.
+
 ## Create database data
 
 Create the admin account and import the 101 menu items:

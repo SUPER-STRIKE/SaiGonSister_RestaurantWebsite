@@ -8,6 +8,11 @@ function resolveDbPath() {
       ? process.env.DB_PATH
       : path.join(process.cwd(), process.env.DB_PATH);
   }
+  // Railway injects this when a volume is attached (mount e.g. /data).
+  const volume = process.env.RAILWAY_VOLUME_MOUNT_PATH;
+  if (volume) {
+    return path.join(volume, 'saigon.db');
+  }
   return path.join(__dirname, '..', 'saigon.db');
 }
 
@@ -15,11 +20,13 @@ function openDatabase() {
   const preferred = resolveDbPath();
   try {
     fs.mkdirSync(path.dirname(preferred), { recursive: true });
-    return new Database(preferred);
+    const db = new Database(preferred);
+    console.log(`SQLite open: ${preferred}`);
+    return db;
   } catch (err) {
     const fallback = path.join('/tmp', 'saigon.db');
     console.error(`DB open failed at ${preferred}: ${err.message}`);
-    console.error(`Falling back to ${fallback}`);
+    console.error(`Falling back to ${fallback} (NOT persistent across deploys)`);
     return new Database(fallback);
   }
 }
@@ -180,7 +187,7 @@ addColumnIfMissing('menu_items', 'sectionNote', 'TEXT');
   console.log(`Bootstrapped admin user "${username}" from env`);
 })();
 
-// ponytail: Railway disk is ephemeral; re-seed stock menu when DB is empty. Ceiling: admin wipe-all returns on restart until persistent volume.
+// ponytail: re-seed stock menu when DB is empty (first boot or no volume yet).
 (function seedMenuIfEmpty() {
   const count = db.prepare('SELECT COUNT(*) AS n FROM menu_items').get().n;
   if (count > 0) return;
