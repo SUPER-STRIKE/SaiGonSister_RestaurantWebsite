@@ -19,18 +19,15 @@ PORT=4000
 DB_PATH=./saigon.db
 JWT_SECRET=replace-with-a-long-random-secret
 
-SMTP_HOST=sandbox.smtp.mailtrap.io
-SMTP_PORT=2525
-SMTP_USER=your-mailtrap-username
-SMTP_PASS=your-mailtrap-password
-MAIL_FROM=noreply@saigonsisterrestaurant.com
+RESEND_API_KEY=re_xxxxxxxx
+MAIL_FROM=Saigon Sister <onboarding@resend.dev>
 
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=your-password
-ADMIN_EMAIL=admin@example.com
+ADMIN_EMAIL=superstrikehsgs@gmail.com
 ```
 
-Use Mailtrap Email Testing credentials during development. Never commit `.env`.
+Get a free API key at [resend.com](https://resend.com). With `onboarding@resend.dev`, Resend only delivers to the email on your Resend account (use that Gmail for testing). After you verify a domain, change `MAIL_FROM` to something like `noreply@yourdomain.com`. Never commit `.env`.
 
 ## Create database data
 
@@ -109,7 +106,7 @@ Expected:
 { "message": "OTP sent to your email" }
 ```
 
-Open Mailtrap, select My Sandbox, and copy the six-digit OTP. It expires after five minutes.
+Check your admin inbox for the six-digit OTP. It expires after ten minutes.
 
 ### 2. Verify OTP and save JWT
 
