@@ -240,7 +240,7 @@ export default function AdminPage() {
       const { endsAt } = await startTimerRequest(token());
       setTimerEndsAt(endsAt);
       setNow(Date.now());
-      setNotice("30-day timer started. Client cannot reset this.");
+      setNotice("Website warranty started. 30 days from now.");
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Failed to start timer.");
     } finally {
@@ -622,7 +622,7 @@ export default function AdminPage() {
               <strong>{items.length}</strong>
             </article>
             <article className="admin-timer-card" aria-live="polite">
-              <span>Timer</span>
+              <span>Warranty</span>
               {!timerEndsAt ? (
                 <button
                   className="admin-timer-start"
@@ -630,7 +630,7 @@ export default function AdminPage() {
                   onClick={startTimer}
                   type="button"
                 >
-                  Start 30 days
+                  Start 30-day warranty
                 </button>
               ) : (
                 <strong className="admin-timer-value">
