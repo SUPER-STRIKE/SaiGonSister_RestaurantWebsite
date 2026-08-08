@@ -168,3 +168,18 @@ export function updateRestaurantInfoRequest(token: string, body: Partial<ApiRest
     body: JSON.stringify(body),
   });
 }
+
+export type ApiTimer = {
+  endsAt: number | null;
+};
+
+export function fetchTimer(token: string) {
+  return apiFetch<ApiTimer>("/api/timer", { token });
+}
+
+export function startTimerRequest(token: string) {
+  return apiFetch<ApiTimer>("/api/timer/start", {
+    method: "POST",
+    token,
+  });
+}

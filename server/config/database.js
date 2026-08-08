@@ -90,6 +90,11 @@ db.exec(`
     hours_by_day TEXT NOT NULL DEFAULT '{}',
     hours_note TEXT NOT NULL DEFAULT ''
   );
+
+  CREATE TABLE IF NOT EXISTS site_timer (
+    id INTEGER PRIMARY KEY CHECK (id = 1),
+    ends_at INTEGER NOT NULL
+  );
 `);
 
 addColumnIfMissing('menu_items', 'choices', "TEXT DEFAULT '[]'");

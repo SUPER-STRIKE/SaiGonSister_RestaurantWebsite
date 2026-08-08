@@ -11,8 +11,10 @@ import {
   deleteMenuItemRequest,
   fetchMenu,
   fetchRestaurantInfo,
+  fetchTimer,
   mediaUrl,
   setSpecialtyRequest,
+  startTimerRequest,
   updateMenuItemRequest,
   updatePasswordRequest,
   updateRestaurantInfoRequest,
@@ -22,6 +24,7 @@ import {
   type ApiRestaurantInfo,
 } from "../lib/api";
 import { clearStaffToken, getStaffToken } from "../lib/auth";
+import { formatTimerRemaining } from "../lib/format-timer";
 import {
   formatPrice,
   parsePriceInput,
@@ -173,6 +176,8 @@ export default function AdminPage() {
   const [dailyFilterCategory, setDailyFilterCategory] = useState<DailyFilterCategory>("all");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
   const [drinkGroup, setDrinkGroup] = useState<DrinkGroup>("");
+  const [timerEndsAt, setTimerEndsAt] = useState<number | null>(null);
+  const [now, setNow] = useState(() => Date.now());
   const [accountUsername, setAccountUsername] = useState("");
   const [passwordDraft, setPasswordDraft] = useState({
     currentPassword: "",
@@ -195,14 +200,18 @@ export default function AdminPage() {
   };
 
   const load = useCallback(async () => {
-    const [menu, specialty, info] = await Promise.all([
+    const authToken = getStaffToken();
+    const [menu, specialty, info, timer] = await Promise.all([
       fetchMenu(),
       fetchMenu("?specialty=true"),
       fetchRestaurantInfo(),
+      authToken ? fetchTimer(authToken) : Promise.resolve({ endsAt: null }),
     ]);
     setItems(menu);
     setSpecialtyIds(specialty.map((item) => item.id));
     setRestaurantInfo(info);
+    setTimerEndsAt(timer.endsAt);
+    setNow(Date.now());
   }, []);
 
   useEffect(() => {
@@ -217,6 +226,27 @@ export default function AdminPage() {
     const timeout = window.setTimeout(() => setNotice(""), 4500);
     return () => window.clearTimeout(timeout);
   }, [notice]);
+
+  useEffect(() => {
+    if (!timerEndsAt) return undefined;
+    const id = window.setInterval(() => setNow(Date.now()), 60_000);
+    return () => window.clearInterval(id);
+  }, [timerEndsAt]);
+
+  async function startTimer() {
+    setBusy(true);
+    setNotice("");
+    try {
+      const { endsAt } = await startTimerRequest(token());
+      setTimerEndsAt(endsAt);
+      setNow(Date.now());
+      setNotice("30-day timer started. Client cannot reset this.");
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : "Failed to start timer.");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   const visibleItems = useMemo(() => {
     if (filterCategory === "all") return items;
@@ -564,7 +594,7 @@ export default function AdminPage() {
             <a href="#dish-list">Menu list</a>
             <a href="#account">Account</a>
           </nav>
-          <button className="forgot-link" onClick={logout} type="button">
+          <button className="admin-signout" onClick={logout} type="button">
             Sign out
           </button>
         </aside>
@@ -590,6 +620,23 @@ export default function AdminPage() {
             <article>
               <span>Dishes</span>
               <strong>{items.length}</strong>
+            </article>
+            <article className="admin-timer-card" aria-live="polite">
+              <span>Timer</span>
+              {!timerEndsAt ? (
+                <button
+                  className="admin-timer-start"
+                  disabled={busy}
+                  onClick={startTimer}
+                  type="button"
+                >
+                  Start 30 days
+                </button>
+              ) : (
+                <strong className="admin-timer-value">
+                  {formatTimerRemaining(timerEndsAt, now)}
+                </strong>
+              )}
             </article>
           </section>
 

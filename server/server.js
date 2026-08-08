@@ -10,6 +10,7 @@ try {
   const authRoutes = require('./routes/authRoutes');
   const menuRoutes = require('./routes/menuRoutes');
   const restaurantRoutes = require('./routes/restaurantRoutes');
+  const timerRoutes = require('./routes/timerRoutes');
   const errorHandler = require('./middleware/errorHandler');
 
   const app = express();
@@ -25,6 +26,7 @@ try {
   app.use('/api/auth', authRoutes);
   app.use('/api/menu', menuRoutes);
   app.use('/api/restaurant', restaurantRoutes);
+  app.use('/api/timer', timerRoutes);
 
   app.use((req, res) => {
     res.status(404).json({ error: `Cannot ${req.method} ${req.path}` });
