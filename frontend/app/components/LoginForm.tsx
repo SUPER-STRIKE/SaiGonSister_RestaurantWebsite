@@ -3,11 +3,9 @@
 import { useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { ApiError, loginRequest, verifyOtpRequest } from "../lib/api";
-import { createFrontendTestStaffToken, setStaffToken } from "../lib/auth";
+import { setStaffToken } from "../lib/auth";
 
 type LoginMode = "login" | "verify";
-
-const showFrontendAdminTestButton = true;
 
 export function LoginForm() {
   const [mode, setMode] = useState<LoginMode>("login");
@@ -52,11 +50,6 @@ export function LoginForm() {
       inFlight.current = false;
       setBusy(false);
     }
-  }
-
-  function openAdminForTesting() {
-    setStaffToken(createFrontendTestStaffToken());
-    window.location.assign("/admin");
   }
 
   if (mode === "verify") {
@@ -126,11 +119,6 @@ export function LoginForm() {
           {busy ? "Sending OTP..." : "Sign in"}
         </button>
       </div>
-      {showFrontendAdminTestButton ? (
-        <button className="admin-test-access" onClick={openAdminForTesting} type="button">
-          Open admin for testing
-        </button>
-      ) : null}
     </form>
   );
 }

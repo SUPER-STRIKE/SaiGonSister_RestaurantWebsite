@@ -8,6 +8,16 @@ type MenuExplorerProps = {
   sections: Record<MenuCategory, MenuSection[]>;
 };
 
+type DrinkGroup = "alcohol" | "non-alcohol";
+
+const alcoholSectionIds = new Set(["cocktails", "red-wine", "white-wine", "beers"]);
+
+function drinkGroupForSection(sectionId: string): DrinkGroup | null {
+  if (sectionId === "non-alcohol") return "non-alcohol";
+  if (alcoholSectionIds.has(sectionId)) return "alcohol";
+  return null;
+}
+
 function cleanList(values?: string[]) {
   return values?.map((value) => value.trim()).filter(Boolean) ?? [];
 }
@@ -106,6 +116,7 @@ function DetailButtons({ dish }: { dish: MenuDish }) {
 export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
   const [activeTab, setActiveTab] = useState<MenuCategory>("lunch");
   const [filter, setFilter] = useState<"all" | "vegan">("all");
+  const [drinkGroup, setDrinkGroup] = useState<DrinkGroup>("alcohol");
 
   useEffect(() => {
     function openSectionFromHash() {
@@ -130,6 +141,10 @@ export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
   const activeTabDetails = tabs.find((tab) => tab.id === activeTab) ?? tabs[0];
   const activeSections = useMemo(() => {
     return sections[activeTab]
+      .filter((section) => {
+        if (activeTab !== "drinks") return true;
+        return drinkGroupForSection(section.id) === drinkGroup;
+      })
       .map((section) => ({
         ...section,
         dishes: section.dishes.filter((dish) => {
@@ -139,7 +154,7 @@ export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
         }),
       }))
       .filter((section) => section.dishes.length > 0);
-  }, [activeTab, filter, sections]);
+  }, [activeTab, drinkGroup, filter, sections]);
 
   const dishCount = activeSections.reduce((total, section) => total + section.dishes.length, 0);
 
@@ -159,6 +174,24 @@ export function MenuExplorer({ tabs, sections }: MenuExplorerProps) {
           </button>
         ))}
       </div>
+
+      {activeTab === "drinks" ? (
+        <div className="drink-subtabs" aria-label="Drink type">
+          {[
+            { id: "alcohol", label: "Alcohol" },
+            { id: "non-alcohol", label: "Non Alcohol" },
+          ].map((option) => (
+            <button
+              className={drinkGroup === option.id ? "active" : ""}
+              key={option.id}
+              onClick={() => setDrinkGroup(option.id as DrinkGroup)}
+              type="button"
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      ) : null}
 
       <div className="menu-note">
         <span>{activeTabDetails.label}</span>

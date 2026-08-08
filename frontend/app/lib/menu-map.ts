@@ -75,8 +75,10 @@ export function groupMenuSections(items: ApiMenuItem[]): Record<MenuCategory, Me
     const grouped = new Map<string, MenuSection>();
 
     for (const item of categoryItems) {
-      const sectionId = item.sectionId?.trim() || "all";
-      const sectionTitle = item.sectionTitle?.trim() || tab?.label || category;
+      const fallbackSectionId = category === "drinks" ? "missing-drink-header" : "all";
+      const fallbackSectionTitle = category === "drinks" ? "Unassigned Drinks" : tab?.label || category;
+      const sectionId = item.sectionId?.trim() || fallbackSectionId;
+      const sectionTitle = item.sectionTitle?.trim() || fallbackSectionTitle;
       const sectionNote = item.sectionNote?.trim() || tab?.note;
       const existing = grouped.get(sectionId);
 

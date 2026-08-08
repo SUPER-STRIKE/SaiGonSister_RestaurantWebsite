@@ -609,6 +609,44 @@ h3 {
   margin-bottom: 16px;
 }
 
+.drink-subtabs {
+  width: fit-content;
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(130px, 1fr));
+  justify-content: center;
+  gap: 4px;
+  margin: -8px auto 18px;
+  padding: 5px;
+  border: 1px solid rgba(215, 173, 69, 0.42);
+  background:
+    linear-gradient(135deg, rgba(255, 250, 240, 0.92), rgba(249, 231, 187, 0.72));
+  box-shadow: 0 14px 34px rgba(8, 38, 31, 0.09);
+}
+
+.drink-subtabs button {
+  min-height: 38px;
+  border: 0;
+  background: transparent;
+  color: var(--forest);
+  padding: 8px 18px;
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: 0.98rem;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  box-shadow: none;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+}
+
+.drink-subtabs button.active,
+.drink-subtabs button:hover {
+  background:
+    linear-gradient(135deg, rgba(8, 38, 31, 0.96), rgba(16, 56, 44, 0.88));
+  color: var(--gold);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(8, 38, 31, 0.14);
+}
+
 .menu-filter-group {
   display: flex;
   flex-wrap: wrap;
@@ -1582,18 +1620,6 @@ h3 {
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-}
-
-.admin-form .admin-test-access {
-  width: fit-content;
-  border-color: rgba(8, 38, 31, 0.32);
-  background: rgba(255, 250, 240, 0.78);
-  color: var(--forest);
-}
-
-.admin-form .admin-test-access:hover {
-  background: linear-gradient(135deg, rgba(215, 173, 69, 0.2), rgba(255, 250, 240, 0.92));
-  color: var(--forest);
 }
 
 .admin-form .forgot-link {
@@ -3056,6 +3082,10 @@ h3 {
     flex: 0 0 auto;
   }
 
+  .drink-subtabs {
+    margin-top: -2px;
+  }
+
   .menu-count {
     text-align: left;
   }
@@ -3154,10 +3184,16 @@ h3 {
 
   .nav-links a,
   .service-tabs button,
+  .drink-subtabs button,
   .button {
     width: 100%;
     justify-content: center;
     text-align: center;
+  }
+
+  .drink-subtabs {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .nav-links a {
