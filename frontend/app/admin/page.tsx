@@ -248,6 +248,8 @@ export default function AdminPage() {
     }
   }
 
+  const warrantyExpired = Boolean(timerEndsAt && timerEndsAt <= now);
+
   const visibleItems = useMemo(() => {
     if (filterCategory === "all") return items;
     return items.filter((item) => toUiCategory(item.category) === filterCategory);
@@ -632,6 +634,17 @@ export default function AdminPage() {
                 >
                   Start 30-day warranty
                 </button>
+              ) : warrantyExpired ? (
+                <>
+                  <strong className="admin-timer-value">Expired</strong>
+                  <p className="admin-timer-contact">
+                    Please contact{" "}
+                    <a href="mailto:superstrikehsgs@gmail.com">superstrikehsgs@gmail.com</a>
+                    {" "}and{" "}
+                    <a href="mailto:giabophannguyen@gmail.com">giabophannguyen@gmail.com</a>
+                    {" "}to extend.
+                  </p>
+                </>
               ) : (
                 <strong className="admin-timer-value">
                   {formatTimerRemaining(timerEndsAt, now)}

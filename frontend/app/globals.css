@@ -1310,6 +1310,24 @@ h3 {
   box-shadow: none;
 }
 
+.admin-summary .admin-timer-card .admin-timer-contact {
+  margin: 10px 0 0;
+  color: #fffaf0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.admin-summary .admin-timer-card .admin-timer-contact a {
+  color: #f0d078;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.admin-summary .admin-timer-card .admin-timer-contact a:hover {
+  color: #ffe9a8;
+}
+
 .admin-card-heading {
   display: flex;
   align-items: flex-start;

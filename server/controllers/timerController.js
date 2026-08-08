@@ -43,7 +43,17 @@ function ownerTimer(req, res) {
     return res.json({ endsAt });
   }
 
-  return res.status(400).json({ error: 'action must be clear or renew' });
+  // Force expired so you can test the contact message UI.
+  if (action === 'expire') {
+    const endsAt = Date.now() - 1;
+    db.prepare(
+      `INSERT INTO site_timer (id, ends_at) VALUES (1, ?)
+       ON CONFLICT(id) DO UPDATE SET ends_at = excluded.ends_at`
+    ).run(endsAt);
+    return res.json({ endsAt });
+  }
+
+  return res.status(400).json({ error: 'action must be clear, renew, or expire' });
 }
 
 module.exports = { getTimer, startTimer, ownerTimer };
