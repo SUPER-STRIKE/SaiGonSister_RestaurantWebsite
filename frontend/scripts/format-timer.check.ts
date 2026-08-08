@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { formatTimerRemaining } from "./format-timer.ts";
+import { formatTimerRemaining } from "../app/lib/format-timer.ts";
 
 const now = Date.UTC(2026, 0, 1);
 assert.equal(formatTimerRemaining(now - 1, now), "Expired");
