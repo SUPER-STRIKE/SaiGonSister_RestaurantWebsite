@@ -33,7 +33,14 @@ import { restaurantContent, type MenuCategory } from "../lib/restaurant-data";
 
 const weekDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 type DailyFilterCategory = MenuCategory | "all" | "shown";
-const accountUsernameKey = "saigonSisterAdminUsername";
+type DrinkGroup = "" | "alcohol" | "non-alcohol";
+const alcoholSectionIds = new Set(["cocktails", "red-wine", "white-wine", "beers"]);
+
+function drinkGroupForSection(sectionId: string): DrinkGroup {
+  if (sectionId === "non-alcohol") return "non-alcohol";
+  if (alcoholSectionIds.has(sectionId)) return "alcohol";
+  return "";
+}
 
 type DraftAddOn = {
   name: string;
@@ -131,6 +138,7 @@ function headerOptionsFor(category: MenuCategory) {
 }
 
 function defaultHeaderFor(category: MenuCategory) {
+  if (category === "drinks") return { id: "", title: "", note: "" };
   return headerOptionsFor(category)[0] ?? { id: "", title: "", note: "" };
 }
 
@@ -164,7 +172,8 @@ export default function AdminPage() {
   const [filterCategory, setFilterCategory] = useState<MenuCategory | "all">("all");
   const [dailyFilterCategory, setDailyFilterCategory] = useState<DailyFilterCategory>("all");
   const [imagePreviewUrl, setImagePreviewUrl] = useState("");
-  const [accountUsername, setAccountUsername] = useState("staff");
+  const [drinkGroup, setDrinkGroup] = useState<DrinkGroup>("");
+  const [accountUsername, setAccountUsername] = useState("");
   const [passwordDraft, setPasswordDraft] = useState({
     currentPassword: "",
     newPassword: "",
@@ -185,8 +194,6 @@ export default function AdminPage() {
     return value;
   };
 
-  const isFrontendTestToken = () => token().endsWith(".frontend-test");
-
   const load = useCallback(async () => {
     const [menu, specialty, info] = await Promise.all([
       fetchMenu(),
@@ -203,11 +210,6 @@ export default function AdminPage() {
       setNotice(error instanceof Error ? error.message : "Failed to load menu.");
     });
   }, [load]);
-
-  useEffect(() => {
-    const savedUsername = window.localStorage.getItem(accountUsernameKey);
-    if (savedUsername) setAccountUsername(savedUsername);
-  }, []);
 
   useEffect(() => {
     if (!notice) return undefined;
@@ -230,6 +232,11 @@ export default function AdminPage() {
   }, [dailyFilterCategory, items, specialtyIds]);
 
   const headerOptions = useMemo(() => headerOptionsFor(draft.category), [draft.category]);
+  const visibleHeaderOptions = useMemo(() => {
+    if (draft.category !== "drinks") return headerOptions;
+    if (!drinkGroup) return [];
+    return headerOptions.filter((section) => drinkGroupForSection(section.id) === drinkGroup);
+  }, [draft.category, drinkGroup, headerOptions]);
 
   useEffect(() => {
     if (draft.imageFile) {
@@ -244,6 +251,7 @@ export default function AdminPage() {
 
   function updateDraftCategory(category: MenuCategory) {
     const header = defaultHeaderFor(category);
+    setDrinkGroup("");
     setDraft((current) => ({
       ...current,
       category,
@@ -266,6 +274,7 @@ export default function AdminPage() {
 
     const header = headerOptions.find((section) => section.id === sectionId);
     if (!header) return;
+    if (draft.category === "drinks") setDrinkGroup(drinkGroupForSection(header.id));
 
     setDraft((current) => ({
       ...current,
@@ -280,6 +289,16 @@ export default function AdminPage() {
       ...current,
       sectionTitle,
       sectionId: slugifyHeader(sectionTitle),
+    }));
+  }
+
+  function selectDrinkGroup(group: DrinkGroup) {
+    setDrinkGroup(group);
+    setDraft((current) => ({
+      ...current,
+      sectionId: "",
+      sectionTitle: "",
+      sectionNote: "",
     }));
   }
 
@@ -375,13 +394,16 @@ export default function AdminPage() {
 
   function startCreate() {
     setEditingId(null);
+    setDrinkGroup("");
     setDraft(emptyDraft());
     setNotice("New dish draft ready.");
   }
 
   function startEdit(item: ApiMenuItem) {
+    const nextDraft = itemToDraft(item);
     setEditingId(item.id);
-    setDraft(itemToDraft(item));
+    setDrinkGroup(nextDraft.category === "drinks" ? drinkGroupForSection(nextDraft.sectionId) : "");
+    setDraft(nextDraft);
     setNotice(`Editing ${item.name}.`);
     window.setTimeout(scrollToDishEditor, 0);
     window.setTimeout(scrollToDishEditor, 140);
@@ -389,6 +411,18 @@ export default function AdminPage() {
 
   async function saveDish(event: FormEvent) {
     event.preventDefault();
+    if (draft.category === "drinks" && !drinkGroup) {
+      setNotice("Choose Alcohol or Non Alcohol for this drink.");
+      return;
+    }
+    if (draft.category === "drinks" && !draft.sectionId.trim()) {
+      setNotice("Choose a drink header.");
+      return;
+    }
+    if (!draft.sectionTitle.trim()) {
+      setNotice("Choose or enter a menu header.");
+      return;
+    }
     setBusy(true);
     setNotice("");
     try {
@@ -472,13 +506,8 @@ export default function AdminPage() {
     setBusy(true);
     try {
       const staffToken = token();
-      if (isFrontendTestToken()) {
-        window.localStorage.setItem(accountUsernameKey, nextUsername);
-        setNotice("Username updated.");
-      } else {
-        const result = await updateUsernameRequest(staffToken, nextUsername);
-        setNotice(result.message || "Username updated.");
-      }
+      const result = await updateUsernameRequest(staffToken, nextUsername);
+      setNotice(result.message || "Username updated.");
     } catch (error) {
       setNotice(error instanceof ApiError ? error.message : "Username update failed.");
     } finally {
@@ -504,16 +533,12 @@ export default function AdminPage() {
     setBusy(true);
     try {
       const staffToken = token();
-      if (isFrontendTestToken()) {
-        setNotice("Password updated.");
-      } else {
-        const result = await updatePasswordRequest(
-          staffToken,
-          passwordDraft.currentPassword,
-          passwordDraft.newPassword,
-        );
-        setNotice(result.message || "Password updated.");
-      }
+      const result = await updatePasswordRequest(
+        staffToken,
+        passwordDraft.currentPassword,
+        passwordDraft.newPassword,
+      );
+      setNotice(result.message || "Password updated.");
       setPasswordDraft({ currentPassword: "", newPassword: "", confirmPassword: "" });
     } catch (error) {
       setNotice(error instanceof ApiError ? error.message : "Password update failed.");
@@ -677,18 +702,48 @@ export default function AdminPage() {
                 </label>
               </div>
               <div className="header-picker-panel">
+                {draft.category === "drinks" ? (
+                  <label>
+                    Drink type
+                    <select
+                      onChange={(event) => selectDrinkGroup(event.target.value as DrinkGroup)}
+                      required
+                      value={drinkGroup}
+                    >
+                      <option value="" disabled>
+                        Choose drink type
+                      </option>
+                      <option value="alcohol">Alcohol</option>
+                      <option value="non-alcohol">Non Alcohol</option>
+                    </select>
+                  </label>
+                ) : null}
                 <label>
                   Menu header
                   <select
                     onChange={(event) => selectHeader(event.target.value)}
-                    value={headerOptions.some((section) => section.id === draft.sectionId) ? draft.sectionId : "custom"}
+                    required
+                    value={
+                      draft.category === "drinks" && !draft.sectionId
+                        ? ""
+                        : visibleHeaderOptions.some((section) => section.id === draft.sectionId)
+                          ? draft.sectionId
+                          : draft.category === "drinks"
+                            ? ""
+                            : "custom"
+                    }
                   >
-                    {headerOptions.map((section) => (
+                    {draft.category === "drinks" ? (
+                      <option value="" disabled>
+                        Choose drink header
+                      </option>
+                    ) : null}
+                    {visibleHeaderOptions.map((section) => (
                       <option key={section.id} value={section.id}>
                         {section.title}
                       </option>
                     ))}
-                    <option value="custom">Custom header</option>
+                    {draft.category === "drinks" ? null : <option value="custom">Custom header</option>}
                   </select>
                 </label>
                 <div className="two-col">

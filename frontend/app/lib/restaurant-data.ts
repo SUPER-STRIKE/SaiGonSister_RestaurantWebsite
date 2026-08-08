@@ -82,8 +82,8 @@ export const restaurantContent: RestaurantContent = {
     "A full-service Vietnamese kitchen serving breakfast, rolls, banh mi, pho, rice platters, dinner specials, drinks, and vegan-friendly choices.",
   menuTabs: [
     { id: "breakfast", label: "Breakfast", note: "Eggs, baguette plates, pho breakfast, and vegan morning dishes." },
-    { id: "lunch", label: "Lunch", note: "Salad rolls, momo, wraps, crispy fry, banh mi, pho, rice, and noodles." },
-    { id: "dinner", label: "Dinner", note: "Dinner specials, rice platters, carpaccio, tuna salad, and beef steak." },
+    { id: "lunch", label: "Lunch and Dinner", note: "Salad rolls, momo, wraps, crispy fry, banh mi, pho, rice, and noodles." },
+    { id: "dinner", label: "Specialty Dinner", note: "Dinner specials, rice platters, carpaccio, tuna salad, and beef steak." },
     { id: "drinks", label: "Drinks", note: "Cocktails, wine, beer, smoothies, tea, juice, soya, and pop." },
   ],
   dailySpecials: [
